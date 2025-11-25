@@ -1,0 +1,29 @@
+identifier in C:-
+-------------------
+In the C programming language, an identifier is a user-defined name given to program elements such as variables, functions, arrays, structures, and labels. They are crucial for uniquely recognizing and referencing these entities throughout the code, making it readable and maintainable.
+
+Rules for Naming Identifiers in C
+----------------------------------
+To create a valid identifier, specific rules must be followed:-
+
+1. Allowed Characters: An identifier can only consist of letters (A-Z, a-z), digits (0-9), and the underscore (_) symbol.
+
+2. First Character Rule: The first character of an identifier must be an alphabet (letter) or an underscore. It cannot be a digit.
+
+3. No Keywords: Identifiers cannot be a reserved keyword in C (e.g., int, return, if, while, etc.).
+
+4. No Whitespace or Special Characters: Blank spaces and other special characters (like !, @, #, %, ;, etc.) are not permitted within an identifier name.
+
+5. Case-Sensitive: C is a case-sensitive language, meaning that name and Name are treated as two different identifiers.
+
+6. Length: While the C standard guarantees support for at least 31 significant characters for internal identifiers, it is generally recommended to keep names concise and meaningful. 
+
+
+Examples of Identifiers:-
+------------------------
+Valid Identifiers 	Invalid Identifiers
+------------------	------------------------
+total_sum		5num (starts with a digit)
+_size			@hello (uses a special character)
+num1			int (is a keyword)
+myVariable		my var (contains a space)

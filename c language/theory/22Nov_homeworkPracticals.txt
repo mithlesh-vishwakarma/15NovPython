@@ -1,0 +1,5 @@
+homework: practicals
+
+1. make a profile using printf
+2. name's first character using (*)
+3. draw a swastik using printf

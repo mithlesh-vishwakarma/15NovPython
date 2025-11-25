@@ -1,0 +1,35 @@
+Data types in C:
+-----------------
+In the C programming language, data types are classified into several categories: basic, derived, user-defined, and void. They define the type and size of data a variable can hold. 
+
+Basic Data Types
+------------------
+These are the fundamental data types built into the C language. 
+
+1. int: Stores whole numbers (integers) without decimal points. Its size is typically 2 or 4 bytes, depending on the system architecture.
+
+2. char: Stores a single character (letters, numbers, or symbols) and occupies 1 byte of memory. Character values are enclosed in single quotes, e.g., 'A'.
+
+3. float: Stores floating-point numbers (numbers with decimals) with single precision. It typically occupies 4 bytes of memory.
+
+4. double: Stores double-precision floating-point numbers, offering more precision and a larger range than float. It typically occupies 8 bytes of memory.
+
+5. _Bool: A Boolean type (added in C99, a core feature since C23) that stores true (1) or false (0) values.
+
+6. void: Indicates the absence of a value, often used as a function return type for functions that do not return a value, or with generic pointers (void *). 
+
+--Modifiers such as signed, unsigned, short, and long can be applied to basic 
+integer types to adjust their size and range: 
+
+short int
+long int
+unsigned int
+long long int
+
+Derived Data Types:
+---------------------
+Derived data types are built upon basic types. Examples include arrays for storing collections of the same data type, pointers for holding memory addresses, and functions for reusable code blocks. 
+
+User-Defined Data Types:
+-----------------------
+User-defined data types allow programmers to create custom structures. These include struct for grouping variables of different types, union for sharing memory space among members, enum for naming integral constants, and typedef for creating type aliases. 
