@@ -14,3 +14,5 @@ homework: practicals
   HINT: PRN/100
 6. Write a program to find area of circle.
 7. Write a program to find area of square and rectangle
+
+
