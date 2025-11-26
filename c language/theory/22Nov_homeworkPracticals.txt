@@ -1,5 +1,16 @@
 homework: practicals
 
+22 Nov -homeworks
+---------------------
 1. make a profile using printf
 2. name's first character using (*)
 3. draw a swastik using printf
+
+25 Nov -homework
+-----------------------
+3. Write a program to create a simple calculator.
+4. Write a program to find cube and square of given number.
+5. Write a program to find simple interest.
+  HINT: PRN/100
+6. Write a program to find area of circle.
+7. Write a program to find area of square and rectangle

@@ -1,0 +1,4 @@
+1. relational operators- (==,<,>,=>,<= )
+2. conditional operators-turnary operators ( condition? true: false)
+3. arithmetic operators- (+,-,/,*,%)
+4. logical operators-  (& AND, || OR , NOT !)
