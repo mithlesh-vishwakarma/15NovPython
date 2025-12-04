@@ -1,0 +1,9 @@
+loops:
+
+1. init; 2. condition; 3. modification
+
+1.for
+
+
+
+
