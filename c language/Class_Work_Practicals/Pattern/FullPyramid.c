@@ -2,9 +2,9 @@
 int main(){
 
   int i,j,k;
-  for (i=1;i<=10;i++)
+  for (i=1;i<=5;i++)
   {
-    for(k=9;k>=i;k--) // k is for space printing, comparing with i(row number )
+    for(k=4;k>=i;k--) // k is for space printing, comparing with i(row number )
     {
       printf(" ");
     }
@@ -17,3 +17,17 @@ int main(){
     printf("\n");
   } 
 }
+
+/*
+left half pyramid
+----------------------
+
+    *
+   * *
+  * * *
+ * * * *
+* * * * *
+
+
+
+*/
