@@ -2,16 +2,20 @@
 int main()
 {
 
-  for (int i = 1; i <= 5; i++)
+  for (int i = 1; i <= 10; i++)
   {
 
     for (int k = 1; k <= i; k++)
     {
+      if (k == i)
+      {
+        printf("*");
+      }
       printf(" ");
     }
-    for (int j = 9; j >= i; j--)
+    for (int j = 10; j >= i; j--)
     {
-      if (i == 1)
+      if (i == 1 || j == i || i == j)
       {
         printf("* ");
       }

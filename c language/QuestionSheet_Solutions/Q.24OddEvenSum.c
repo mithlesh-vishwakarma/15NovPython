@@ -2,26 +2,35 @@
 #include <stdio.h>
 int main()
 {
-  int num, sum = 0;
+  int num, EvenSum = 0, OddSum = 0;
   printf("Enter The Number:\n");
   scanf("%d", &num);
 
+  // printf("The Even Numbers between 1 to %d:\n", num);
   for (int i = 1; i <= num; i++)
   {
-    printf("%d\n", i);
+    // printf("%d\n", i);
 
     if (i % 2 == 0)
     {
+      // printf("%d\n", i);
+      EvenSum = EvenSum + i;
+    }
 
-      sum = sum + i;
-      printf("The Even Numbers are: %d\n", sum);
-    }
-    else
+    if (i % 2 != 0)
     {
-      sum = sum + i;
-      printf("The Odd Numbers are: %d\n", sum);
+      // printf("%d\n", i);
+      OddSum = OddSum + i;
     }
+    // else
+    // {
+    //   sum = sum + i;
+    //   printf("The Odd Numbers are: %d\n", sum);
+    // }
   }
+  printf("The Sum of Even Numbers is %d\n", EvenSum);
+  // printf("The Odd Numbers between 1 to %d:\n", num);
+  printf("The Sum of Even Numbers is %d\n", OddSum);
 
   return 0;
 }
