@@ -19,14 +19,15 @@ o If no then display the final bill on the screen */
 #include <stdio.h>
 int main()
 {
+  // declaration and initialisation of the variables
   char choice;
   int qty;
   float CurrAmount = 0, TotalAmount = 0;
   char placeMoreOrder = 'y';
-
+  // initial value of placeMoreOrder is y so it will enter in the loop. and asked for run the loop till the value of asked for placeMoreOrder is matching to 'y' or 'Y'.
   while (placeMoreOrder == 'y' || placeMoreOrder == 'Y')
   {
-
+    // asking for selection to order the dish.
     printf("Available Dishes in the Manu are: \n"
            "1. Pizza    price=180rs/pcs\n"
            "2. Burger   price=100rs/pcs\n"
@@ -35,8 +36,9 @@ int main()
            "please Enter Your choice by entering 1,2,3 or 4:"
 
     );
-    scanf(" %c", &choice);
+    scanf(" %c", &choice); // getting input from user for their choices of dish
 
+    // matching conditions according to inputs by the user and performing on it.
     if (choice == '1')
     {
       printf("you have selected Pizza.");
@@ -50,7 +52,7 @@ int main()
       printf("you have selected Burger.\n");
       printf("Please Enter the Quantity.\n");
       scanf("%d", &qty);
-      CurrAmount = (float)qty * 100;
+      CurrAmount = (float)qty * 100; // calculating the (qty x rate) so can be got the amount.
       // printf("Amount is %f:\t", CurrAmount);
     }
     else if (choice == '3')
@@ -74,26 +76,15 @@ int main()
 
       printf("you have Entered invalid input.\n");
       printf("Please Enter the valid choice.......\n");
-      continue;
+      continue; // it will start from the option again when choices are invalid.
     }
 
-    TotalAmount += CurrAmount;
-    printf("Current Total: %f\n", TotalAmount);
-    printf("Do you want to place more orders: Y/N \n");
+    TotalAmount += CurrAmount; // for every time the loop runs it will add the Current Amount in the TotalAmount.
+    printf("Current Total: %.2f\n", TotalAmount);
+    printf("Do you want to place more orders ?  Y/N :"); // asking for user whether they are willing to ordermore or not?.
     scanf(" %c", &placeMoreOrder);
-    // if ((placeMoreOrder != 'y' || placeMoreOrder != 'Y') && (placeMoreOrder != 'n' || placeMoreOrder != 'N'))
-    // {
-    //   scanf("%c", &placeMoreOrder);
-    // }
-    // else
-    // {
-    //   printf("Enter Valid y/n:\n");
-
-    // }
-    // printf("Current Amount: %f\n", CurrAmount);
-    // TotalAmount = CurrAmount + TotalAmount;
   }
-  printf("Total Bill Amount is: %f\n", TotalAmount);
+  printf("Total Bill Amount is: %.2f\n", TotalAmount); // printing final value of TotalAmount.
   printf("Thank you for your order please visit again..!!!!");
 
   return 0;
