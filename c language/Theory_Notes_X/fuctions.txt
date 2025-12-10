@@ -1,0 +1,24 @@
+
+
+function:
+----------
+=> A function in C is a self-contained block of code designed to perform a specific task. Functions break large, complex programs into smaller, more manageable modules, which promotes code reusability, improves readability, and makes debugging easier.
+
+There are two types of function :
+----------------------------------
+1. re-defined functions
+2. user-defined fucntions
+
+also the user defind function as four types:
+----------------------------------------------
+- with return type with parameter
+- with return type without parameter
+- without return type with parameter
+- without return type without parameter
+
+examples are in the folder of ClassWorkPracticals.
+
+recursive function
+---------------------
+=> A recursive function in C is a function that calls itself to solve a problem by breaking it down into smaller, simpler subproblems. This technique is used for tasks that can be defined in terms of themselves, such as calculating factorials or traversing hierarchical data structures like trees. 
+

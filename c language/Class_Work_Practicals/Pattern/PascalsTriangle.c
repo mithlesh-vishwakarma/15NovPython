@@ -1,16 +1,25 @@
 #include <stdio.h>
+
 int main()
 {
-  int num;
-  printf("enter the num\n");
-  scanf("%d", &num);
-  for (int i = 1; i <= num; i++)
+  int ans;
+
+  for (int i = 0; i <= 6; i++)
   {
-    for (int j = 1; j <= i; j++)
+    for (int k = 6; k >= i; k--)
     {
-      printf("%d", i);
+      printf(" ");
     }
+    ans = 1;
+    // Print values
+    for (int j = 0; j <= i; j++)
+    {
+      printf(" %d", ans);
+      ans = ans * (i - j) / (j + 1); // Pascal formula
+    }
+
     printf("\n");
   }
+
   return 0;
 }
