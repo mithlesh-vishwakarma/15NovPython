@@ -1,0 +1,7 @@
+Static Variable in C:
+---------------------
+=> A static variable in C is a variable that remains its value between multiple function calls and persists for the entire duration of the program's execution.
+
+=> the memory doesn't terminate it's value.
+
+

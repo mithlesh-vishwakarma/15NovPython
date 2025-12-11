@@ -1,0 +1,11 @@
+Scope of variables
+-------------------
+=> Scope is the part of the program where a defined variable can have its existance, adn beyond that it cannot exist.
+
+Types of Variables :
+--------------------
+1. global varibal
+2. local variable
+3. formal parameter (which is used in functions)
+
+examples are in the Class_Work_Practicals folder..
