@@ -1,0 +1,24 @@
+Call by Value vs Call by Reference (in C):
+-------------------------------------------
+
+------------------------------------------------------------------
+| Title             | Call by Value          | Call by Reference |
+------------------------------------------------------------------
+| Definition        | A copy of the actual   | Address of the    |
+|                   | variable is passed to  | actual variable   |
+|                   | the function.          | is passed using   |
+|                   |                        | pointers.         |
+------------------------------------------------------------------
+| Effect of Changes | Changes inside the     | Changes inside    |
+|                   | function do NOT affect | the function DO   |
+|                   | the original variable. | affect the        |
+|                   |                        | original variable |
+------------------------------------------------------------------
+| Usage             | Used when original     | Used when the     |
+|                   | data should not be     | function needs    |
+|                   | modified.              | to modify the     |
+|                   |                        | original data.    |
+------------------------------------------------------------------
+
+Examples:
+as you know in the class_work_practical folder

@@ -1,0 +1,120 @@
+========================
+ARRAYS IN C (ADVANCED)
+========================
+
+1) Definition
+-------------
+An array is a collection of elements of the same data type stored in
+contiguous memory locations and accessed using an index (starts from 0).
+
+Example:
+int a[5] = {10, 20, 30, 40, 50};
+
+------------------------------------------------
+
+2) Memory Layout
+----------------
+- Array elements are stored sequentially in memory.
+- Address of next element = previous address + size of data type.
+
+Example:
+int a[3];
+&a[0], &a[1], &a[2]
+
+------------------------------------------------
+
+3) Indexing Rule
+----------------
+- First element index = 0
+- Last element index = size - 1
+
+Example:
+a[0]  // first element
+a[4]  // last element in int a[5]
+
+------------------------------------------------
+
+4) Array and Loop Relationship
+------------------------------
+Arrays are usually accessed using loops for efficiency.
+
+Example:
+for(int i = 0; i < 5; i++)
+{
+    printf("%d ", a[i]);
+}
+
+------------------------------------------------
+
+5) Array as Function Argument
+-----------------------------
+Array name acts as base address when passed to a function.
+
+Example:
+void display(int arr[], int n)
+{
+    for(int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+}
+
+------------------------------------------------
+
+6) Call by Reference Nature
+---------------------------
+Arrays are always passed by reference by default.
+
+Effect:
+Changes inside function affect original array.
+
+------------------------------------------------
+
+7) Multidimensional Array
+-------------------------
+Used to store data in table/matrix form.
+
+Example:
+int m[2][3] = {{1,2,3},{4,5,6}};
+
+Access:
+m[0][1]  // value = 2
+
+------------------------------------------------
+
+8) Character Array (Strings)
+----------------------------
+A character array stores a string ending with '\0'.
+
+Example:
+char name[10] = "Mithlesh";
+
+------------------------------------------------
+
+9) Array and Pointer Relation
+-----------------------------
+Array name is a constant pointer to first element.
+
+Example:
+int a[3] = {1,2,3};
+printf("%d", *(a + 1));  // output: 2
+
+------------------------------------------------
+
+10) Limitations of Arrays
+-------------------------
+- Fixed size
+- Cannot grow or shrink dynamically
+- No bounds checking in C
+
+------------------------------------------------
+
+11) Advantages of Arrays
+------------------------
+- Fast access using index
+- Efficient memory usage
+- Simplifies data handling
+
+------------------------------------------------
+
+IMPORTANT NOTE:
+---------------
+Accessing out-of-bound index leads to undefined behavior.

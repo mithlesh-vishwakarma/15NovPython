@@ -22,12 +22,7 @@ int main()
       // printf("%d\n", i);
       OddSum = OddSum + i;
     }
-    // else
-    // {
-    //   sum = sum + i;
-    //   printf("The Odd Numbers are: %d\n", sum);
-    // }
-  }
+    }
   printf("The Sum of Even Numbers is %d\n", EvenSum);
   // printf("The Odd Numbers between 1 to %d:\n", num);
   printf("The Sum of Even Numbers is %d\n", OddSum);
