@@ -1,3 +1,6 @@
+// Write a C program that accepts two integers from the user and performs
+// arithmetic, relational, and logical operations on them.Display the results.
+
 #include <stdio.h>
 int main()
 {
@@ -12,3 +15,18 @@ int main()
   printf("\nmodulo=%d", a % b);
   return 0;
 }
+
+/*
+output:
+-------
+enter values of a and b
+34
+43
+
+sum=77
+sub=-9
+mul=1462
+div=0.790698
+modulo=34
+
+*/
