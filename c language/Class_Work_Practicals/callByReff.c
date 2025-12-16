@@ -6,7 +6,7 @@ void swap(int *a, int *b)
   c = *a;
   *a = *b;
   *b = c;
-  printf("After swaping the values of a=%p and b=%p\n", a, b);
+  // printf("After swaping the values of a=%p and b=%p\n", a, b);
 }
 
 int main()

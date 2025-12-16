@@ -9,10 +9,6 @@ int main()
       {
         printf(" ");
       }
-      // else
-      // {
-      //   printf("* ");
-      // }
     }
     for (int j = 6; j >= i; j--)
     {

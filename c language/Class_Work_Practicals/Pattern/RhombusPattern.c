@@ -7,13 +7,11 @@ int main()
 
     for (int k = 1; k <= i; k++)
     {
-      if (k == i)
-      {
-        printf(" ");
-      }
+
+      printf(" ");
     }
 
-    for (int j = 1; j <= 6 + i; j++)
+    for (int j = 1; j <= 6; j++)
     {
       printf("*");
     }
@@ -22,3 +20,15 @@ int main()
 
   return 0;
 }
+
+/*
+output
+
+ ******
+  ******
+   ******
+    ******
+     ******
+      ******
+
+*/

@@ -22,10 +22,10 @@ int main()
       }
     }
   }
-
+  printf("the value of sorting arrays are\n");
   for (int i = 0; i < 5; i++)
   {
-    printf("the value of evens a[%d]=%d\n", i, a[i]);
+    printf("%d\t", a[i]);
   }
   return 0;
 }

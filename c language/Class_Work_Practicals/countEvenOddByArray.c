@@ -7,7 +7,7 @@ int main()
     printf("please enter the value of a[%d]=", i);
     scanf("%d", &a[i]);
   }
-  int even = 0, odd;
+  int even = 0, odd = 0;
   for (int i = 0; i < 10; i++)
   {
 
