@@ -1,0 +1,141 @@
+/* =========================================================
+            FILE HANDLING IN C – NOTES
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. WHAT IS FILE HANDLING?
+   ---------------------------------------------------------
+   - File handling allows data to be stored permanently.
+   - Data remains saved even after program execution ends.
+   - C uses FILE pointer to work with files.
+*/
+
+/* ---------------------------------------------------------
+   2. HEADER FILE REQUIRED
+   --------------------------------------------------------- */
+#include <stdio.h>
+
+/* ---------------------------------------------------------
+   3. FILE POINTER
+   ---------------------------------------------------------
+   - FILE is a structure defined in stdio.h
+   - Used to access files in memory
+*/
+FILE *fp;
+
+/* ---------------------------------------------------------
+   4. OPENING A FILE – fopen()
+   ---------------------------------------------------------
+   Syntax:
+   fp = fopen("filename", "mode");
+*/
+fp = fopen("data.txt", "r");
+
+/* ---------------------------------------------------------
+   5. FILE OPENING MODES
+   ---------------------------------------------------------
+   "r"   → Read only
+   "w"   → Write (creates new / clears old data)
+   "a"   → Append (add data at end)
+   "r+"  → Read + Write
+   "w+"  → Write + Read
+   "a+"  → Append + Read
+*/
+
+/* ---------------------------------------------------------
+   6. CHECKING FILE OPEN SUCCESS
+   ---------------------------------------------------------
+*/
+if (fp == NULL)
+{
+    printf("File not found or cannot be opened");
+}
+
+/* ---------------------------------------------------------
+   7. CLOSING A FILE – fclose()
+   ---------------------------------------------------------
+   - Always close file after use
+*/
+fclose(fp);
+
+/* ---------------------------------------------------------
+   8. WRITING TO A FILE
+   ---------------------------------------------------------
+   fprintf() → formatted output
+   fputc()   → write single character
+   fputs()   → write string
+*/
+fprintf(fp, "Hello World");
+fputc('A', fp);
+fputs("Hello", fp);
+
+/* ---------------------------------------------------------
+   9. READING FROM A FILE
+   ---------------------------------------------------------
+   fscanf() → formatted input
+   fgetc()  → read single character
+   fgets()  → read string
+*/
+fscanf(fp, "%d", &x);
+char ch = fgetc(fp);
+fgets(str, 50, fp);
+
+/* ---------------------------------------------------------
+   10. END OF FILE (EOF)
+   ---------------------------------------------------------
+   - EOF indicates end of file
+*/
+while ((ch = fgetc(fp)) != EOF)
+{
+    printf("%c", ch);
+}
+
+/* ---------------------------------------------------------
+   11. BINARY FILE HANDLING
+   ---------------------------------------------------------
+   - Used for storing structures or raw data
+   - fread()  → read binary data
+   - fwrite() → write binary data
+*/
+fwrite(&obj, sizeof(obj), 1, fp);
+fread(&obj, sizeof(obj), 1, fp);
+
+/* ---------------------------------------------------------
+   12. FILE POINTER POSITION FUNCTIONS
+   ---------------------------------------------------------
+   ftell()  → returns current position
+   fseek()  → moves file pointer
+   rewind() → moves pointer to beginning
+*/
+fseek(fp, 0, SEEK_SET);
+rewind(fp);
+
+/* ---------------------------------------------------------
+   13. COMMON FILE OPERATIONS
+   ---------------------------------------------------------
+   Create file      → "w"
+   Read file        → "r"
+   Append data      → "a"
+   Update file      → "r+"
+   Binary storage   → fread(), fwrite()
+*/
+
+/* ---------------------------------------------------------
+   14. ADVANTAGES OF FILE HANDLING
+   ---------------------------------------------------------
+   - Permanent data storage
+   - Handles large amount of data
+   - Used in databases, logs, reports
+*/
+
+/* ---------------------------------------------------------
+   15. IMPORTANT EXAM POINTS
+   ---------------------------------------------------------
+   - FILE *fp is mandatory
+   - Always check fp == NULL
+   - Always close file using fclose()
+   - Text files use fprintf / fscanf
+   - Binary files use fread / fwrite
+*/
+
+/* ===================== END ============================== */

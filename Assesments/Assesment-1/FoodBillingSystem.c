@@ -9,7 +9,7 @@
 Adhere to the coding principles
 -----------------------------------
 Execution Flow of the Project:
-----------------------------------
+-----------------------------------
 o First, display the food items available
 o Then after the user can choose any of the item displayed
 o Also take the quantity of selected food item by the customer, then ask the user that he/she wanna select more?

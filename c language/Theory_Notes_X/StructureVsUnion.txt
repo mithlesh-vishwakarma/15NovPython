@@ -1,0 +1,35 @@
+Structure allocates separate memory for each member, while union shares the same memory.
+
+
+comparison table:
+----------------
+
+------------------------------------------------------------
+| Feature            | Structure (struct) | Union (union)  |
+------------------------------------------------------------
+| Definition         | Collection of      | Collection of |
+|                    | different data     | data sharing  |
+|                    | types              | same memory   |
+------------------------------------------------------------
+| Memory Allocation  | Separate memory    | Shared memory |
+|                    | for each member    | for all       |
+------------------------------------------------------------
+| Size               | Sum of all members | Size of       |
+|                    |                    | largest member|
+------------------------------------------------------------
+| Data Access        | All members        | Only one      |
+|                    | usable at once     | member valid  |
+------------------------------------------------------------
+| Effect of Change   | No effect on other | Overwrites    |
+|                    | members            | other members |
+------------------------------------------------------------
+| Initialization     | All members can be | Only first    |
+|                    | initialized        | member only   |
+------------------------------------------------------------
+| Data Safety        | More safe           | Less safe     |
+------------------------------------------------------------
+| Usage              | When all data is   | When memory   |
+|                    | needed together    | saving needed |
+------------------------------------------------------------
+| Keyword            | struct              | union         |
+------------------------------------------------------------

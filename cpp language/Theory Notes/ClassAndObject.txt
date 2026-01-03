@@ -1,0 +1,118 @@
+
+========================================================
+            CLASSES AND OBJECTS IN C++
+========================================================
+
+1. CLASS
+--------------------------------------------------------
+A class is a user-defined data type in C++ that groups
+data members (variables) and member functions (methods)
+into a single unit.
+
+A class acts as a blueprint for creating objects.
+
+Syntax:
+class ClassName {
+    access_specifier:
+        data_members;
+        member_functions;
+};
+
+Example:
+class Student {
+public:
+    int roll;
+    float marks;
+};
+
+--------------------------------------------------------
+2. OBJECT
+--------------------------------------------------------
+An object is an instance of a class.
+It represents a real-world entity and occupies memory.
+
+Syntax:
+ClassName objectName;
+
+Example:
+Student s1;
+
+Accessing class members:
+objectName.variable;
+objectName.function();
+
+--------------------------------------------------------
+3. ACCESS SPECIFIERS
+--------------------------------------------------------
+Access specifiers define the accessibility of class
+members (variables and functions).
+
+There are three access specifiers in C++:
+
+1) PUBLIC
+- Members are accessible from anywhere in the program.
+- Used when data needs to be openly available.
+
+Example:
+public:
+    int x;
+
+--------------------------------------------------------
+
+2) PRIVATE
+- Members are accessible only inside the class.
+- Used for data hiding and security.
+- Default access specifier in C++ class.
+
+Example:
+private:
+    int y;
+
+--------------------------------------------------------
+
+3) PROTECTED
+- Members are accessible inside the class and
+  derived (child) classes.
+- Mainly used in inheritance.
+
+Example:
+protected:
+    int z;
+
+--------------------------------------------------------
+4. DEFAULT ACCESS SPECIFIER
+--------------------------------------------------------
+If no access specifier is mentioned, members are
+private by default in a class.
+
+--------------------------------------------------------
+5. DIFFERENCE BETWEEN CLASS AND OBJECT
+--------------------------------------------------------
+Class:
+- Blueprint or template
+- Does not occupy memory
+- Logical entity
+
+Object:
+- Instance of class
+- Occupies memory
+- Physical entity
+
+--------------------------------------------------------
+6. ADVANTAGES OF CLASSES AND OBJECTS
+--------------------------------------------------------
+- Supports Object Oriented Programming
+- Improves code reusability
+- Provides data security
+- Helps in data abstraction and encapsulation
+- Makes large programs easy to manage
+
+--------------------------------------------------------
+7. IMPORTANT POINTS
+--------------------------------------------------------
+- class keyword is used to define a class
+- Object is created using class name
+- Dot (.) operator is used to access members
+- Data hiding is achieved using private access specifier
+
+========================================================
