@@ -1,0 +1,140 @@
+INHERITANCE (C++)
+
+Definition:
+Inheritance is an object-oriented programming concept in which a new class (derived class)
+acquires the properties and behaviors (data members and member functions) of an existing
+class (base class). It helps in code reuse, extensibility, and logical organization of programs.
+
+Why Inheritance is Used (Uses of Inheritance):
+
+1. Code Reusability:
+   Existing class code can be reused in new classes, reducing duplication and saving development time.
+
+2. Extensibility:
+   New features can be added to a program without modifying the existing code.
+
+3. Better Maintainability:
+   Changes made in the base class automatically reflect in derived classes, making maintenance easier.
+
+4. Logical Hierarchy:
+   Inheritance helps represent real-world relationships such as parent-child or general-specific.
+
+5. Faster Development:
+   Developers can build applications quickly by reusing tested and reliable code.
+
+6. Improved Readability:
+   Code becomes more organized and easier to understand due to structured class relationships.
+
+7. Supports Polymorphism:
+   Inheritance allows function overriding, enabling runtime polymorphism.
+
+Example:
+   A class "Student" can inherit from a class "Person" because a student is a person.
+
+Syntax Example:
+   class DerivedClass : public BaseClass
+   {
+       // members of derived class
+   };
+
+
+TYPES OF INHERITANCE (C++)
+
+1. Single Inheritance:
+   In single inheritance, one derived class inherits from only one base class.
+
+   Syntax Example:
+   class A
+   {
+       // data members and member functions
+   };
+
+   class B : public A
+   {
+       // inherits properties of class A
+   };
+
+
+2. Multiple Inheritance:
+   In multiple inheritance, one derived class inherits from more than one base class.
+
+   Syntax Example:
+   class A
+   {
+       // members of class A
+   };
+
+   class B
+   {
+       // members of class B
+   };
+
+   class C : public A, public B
+   {
+       // inherits from both A and B
+   };
+
+
+3. Multilevel Inheritance:
+   In multilevel inheritance, a class is derived from another derived class.
+
+   Syntax Example:
+   class A
+   {
+       // base class
+   };
+
+   class B : public A
+   {
+       // derived from A
+   };
+
+   class C : public B
+   {
+       // derived from B
+   };
+
+
+4. Hierarchical Inheritance:
+   In hierarchical inheritance, multiple derived classes inherit from a single base class.
+
+   Syntax Example:
+   class A
+   {
+       // base class
+   };
+
+   class B : public A
+   {
+       // derived class 1
+   };
+
+   class C : public A
+   {
+       // derived class 2
+   };
+
+
+5. Hybrid Inheritance:
+   Hybrid inheritance is a combination of two or more types of inheritance.
+
+   Syntax Example:
+   class A
+   {
+       // base class
+   };
+
+   class B : public A
+   {
+       // derived from A
+   };
+
+   class C : public A
+   {
+       // derived from A
+   };
+
+   class D : public B, public C
+   {
+       // hybrid inheritance
+   };

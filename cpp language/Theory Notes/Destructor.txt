@@ -1,0 +1,26 @@
+What is a Destructor?
+---------------------------
+A destructor is a special member function of a class that is automatically called when an object is destroyed.
+
+It is mainly used to:
+-----------------------
+Free memory
+Release resources
+Close files
+Clean up before object removal
+
+Sytex:
+--------~ClassName()
+{
+    // cleanup code
+}
+
+
+Key Rules (Very Important)
+-----------------------------
+Destructor name is same as class name, prefixed with ~
+Destructor has no return type
+Destructor takes no arguments
+Only one destructor per class
+Destructor is called automatically
+Destructor cannot be overloaded
