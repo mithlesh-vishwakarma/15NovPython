@@ -138,3 +138,9 @@ TYPES OF INHERITANCE (C++)
    {
        // hybrid inheritance
    };
+ Now it will show the error about conflition of class A data member and memebr functions, so there is a keyword called "virtual" will solve the error of duplication or conflition.
+
+ virtual base class: 
+- Virtual inheritance is used to avoid duplication of base class data members in diamond inheritance and remove ambiguity.
+-virtual base class is used in situation where a derived have multiple copies of base class.
+ when two or more objects are derived from a common base class, we can prevent multiple copies of the base class being present in an object derived from those objects by declaring the base as virtual when it is being inherited. Such a base class is known as virtual base class.

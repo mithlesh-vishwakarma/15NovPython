@@ -1,0 +1,35 @@
+Constructor in a Derived Class (C++):
+------------------------------------
+In C++, when a derived class object is created, constructors are called in a fixed order:
+
+- Base class constructor runs first
+- Then derived class constructor runs
+
+This ensures the base part of the object is fully ready before the derived part uses it.
+
+What if the base class constructor has parameters?
+---------------------------------------------------
+Rule:
+" If a base class has a parameterized constructor, the derived class must pass values to it using a constructor initializer list."
+ example: if the constructor having 3-4 variables then at the last child constructor must have to initialize the same count of variables including it's own variables to the child class constructor, and when it is done then use (:parent) -keyword to put the values of parent's varible.
+
+Otherwise, the program will not compile.
+
+example :
+--------
+class A {
+public:
+    int x, y;
+    A(int a, int b) {
+        x = a;
+        y = b;
+    }
+};
+
+class B : public A {
+public:
+    int z;
+    B(int a, int b, int c) : A(a, b) {
+        z = c;
+    }
+};

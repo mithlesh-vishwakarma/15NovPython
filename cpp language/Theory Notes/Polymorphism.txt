@@ -1,0 +1,12 @@
+Polymorphism:
+- poly refers many.
+- single interface having multiple implementations
+- there must be the parameters different types.
+- Polymorphism means one name, many forms.
+  In C++, it allows the same function or operator to behave differently based on how it is used.
+
+
+There are two types of polymorphism :
+
+1. compile time (Static polymorphism) : 1. function overloading && 2. operator overoading
+2. run time  (dynamic polymorphism)   : 1. function overriding  && 2. operator overriding
