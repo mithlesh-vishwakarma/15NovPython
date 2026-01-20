@@ -10,3 +10,33 @@ There are two types of polymorphism :
 
 1. compile time (Static polymorphism) : 1. function overloading && 2. operator overoading
 2. run time  (dynamic polymorphism)   : 1. function overriding  && 2. operator overriding
+
+
+1. Function overloading:
+------------------------
+same function name but it behave based on variable's data type and number of parameter. it is called function overloading.
+
+2. operator overloading: 
+------------------------
+single operators which is used to perform two or more operands. this is called operator overloading.
+
+3. function overriding:
+-----------------------
+
+virtual function:
+-----------------
+a virtual function can be defined as the member function within a base class which you expect to redefine in derived classes.
+for creating a virtual function, you have to precede your function's declaration within the base class with a virtual keyword.
+
+
+Pure Virtual Function :
+---------------------
+A pure virtual function is a virtual function that has no definition in the base class and is declared using = 0.
+
+
+Why Abstract Class is Used
+----------------------------
+To define a common interface for derived classes
+To force derived classes to implement specific functions
+To achieve runtime polymorphism
+To design loosely coupled and scalable code

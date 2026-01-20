@@ -1,0 +1,72 @@
+What is a “Static Class” (Concept):
+-----------------------------------
+A static class is a class whose objects cannot be created and whose members are accessed directly using the class name.
+
+Why Static Class Concept is Used:
+----------------------------------
+- To group utility functions
+- To share common data
+- To avoid object creation
+- For global-like functionality with class structure
+
+
+2. Static Data Member in C++:
+-----------------------------
+Definition:
+-----------
+A static data member is a class variable that is shared by all objects of the class.
+
+
+Characteristics:
+-----------------
+- Only one copy exists
+- Memory allocated once
+- Declared inside class, defined outside
+- Accessed using class name
+
+
+
+3. Static Member Function in C++:
+--------------------------------
+Definition:
+A static member function belongs to the class, not to any object.
+It can access only static data members of the class.
+
+Why Static Member Function is Used:
+----------------------------------
+- Operates on class-level data
+- No need to create objects
+- Better memory usage
+- Used for utility methods
+
+
+Rules of Static Member Function:
+---------------------------------
+- Can access only static members
+- Cannot use this pointer
+- Called using ClassName::function()
+- Exists even if no object is created
+
+
+
+
+
+5. One-Line Exam Definitions:
+-----------------------------
+Static Data Member:-- A variable shared by all objects of a class.
+
+Static Member Function:-- A function that belongs to the class and accesses only static members.
+
+Static Class (Concept):-- A class with only static members and no object creation.
+
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------
+| Normal Member Function | Static Member Function         |
+|------------------------|--------------------------------|
+| Requires object        | No object required             |
+| Can access all members | Can access only static members |
+| Uses `this` pointer    | No `this` pointer              |
+| Object based           | Class based                    |
+-------------------------------------------------------------
