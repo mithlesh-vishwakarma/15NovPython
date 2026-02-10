@@ -37,19 +37,19 @@ public:
 
   void displayDetails()
   {
-    cout << "Lecturer Name: " << name << endl;
-    cout << "Subject: " << subject << endl;
-    cout << "Course: " << course << endl;
+    cout << "\nLecturer Name: " << name;
+    cout << "\nSubject: " << subject;
+    cout << "\nCourse: " << course;
   }
 };
 int main()
 {
   Lecturer lecturers[5] = {
-      Lecturer("Dr. Smith", "Mathematics", "Calculus"),
-      Lecturer("Prof. Johnson", "Computer Science", "Data Structures"),
-      Lecturer("Dr. Brown", "Physics", "Quantum Mechanics"),
-      Lecturer("Prof. Davis", "Chemistry", "Organic Chemistry"),
-      Lecturer("Dr. Wilson", "Biology", "Genetics")};
+      Lecturer("\nDr. Smith", "Mathematics", "Calculus"),
+      Lecturer("\nProf. Johnson", "Computer Science", "Data Structures"),
+      Lecturer("\nDr. Brown", "Physics", "Quantum Mechanics"),
+      Lecturer("\nProf. Davis", "Chemistry", "Organic Chemistry"),
+      Lecturer("\nDr. Wilson", "Biology", "Genetics")};
 
   cout << "Lecture Details:\n";
   for (int i = 0; i < 5; i++)
