@@ -1,0 +1,31 @@
+Friend Function:
+----------------
+A friend function is a function that is not a member of a class, but still can access that class’s private and protected data.
+
+It is declared inside the class using the keyword friend, but defined outside.
+
+Why needed?
+
+Normally private data is hidden.
+Friend functions are used when external functions need direct access to class internals.
+
+
+Key Points
+-------------
+- Not a class member
+- Called like a normal function
+- Can access private data
+- Breaks strict encapsulation (use carefully)
+
+==============================================================================================================================================================================
+
+Friend Class:
+-------------
+- A friend class is a class whose all member functions can access private/protected members of another class.
+
+ Key Points
+ -----------
+- Whole class gets access
+- Useful when two classes work closely
+- Friendship is not mutual
+- Not inherited
