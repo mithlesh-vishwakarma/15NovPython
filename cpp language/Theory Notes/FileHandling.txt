@@ -1,0 +1,40 @@
+FIle handling : 
+---------------
+File handling in C++ lets your program store data permanently in files and read it later.
+Without files, everything disappears once the program stops.
+
+Variables = temporary memory
+Files = permanent storage (on disk)
+
+header file is:
+#include <fstream>
+
+
+/* ===================== FILE HANDLING IN C++ =====================
+
+Main File Classes:
+
+Class       Purpose
+--------------------------------
+ofstream    Write to file
+ifstream    Read from file
+fstream     Read + Write
+
+
+File Opening Modes:
+
+Mode            Meaning
+--------------------------------
+ios::in         Read
+ios::out        Write
+ios::app        Append (adds data at end)
+ios::trunc      Delete old data before writing
+ios::binary     Binary file mode
+
+
+Example usage:
+
+fstream file;
+file.open("data.txt", ios::out | ios::app);
+
+=============================================================== */

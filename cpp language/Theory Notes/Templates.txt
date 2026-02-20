@@ -1,0 +1,18 @@
+Templates: -
+----------
+Templates in cpp, allow you to write generic programs, functions and classes that work with any datatype.
+promoting code reusability and type safety. once the program created and we can reuse it by using any data types, any types of inputs.
+
+Types of Templates:
+----------------------
+There are two main types:
+
+1. Function Templates
+2. Class Templates
+
+
+Function Template:-  Used when logic is same but data type changes.
+-----------------
+
+Class Template:-  Used when entire class should work for multiple data types.
+---------------
