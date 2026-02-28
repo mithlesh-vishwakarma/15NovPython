@@ -1,0 +1,8 @@
+operators in python:
+
+1. Arithmetic Operators:  (+,-,%,/,*)
+2. Assignment Operators: (=,-=,+=,**=,/=,%=,//)
+3. Logical Operators: (and, or, not)
+3. Comparison Operators: (==,<=,>=,!=)
+4. Identity Operators: (is, is not)
+5. Membership Operators: (in, not in)

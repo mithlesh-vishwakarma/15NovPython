@@ -1,0 +1,19 @@
+Types of Conditional Statements:
+---------------------------------
+1. If statement
+2. If else statement
+3. Elif Statement
+4. Nested if statement
+
+
+looping statement:
+------------------
+1. for loop 
+2. while loop
+
+
+control statement:
+------------------
+1. break
+2. continue
+3. pass

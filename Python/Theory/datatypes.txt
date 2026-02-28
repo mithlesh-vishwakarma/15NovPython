@@ -1,0 +1,21 @@
+data types:
+-----------
+Numeric data type:
+1. int
+2. float
+3. complex
+
+sequence data type:
+1. str
+2. list
+3. tuple
+4. range
+
+set:
+1. set
+
+map:
+1. dict
+
+boolean data type:
+1. bool
