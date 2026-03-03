@@ -231,3 +231,13 @@ Flow:
 3. Ask user if continue
 4. Repeat until user stops
 """
+
+
+#control : break, continue, pass
+
+# for i in range(20):  
+#     if i==5:
+#         # break
+#         # continue
+#         pass
+#     print(i)

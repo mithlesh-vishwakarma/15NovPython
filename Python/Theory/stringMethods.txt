@@ -1,0 +1,21 @@
+String methods:
+---------------
+
+1. len()
+2. lower()
+3. casefold()
+4. upper()
+5. title()
+6. capitalize()
+7. strip()
+8. replace()
+9. find()
+10. startswith()
+11. endswith()
+12. split()
+13. join()
+14. isalpha()
+15. isdigit()
+16. isalnum()
+17. zfill()
+18. center(12,"*")
