@@ -13,6 +13,21 @@
 #10011011: 1+2+0+8+16+0+0= 155 -> binary into decimal. 
 #get reminder by deviding by 10 and then multiply it with 2's power from 0,1,2,3,4, and so on...
 
+
+# ===============================chintan sir=================================================
+# number = 10101110101
+# p = 0
+# sum = 0
+# while number!=0:
+#     rem = number%10
+#     sum+=rem*pow(2,p)
+#     number//=10
+#     p+=1
+
+# print(sum)
+# ============================================================================================
+
+
 number = 1001101101
 sum=0
 m=0
