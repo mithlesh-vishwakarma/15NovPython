@@ -64,13 +64,21 @@
 
 
 
-lines=5
-num=0
-for i in range (lines):
-    for j in range (i):
-      print((i+j)%2,end="")
-    num+=1
+# lines=5
+# num=0
+# for i in range (lines):
+#     for j in range (i):
+#       print((i+j)%2,end="")
+#     num+=1
+#     print()
+
+lines = 5
+stars = 1
+for i in range(lines):
+    for j in range(stars):
+        print((i+j)%2,end=" ")
     print()
+    stars+=1
   
 
 # 0
