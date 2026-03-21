@@ -38,13 +38,13 @@ int main()
     printf("\nEnter details of Student %d\n", i + 1);
 
     printf("Roll Number: ");
-    scanf("%d", &s[i].roll);
+    scanf(" %d", &s[i].roll);
 
     printf("Name: ");
-    scanf("%s", s[i].name);
+    scanf(" %19[^\n]", s[i].name);
 
     printf("Marks: ");
-    scanf("%f", &s[i].marks);
+    scanf(" %f", &s[i].marks);
   }
 
   /* Display student details */
