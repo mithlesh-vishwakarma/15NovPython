@@ -1,0 +1,15 @@
+# Ignore video files and large binaries
+*.mp4
+*.mkv
+*.webm
+*.avi
+*.mov
+
+# Ignore temporary files
+*.tmp
+*.log
+__pycache__/
+.pytest_cache/
+.vscode/
+.idea/
+*.spec
