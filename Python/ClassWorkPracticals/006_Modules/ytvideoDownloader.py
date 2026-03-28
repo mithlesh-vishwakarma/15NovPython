@@ -12,9 +12,9 @@ def fetch_formats(url):
             info = ydl.extract_info(url, download=False)
             formats = info.get('formats', [])
             
-            print("\n" + "="*80)
-            print(f"{'ID':<10} {'EXT':<10} {'RESOLUTION':<20} {'TYPE':<10} {'NOTES'}")
-            print("-" * 90)
+            print("\n" + "="*110)
+            print(f"{'ID':<10} {'EXT':<10} {'RESOLUTION':<20} {'TYPE':<12} {'CODECS (V/A)':<30} {'NOTES'}")
+            print("-" * 110)
             
             for f in formats:
                 fid = f.get('format_id')
@@ -26,7 +26,7 @@ def fetch_formats(url):
                 
                 # Determine type
                 if vcodec != 'none' and acodec != 'none':
-                    ftype = "Video+A"
+                    ftype = "Combined"
                 elif vcodec != 'none':
                     ftype = "Video Only"
                 elif acodec != 'none':
@@ -35,9 +35,10 @@ def fetch_formats(url):
                     ftype = "N/A"
                 
                 if ftype != "N/A":
-                    print(f"{str(fid):<10} {str(ext):<10} {str(resolution):<20} {ftype:<10} {note}")
+                    codecs = f"{vcodec[:12]}/{acodec[:12]}"
+                    print(f"{str(fid):<10} {str(ext):<10} {str(resolution):<20} {ftype:<12} {codecs:<30} {note}")
             
-            print("="*90)
+            print("="*110)
             return True
     except Exception as e:
         print(f"Error fetching formats: {e}")
@@ -45,21 +46,36 @@ def fetch_formats(url):
 
 def download_video(url, format_id='best'):
     """Downloads a YouTube video using yt-dlp with a specific format."""
-    # Using format_id + bestaudio ensures we get audio if format_id is video-only.
-    # The '/best' fallback handles cases where the merge string isn't valid.
+    
+    # Check if ffmpeg is available for merging
+    from yt_dlp.postprocessor.ffmpeg import FFmpegPostProcessor
+    temp_ydl = yt_dlp.YoutubeDL()
+    pp = FFmpegPostProcessor(temp_ydl)
+    if not pp.available:
+        print("\n[WARNING] FFmpeg was not found. High-quality (1080p+) downloads may have no audio or fail to merge.")
+    
+    # Improved format selection logic
+    # If a specific ID is provided, try to merge it with best audio if it's video-only.
+    # We use m4a for audio to ensure best compatibility with MP4 container.
+    format_str = f"{format_id}+bestaudio[ext=m4a]/best" if format_id else "bestvideo+bestaudio/best"
+    
     ydl_opts = {
-        'format': f"{format_id}+bestaudio/best" if format_id else 'bestvideo+bestaudio/best',
+        'format': format_str,
         'outtmpl': '%(title)s.%(ext)s',
         'merge_output_format': 'mp4', # Ensures it merges into MP4 if possible
+        'postprocessors': [{
+            'key': 'FFmpegVideoConvertor',
+            'preferedformat': 'mp4',
+        }],
     }
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            print(f"\nStarting download with format ID: {format_id if format_id else 'Default'}")
+            print(f"\nStarting download using format: {format_str}")
             ydl.download([url])
             print("\nDownload completed successfully!")
     except Exception as e:
-        print(f"An error occurred during download: {e}")
+        print(f"\nAn error occurred during download: {e}")
 
 if __name__ == "__main__":
     print("--- YouTube Video Downloader (Enhanced) ---")
