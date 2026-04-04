@@ -1,3 +1,7 @@
-# Q.8.f: [Question Text]
+# Write a Python program to create a lambda function with two expressions.
 
-# Your code goes here
+# Creating a lambda function
+lambda x, y: x + y
+
+# Calling the lambda function
+print((lambda x, y: x + y)(5, 10))

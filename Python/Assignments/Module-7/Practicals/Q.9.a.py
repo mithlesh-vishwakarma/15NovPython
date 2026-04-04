@@ -1,3 +1,9 @@
-# Q.9.a: [Question Text]
+# Write a Python program to import the math module and use functions like sqrt(), ceil(), floor().
 
-# Your code goes here
+# Importing the math module
+import math
+
+# Using functions from the math module
+print(math.sqrt(16))
+print(math.ceil(16.4))
+print(math.floor(16.4))

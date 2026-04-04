@@ -1,3 +1,8 @@
-# Q.8.a: [Question Text]
+# Write a Python program to create a function that takes a string as input and prints it.
 
-# Your code goes here
+# Creating a function
+def print_string(my_string):
+    print(my_string)
+
+# Calling the function
+print_string("Hello, World!")
