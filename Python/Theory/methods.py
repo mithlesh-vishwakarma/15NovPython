@@ -15,7 +15,7 @@
 # # isalpha() : returns True if the string contains only alphabets
 # # isdigit() : returns True if the string contains only digits
 # # isalnum() : returns True if the string contains only alphabets and digits
-# # zfill() : returns the zero filled string
+# # zfill() : returns the zero filled string, left justify the string with zeros
 # # center(12,"*") : returns the centered string with the width of 12 and the character "*"
 # # casefold() : returns the casefolded string
 # # isspace() : returns True if the string contains only spaces
