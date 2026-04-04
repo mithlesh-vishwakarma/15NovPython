@@ -7,8 +7,7 @@
 # 1. IMPORT NUMPY
 # ============================================
 
-import numpy as np   # np is alias (short name)
-
+import numpy as np  # np is alias (short name)
 
 """
 Explanation:
