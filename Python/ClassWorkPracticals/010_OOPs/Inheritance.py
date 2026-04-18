@@ -124,3 +124,31 @@ c2.m2()
 c2.m4()
 
 '''
+
+
+class A:
+  def __init__(self):
+    print("class A constructor")
+  def display(self):
+    print("class A display calling")
+
+class B:
+  def __init__(self):
+    print("class B constructor")
+  def display(self):
+    print("class B display calling")
+
+class C(A,B):
+  def __init__(self):
+    print("C constructor")
+    A.__init__(self)
+    # A.display(self)
+    B.display(self)
+
+    # B.__init__(self)
+    # super().__init__()
+    # super().display()
+
+c=C()
+c.display()
+
