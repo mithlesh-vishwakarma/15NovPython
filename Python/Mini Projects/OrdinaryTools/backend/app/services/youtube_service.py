@@ -57,6 +57,9 @@ async def get_video_info(url: str):
         })
     
     duration = info.get("duration") or 0
+    width = info.get("width") or 0
+    height = info.get("height") or 0
+    
     return {
         "title": info.get("title", "Unknown"),
         "thumbnail": info.get("thumbnail", ""),
@@ -64,6 +67,10 @@ async def get_video_info(url: str):
         "duration_string": _format_duration(duration),
         "channel": info.get("channel") or info.get("uploader", "Unknown"),
         "view_count": info.get("view_count"),
+        "like_count": info.get("like_count"),
+        "comment_count": info.get("comment_count"),
+        "repost_count": info.get("repost_count"),
+        "is_vertical": height > width,
         "upload_date": info.get("upload_date"),
         "formats": formats,
     }

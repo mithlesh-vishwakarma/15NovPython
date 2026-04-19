@@ -57,6 +57,10 @@ async def get_instagram_info(url: str):
         "duration_string": f"{int(post.video_duration)}s" if post.is_video else "Static",
         "channel": post.owner_username,
         "view_count": post.video_view_count if post.is_video else None,
+        "like_count": post.likes,
+        "comment_count": post.comments,
+        "repost_count": None,
+        "is_vertical": True,
         "upload_date": post.date_utc.strftime("%Y-%m-%d"),
         "formats": [
             {

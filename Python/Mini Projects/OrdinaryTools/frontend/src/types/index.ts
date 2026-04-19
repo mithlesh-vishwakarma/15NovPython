@@ -16,6 +16,10 @@ export interface VideoInfo {
   duration_string: string;
   channel: string;
   view_count: number | null;
+  like_count: number | null;
+  comment_count: number | null;
+  repost_count: number | null;
+  is_vertical: boolean;
   upload_date: string | null;
   formats: FormatInfo[];
 }

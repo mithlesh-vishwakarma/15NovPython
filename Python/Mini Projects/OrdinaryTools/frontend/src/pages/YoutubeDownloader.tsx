@@ -120,6 +120,7 @@ export default function YoutubeDownloader({ onBack }: Props) {
             onDownload={handleDownload}
             isDownloading={appState === "downloading"}
             downloadingFormatId={downloadingFormatId}
+            thumbnail={videoInfo.thumbnail}
           />
         </>
       )}

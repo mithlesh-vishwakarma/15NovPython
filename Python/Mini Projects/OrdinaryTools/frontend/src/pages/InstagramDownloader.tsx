@@ -120,6 +120,7 @@ export default function InstagramDownloader({ onBack }: Props) {
             onDownload={handleDownload}
             isDownloading={appState === "downloading"}
             downloadingFormatId={downloadingFormatId}
+            thumbnail={videoInfo.thumbnail}
           />
         </>
       )}

@@ -8,6 +8,7 @@ interface Props {
   onDownload: (formatId: string) => void;
   isDownloading: boolean;
   downloadingFormatId: string | null;
+  thumbnail?: string;
 }
 
 function formatFileSize(bytes: number | null): string {
@@ -37,6 +38,7 @@ export default function FormatTable({
   onDownload,
   isDownloading,
   downloadingFormatId,
+  thumbnail,
 }: Props) {
   const [filter, setFilter] = useState<FilterType>("all");
 
@@ -56,9 +58,25 @@ export default function FormatTable({
     <section className="format-section" id="format-table-section">
       <div className="container">
         <div className="format-section__header">
-          <h3 className="format-section__title">
-            Available Formats ({filtered.length})
-          </h3>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            {thumbnail && (
+              <img 
+                src={thumbnail} 
+                alt="Thumbnail" 
+                referrerPolicy="no-referrer"
+                style={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  borderRadius: '8px', 
+                  objectFit: 'cover',
+                  border: '1px solid var(--bg-glass-border)'
+                }} 
+              />
+            )}
+            <h3 className="format-section__title">
+              Available Formats ({filtered.length})
+            </h3>
+          </div>
           <div className="format-section__filters">
             {filters.map((f) => (
               <button

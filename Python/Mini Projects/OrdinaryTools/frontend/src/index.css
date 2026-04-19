@@ -395,6 +395,15 @@ a:hover {
   object-fit: cover;
   display: block;
   border-radius: var(--radius-md);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.video-preview__thumbnail-wrapper--vertical {
+  width: 160px;
+}
+
+.video-preview__thumbnail-wrapper--vertical .video-preview__thumbnail {
+  aspect-ratio: 9 / 16;
 }
 
 .video-preview__duration-badge {
