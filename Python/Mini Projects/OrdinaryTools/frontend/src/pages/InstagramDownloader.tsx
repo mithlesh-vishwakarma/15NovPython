@@ -12,10 +12,9 @@ import Disclaimer from "../components/Disclaimer";
 
 interface Props {
   onBack: () => void;
-  onNavigate: (page: string) => void;
 }
 
-export default function InstagramDownloader({ onBack, onNavigate }: Props) {
+export default function InstagramDownloader({ onBack }: Props) {
   const [appState, setAppState] = useState<AppState>("idle");
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
@@ -88,7 +87,7 @@ export default function InstagramDownloader({ onBack, onNavigate }: Props) {
 
   return (
     <div className="animate-fade-in">
-      <Header tagline="SAVE REELS & POSTS INSTANTLY" onNavigate={onNavigate} />
+      <Header tagline="SAVE REELS & POSTS INSTANTLY" />
 
       <div className="container">
         <div className="back-nav">

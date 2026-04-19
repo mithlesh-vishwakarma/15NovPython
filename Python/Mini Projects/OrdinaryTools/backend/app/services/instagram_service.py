@@ -67,7 +67,7 @@ async def get_instagram_info(url: str):
                 "format_id": "original",
                 "ext": "mp4" if post.is_video else "jpg",
                 "resolution": "Original",
-                "type": "Video" if post.is_video else "Image",
+                "type": "Combined",
                 "vcodec": "N/A",
                 "acodec": "N/A",
                 "filesize": None,

@@ -2,13 +2,12 @@ import Header from "../components/Header";
 
 interface Props {
   onBack: () => void;
-  onNavigate: (page: string) => void;
 }
 
-export default function UnderConstruction({ onBack, onNavigate }: Props) {
+export default function UnderConstruction({ onBack }: Props) {
   return (
     <div className="animate-fade-in-up">
-      <Header tagline="FEATURE COMING SOON" onNavigate={onNavigate} />
+      <Header tagline="FEATURE COMING SOON" />
       
       <div className="container" style={{ textAlign: 'center', padding: '100px 24px' }}>
         <div className="glass-card" style={{ padding: '60px 40px', maxWidth: '600px', margin: '0 auto' }}>

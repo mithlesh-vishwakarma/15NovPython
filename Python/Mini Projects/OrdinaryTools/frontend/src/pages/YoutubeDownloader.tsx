@@ -12,10 +12,9 @@ import Disclaimer from "../components/Disclaimer";
 
 interface Props {
   onBack: () => void;
-  onNavigate: (page: string) => void;
 }
 
-export default function YoutubeDownloader({ onBack, onNavigate }: Props) {
+export default function YoutubeDownloader({ onBack }: Props) {
   const [appState, setAppState] = useState<AppState>("idle");
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
@@ -88,7 +87,7 @@ export default function YoutubeDownloader({ onBack, onNavigate }: Props) {
 
   return (
     <div className="animate-fade-in">
-      <Header tagline="PREMIUM VIDEO DOWNLOADER" onNavigate={onNavigate} />
+      <Header tagline="PREMIUM VIDEO DOWNLOADER" />
 
       <div className="container">
         <div className="back-nav">
