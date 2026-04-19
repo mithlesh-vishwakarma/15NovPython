@@ -8,6 +8,7 @@ import VideoPreview from "../components/VideoPreview";
 import FormatTable from "../components/FormatTable";
 import DownloadProgress from "../components/DownloadProgress";
 import ErrorBanner from "../components/ErrorBanner";
+import Disclaimer from "../components/Disclaimer";
 
 interface Props {
   onBack: () => void;
@@ -92,17 +93,22 @@ export default function InstagramDownloader({ onBack }: Props) {
          </button>
       </div>
       
-      <Header 
-        title="Instagram Toolkit" 
-        subtitle="Download Reels, Posts, and Videos effortlessly"
-        icon="📸"
-      />
+      <Header tagline="SAVE REELS & POSTS INSTANTLY" />
 
-      <UrlInput 
-        onFetch={handleFetch} 
-        isLoading={appState === "fetching"} 
-        placeholder="Paste Instagram Reel or Post link here..."
-      />
+      <div className="container">
+        <div className="header__hero">
+          <h1 className="header__title">Instagram Toolkit</h1>
+          <p className="header__subtitle">
+            Download Reels, Posts, and Videos effortlessly
+          </p>
+          <Disclaimer />
+        </div>
+
+        <UrlInput 
+          onFetch={handleFetch} 
+          isLoading={appState === "fetching"} 
+          placeholder="Paste Instagram Reel or Post link here..."
+        />
 
       {errorMessage && (
         <ErrorBanner message={errorMessage} onDismiss={dismissError} />
@@ -125,5 +131,6 @@ export default function InstagramDownloader({ onBack }: Props) {
         </>
       )}
     </div>
-  );
+  </div>
+);
 }

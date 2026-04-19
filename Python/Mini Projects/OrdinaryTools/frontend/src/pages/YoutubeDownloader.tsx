@@ -8,6 +8,7 @@ import VideoPreview from "../components/VideoPreview";
 import FormatTable from "../components/FormatTable";
 import DownloadProgress from "../components/DownloadProgress";
 import ErrorBanner from "../components/ErrorBanner";
+import Disclaimer from "../components/Disclaimer";
 
 interface Props {
   onBack: () => void;
@@ -92,17 +93,22 @@ export default function YoutubeDownloader({ onBack }: Props) {
          </button>
       </div>
       
-      <Header 
-        title="YouTube Toolkit" 
-        subtitle="Download videos, shorts, and audio in high quality"
-        icon="📺"
-      />
+      <Header tagline="PREMIUM VIDEO DOWNLOADER" />
 
-      <UrlInput 
-        onFetch={handleFetch} 
-        isLoading={appState === "fetching"} 
-        placeholder="Paste YouTube Video or Shorts URL here..."
-      />
+      <div className="container">
+        <div className="header__hero">
+          <h1 className="header__title">YouTube Toolkit</h1>
+          <p className="header__subtitle">
+            Download videos, shorts, and audio in high quality
+          </p>
+          <Disclaimer />
+        </div>
+
+        <UrlInput 
+          onFetch={handleFetch} 
+          isLoading={appState === "fetching"} 
+          placeholder="Paste YouTube Video or Shorts URL here..."
+        />
 
       {errorMessage && (
         <ErrorBanner message={errorMessage} onDismiss={dismissError} />
@@ -125,5 +131,6 @@ export default function YoutubeDownloader({ onBack }: Props) {
         </>
       )}
     </div>
-  );
+  </div>
+);
 }
