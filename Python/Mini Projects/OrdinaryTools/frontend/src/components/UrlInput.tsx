@@ -3,9 +3,10 @@ import { useState, useRef } from "react";
 interface Props {
   onFetch: (url: string) => void;
   isLoading: boolean;
+  placeholder?: string;
 }
 
-export default function UrlInput({ onFetch, isLoading }: Props) {
+export default function UrlInput({ onFetch, isLoading, placeholder = "Paste link here..." }: Props) {
   const [url, setUrl] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,15 +38,15 @@ export default function UrlInput({ onFetch, isLoading }: Props) {
             <span className="url-input__icon" aria-hidden="true">🔗</span>
             <input
               ref={inputRef}
-              id="youtube-url-input"
+              id="media-url-input"
               type="url"
               className="url-input"
-              placeholder="https://www.youtube.com/watch?v=..."
+              placeholder={placeholder}
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               autoComplete="off"
               spellCheck={false}
-              aria-label="YouTube video URL"
+              aria-label="Media URL"
             />
             {url && (
               <button

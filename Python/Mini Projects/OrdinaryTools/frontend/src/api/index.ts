@@ -2,8 +2,9 @@ import type { VideoInfo } from "../types";
 
 const API_BASE = "/api";
 
-export async function fetchVideoInfo(url: string): Promise<VideoInfo> {
-  const res = await fetch(`${API_BASE}/video-info`, {
+export async function fetchMediaInfo(url: string, type: 'youtube' | 'instagram'): Promise<VideoInfo> {
+  const endpoint = type === 'youtube' ? '/youtube/info' : '/instagram/info';
+  const res = await fetch(`${API_BASE}${endpoint}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url }),
@@ -17,12 +18,14 @@ export async function fetchVideoInfo(url: string): Promise<VideoInfo> {
   return res.json();
 }
 
-export async function downloadVideo(
+export async function downloadMedia(
   url: string,
-  formatId: string,
+  type: 'youtube' | 'instagram',
+  formatId?: string,
   onProgress?: (loaded: number, total: number) => void
 ): Promise<{ blob: Blob; filename: string }> {
-  const res = await fetch(`${API_BASE}/download`, {
+  const endpoint = type === 'youtube' ? '/youtube/download' : '/instagram/download';
+  const res = await fetch(`${API_BASE}${endpoint}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url, format_id: formatId }),
@@ -33,9 +36,8 @@ export async function downloadVideo(
     throw new Error(err.detail || `HTTP ${res.status}`);
   }
 
-  // Extract filename from Content-Disposition header
   const disposition = res.headers.get("content-disposition");
-  let filename = "video.mp4";
+  let filename = type === 'youtube' ? "video.mp4" : "instagram_media.mp4";
   if (disposition) {
     const match = disposition.match(/filename\*?=(?:UTF-8''|"?)([^";]+)/i);
     if (match) filename = decodeURIComponent(match[1].replace(/"/g, ""));
@@ -49,7 +51,6 @@ export async function downloadVideo(
     return { blob, filename };
   }
 
-  // Stream with progress
   const reader = res.body.getReader();
   const chunks: Uint8Array[] = [];
   let loaded = 0;

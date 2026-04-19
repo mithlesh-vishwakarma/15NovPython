@@ -1,16 +1,19 @@
 import { useState, useCallback } from "react";
-import type { VideoInfo, AppState } from "./types";
-import { fetchVideoInfo, downloadVideo, triggerBrowserDownload } from "./api";
+import type { VideoInfo, AppState } from "../types";
+import { fetchMediaInfo, downloadMedia, triggerBrowserDownload } from "../api";
 
-import Header from "./components/Header";
-import UrlInput from "./components/UrlInput";
-import VideoPreview from "./components/VideoPreview";
-import FormatTable from "./components/FormatTable";
-import DownloadProgress from "./components/DownloadProgress";
-import ErrorBanner from "./components/ErrorBanner";
-import Footer from "./components/Footer";
+import Header from "../components/Header";
+import UrlInput from "../components/UrlInput";
+import VideoPreview from "../components/VideoPreview";
+import FormatTable from "../components/FormatTable";
+import DownloadProgress from "../components/DownloadProgress";
+import ErrorBanner from "../components/ErrorBanner";
 
-export default function App() {
+interface Props {
+  onBack: () => void;
+}
+
+export default function YoutubeDownloader({ onBack }: Props) {
   const [appState, setAppState] = useState<AppState>("idle");
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
@@ -20,7 +23,6 @@ export default function App() {
     null
   );
 
-  // --- Fetch video info ---
   const handleFetch = useCallback(async (url: string) => {
     setAppState("fetching");
     setErrorMessage("");
@@ -28,7 +30,7 @@ export default function App() {
     setCurrentUrl(url);
 
     try {
-      const info = await fetchVideoInfo(url);
+      const info = await fetchMediaInfo(url, 'youtube');
       setVideoInfo(info);
       setAppState("ready");
     } catch (err) {
@@ -39,7 +41,6 @@ export default function App() {
     }
   }, []);
 
-  // --- Download a format ---
   const handleDownload = useCallback(
     async (formatId: string) => {
       if (!currentUrl) return;
@@ -50,8 +51,9 @@ export default function App() {
       setErrorMessage("");
 
       try {
-        const { blob, filename } = await downloadVideo(
+        const { blob, filename } = await downloadMedia(
           currentUrl,
+          'youtube',
           formatId,
           (loaded, total) => {
             setDownloadProgress((loaded / total) * 100);
@@ -83,10 +85,24 @@ export default function App() {
   };
 
   return (
-    <>
-      <Header />
+    <div className="animate-fade-in">
+      <div className="container" style={{ paddingTop: '2rem' }}>
+         <button onClick={onBack} className="btn btn--secondary btn--small" style={{ marginBottom: '1rem' }}>
+           ← Back to Tools
+         </button>
+      </div>
+      
+      <Header 
+        title="YouTube Toolkit" 
+        subtitle="Download videos, shorts, and audio in high quality"
+        icon="📺"
+      />
 
-      <UrlInput onFetch={handleFetch} isLoading={appState === "fetching"} />
+      <UrlInput 
+        onFetch={handleFetch} 
+        isLoading={appState === "fetching"} 
+        placeholder="Paste YouTube Video or Shorts URL here..."
+      />
 
       {errorMessage && (
         <ErrorBanner message={errorMessage} onDismiss={dismissError} />
@@ -107,8 +123,6 @@ export default function App() {
           />
         </>
       )}
-
-      <Footer />
-    </>
+    </div>
   );
 }
