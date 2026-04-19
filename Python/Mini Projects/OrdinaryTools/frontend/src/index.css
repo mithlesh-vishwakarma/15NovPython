@@ -188,16 +188,35 @@ a:hover {
   animation: fadeIn 0.8s var(--ease-out) both;
 }
 
-.header__brand-row {
+.header__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__left {
+  flex: 1;
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 0;
+}
+
+.header__center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.header__right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .header__brand {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .header__logo-text {
@@ -211,8 +230,6 @@ a:hover {
 }
 
 .logo-subtitle {
-  display: flex;
-  justify-content: center;
   color: var(--text-muted);
   margin-top: 2px;
   line-height: 1;
@@ -220,6 +237,48 @@ a:hover {
   font-size: 5px; /* Base size */
   letter-spacing: 0.1em;
   opacity: 0.8;
+}
+
+/* --- Header Menu --- */
+.header__menu {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.header__menu-link {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s var(--ease-out);
+  position: relative;
+  padding: 4px 0;
+}
+
+.header__menu-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+  transition: width 0.3s var(--ease-out);
+  border-radius: 99px;
+}
+
+.header__menu-link:hover {
+  color: var(--text-primary);
+}
+
+.header__menu-link:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .header__center {
+    display: none;
+  }
 }
 
 @media (min-width: 640px) {
@@ -758,6 +817,12 @@ a:hover {
 
 .error-banner__close:hover {
   color: white;
+}
+
+.back-nav {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1.5rem 0 0.5rem;
 }
 
 /* --- Footer --- */

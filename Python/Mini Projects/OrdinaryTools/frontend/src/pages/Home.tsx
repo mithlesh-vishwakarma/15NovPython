@@ -4,12 +4,13 @@ import Disclaimer from "../components/Disclaimer";
 
 interface Props {
   onSelect: (tool: 'youtube' | 'instagram') => void;
+  onNavigate: (page: string) => void;
 }
 
-export default function Home({ onSelect }: Props) {
+export default function Home({ onSelect, onNavigate }: Props) {
   return (
     <div className="animate-fade-in-up">
-      <Header />
+      <Header onNavigate={onNavigate} />
 
       <div className="container">
         <div className="header__hero">

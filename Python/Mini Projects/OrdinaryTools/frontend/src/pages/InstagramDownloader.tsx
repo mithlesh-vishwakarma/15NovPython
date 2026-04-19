@@ -12,9 +12,10 @@ import Disclaimer from "../components/Disclaimer";
 
 interface Props {
   onBack: () => void;
+  onNavigate: (page: string) => void;
 }
 
-export default function InstagramDownloader({ onBack }: Props) {
+export default function InstagramDownloader({ onBack, onNavigate }: Props) {
   const [appState, setAppState] = useState<AppState>("idle");
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
@@ -87,15 +88,15 @@ export default function InstagramDownloader({ onBack }: Props) {
 
   return (
     <div className="animate-fade-in">
-      <div className="container" style={{ paddingTop: '2rem' }}>
-         <button onClick={onBack} className="btn btn--secondary btn--small" style={{ marginBottom: '1rem' }}>
-           ← Back to Tools
-         </button>
-      </div>
-      
-      <Header tagline="SAVE REELS & POSTS INSTANTLY" />
+      <Header tagline="SAVE REELS & POSTS INSTANTLY" onNavigate={onNavigate} />
 
       <div className="container">
+        <div className="back-nav">
+           <button onClick={onBack} className="btn btn--secondary btn--small">
+             ← Back to Tools
+           </button>
+        </div>
+
         <div className="header__hero">
           <h1 className="header__title">Instagram Toolkit</h1>
           <p className="header__subtitle">
