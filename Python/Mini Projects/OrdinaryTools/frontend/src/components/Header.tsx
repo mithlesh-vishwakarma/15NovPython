@@ -1,3 +1,5 @@
+import Disclaimer from "./Disclaimer";
+
 interface Props {
   title?: string;
   subtitle?: string;
@@ -19,6 +21,7 @@ export default function Header({
         <p className="header__subtitle">
           {subtitle}
         </p>
+        <Disclaimer />
       </div>
     </header>
   );

@@ -141,6 +141,11 @@ a:hover {
   50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.4), 0 0 80px rgba(0, 240, 255, 0.1); }
 }
 
+@keyframes fadeBlink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
 /* --- Utility Classes --- */
 .animate-fade-in-up {
   animation: fadeInUp 0.6s var(--ease-out) both;
@@ -704,15 +709,30 @@ a:hover {
   color: var(--text-muted);
 }
 
-.footer__disclaimer {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 8px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+.disclaimer-banner {
+  padding: 8px 0;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+}
+
+.disclaimer-pill {
+  font-size: 0.72rem;
+  color: var(--accent-amber);
+  margin: 12px auto 0;
+  width: fit-content;
+  max-width: min(85vw, 800px);
   line-height: 1.5;
-  opacity: 0.7;
+  animation: fadeBlink 4s ease-in-out infinite;
+  padding: 10px 24px;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  letter-spacing: 0.01em;
+  text-align: center;
+  display: block;
 }
 
 /* --- Responsive --- */

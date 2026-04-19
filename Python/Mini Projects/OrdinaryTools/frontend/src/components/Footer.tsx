@@ -12,11 +12,6 @@ export default function Footer() {
             yt-dlp
           </a>
         </p>
-        <p className="footer__disclaimer">
-          ⚠️ This tool is for educational purposes only. Downloading copyrighted
-          content without permission may violate YouTube's Terms of Service and
-          applicable laws. Use responsibly.
-        </p>
       </div>
     </footer>
   );
