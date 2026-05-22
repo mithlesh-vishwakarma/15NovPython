@@ -6,4 +6,5 @@ urlpatterns = [
     path("reg", reg, name="reg"),
     path("display",display,name="display"),
     path("delete",delete_data,name="delete"),
+    path("update",update_data,name="update"),
 ]
