@@ -1,4 +1,4 @@
-from django.shortcuts import *
+from django.shortcuts import get_object_or_404, redirect, render
 from student_management_system.models import *
 # Create your views here.
 def index(request):
@@ -23,14 +23,29 @@ def add_student(request):
             contact=contact,
             course=course,
         )
-        return render(request,"index.html",{"msg": "registration successfully"})
+        return redirect("display_data")
+    return render(request, "index.html")
 
 def display_data(request):
     student_data=Student.objects.all()
     return render(request, "display_data.html", {"student_data":student_data})
 
-def delete_data(request):
-    id=request.GET.get('id')
-    student=Student.objects.get(id=id)
+def update_data(request, id):
+    student = get_object_or_404(Student, id=id)
+
+    if request.method == "POST":
+        student.name = request.POST.get("name")
+        student.rollnumber = request.POST.get("rollnumber")
+        student.email = request.POST.get("email")
+        student.age = request.POST.get("age")
+        student.contact = request.POST.get("contact")
+        student.course = request.POST.get("course")
+        student.save()
+        return redirect("display_data")
+
+    return render(request, "update_student.html", {"student": student})
+
+def delete_data(request, id):
+    student = get_object_or_404(Student, id=id)
     student.delete()
     return redirect("display_data")

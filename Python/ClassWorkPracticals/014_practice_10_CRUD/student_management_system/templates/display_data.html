@@ -78,9 +78,9 @@
             <td>{{st.course}}</td>
 
             <td>
-              <a href="#" class="btn btn-warning btn-action"> Edit </a>
+              <a href="{% url 'update_data' st.id %}" class="btn btn-warning btn-action"> Edit </a>
 
-              <a href="{% url 'delete_data'?id={st.id}%}" class="btn btn-danger btn-action">
+              <a href="{% url 'delete_data' st.id %}" class="btn btn-danger btn-action" onclick="return confirm('Delete this student?');">
     Delete
 </a>
             </td>
