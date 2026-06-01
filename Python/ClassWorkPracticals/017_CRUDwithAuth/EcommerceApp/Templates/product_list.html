@@ -77,6 +77,7 @@
                         <th>ID</th>
                         <th>Image</th>
                         <th>Product Name</th>
+                        <th>Category</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th width="180">Actions</th>
@@ -85,65 +86,42 @@
                     </thead>
 
                     <tbody>
-
+                    {% for product in products %}
                     <tr>
-                        <td>1</td>
-
+                        <td>{{ product.id }}</td>
                         <td>
-                            <img src="https://via.placeholder.com/80"
-                                 class="product-image">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="product-image">
+                            {% else %}
+                                <img src="https://via.placeholder.com/80" class="product-image">
+                            {% endif %}
                         </td>
-
-                        <td>T-Shirt</td>
-
-                        <td>₹499</td>
-
-                        <td>25</td>
-
+                        <td>{{ product.name }}</td>
                         <td>
-    <div class="d-flex gap-2">
-
-        <a href="#" class="btn btn-warning btn-sm">
-            <i class="bi bi-pencil-square"></i> Edit
-        </a>
-
-        <a href="#" class="btn btn-danger btn-sm">
-            <i class="bi bi-trash"></i> Delete
-        </a>
-
-    </div>
-</td>
+                            {% if product.category %}
+                                {{ product.category.name }}
+                            {% else %}
+                                <span class="text-muted">None</span>
+                            {% endif %}
+                        </td>
+                        <td>₹{{ product.price }}</td>
+                        <td>{{ product.qty }}</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'edit_product' product.id %}" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a href="{% url 'delete_product' product.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete {{ product.name|escapejs }}?');">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </div>
+                        </td>
                     </tr>
-
+                    {% empty %}
                     <tr>
-                        <td>2</td>
-
-                        <td>
-                            <img src="https://via.placeholder.com/80"
-                                 class="product-image">
-                        </td>
-
-                        <td>Track Pant</td>
-
-                        <td>₹799</td>
-
-                        <td>15</td>
-
-                        <td>
-    <div class="d-flex gap-2">
-
-        <a href="#" class="btn btn-warning btn-sm">
-            <i class="bi bi-pencil-square"></i> Edit
-        </a>
-
-        <a href="#" class="btn btn-danger btn-sm">
-            <i class="bi bi-trash"></i> Delete
-        </a>
-
-    </div>
-</td>
+                        <td colspan="7" class="text-center">No products found. Add some products using the Add New Product button.</td>
                     </tr>
-
+                    {% endfor %}
                     </tbody>
 
                 </table>
