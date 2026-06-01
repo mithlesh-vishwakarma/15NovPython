@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AJAX</title>
+<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+
+<script>
+
+$(document).ready(function(){
+
+})
+
+const test =()=> {
+  var q = $("#q").val()
+  $get(("test",{q}),function(rt){
+    //alert(rt)
+    $("#display").html(rt)
+  })
+}
+
+
+</script>
+
+</head>
+<body>
+
+   <h3 class="mb-3">Hello, Good Morning</h3>
+
+    <input
+        type="text"
+        name="username"
+        id="q">
+
+    <button onClick="test()">
+        Click Me
+    </button>
+    <div id="display">
+
+    </div>
+  
+</body>
+</html>
