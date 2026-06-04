@@ -9,4 +9,4 @@ def index(request):
 
 def test(request):
     q=request.GET['q']
-    return HttpResponse(request,"index.html")
+    return HttpResponse(request,f"hello,{q},how are you")
