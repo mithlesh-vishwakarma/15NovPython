@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from playlists import views as playlist_views # Import views from the playlists app
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Map the URL path 'music/' to the home view function
+    path('music/', playlist_views.home, name='music-home'),
 ]
