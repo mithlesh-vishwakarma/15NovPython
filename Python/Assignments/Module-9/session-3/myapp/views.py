@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from myapp.urls import *
 
 
 # Create your views here.
 
 def home(request):
   return render(request,"home.html")
+
+def explore(request):
+  return render (request,"explore.html")

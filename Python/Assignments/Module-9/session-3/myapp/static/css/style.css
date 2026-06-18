@@ -1,0 +1,174 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #121212;
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Navbar */
+nav {
+  background: #000;
+  padding: 20px 40px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #b3b3b3;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #1db954;
+}
+
+/* Main */
+main {
+  min-height: 80vh;
+  padding: 40px;
+}
+
+
+/* Button */
+.btn {
+  display: inline-block;
+  margin-top: 15px;
+  background: #1db954;
+  color: white;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #1ed760;
+}
+
+/* Footer */
+footer {
+  background: #000;
+  text-align: center;
+  padding: 20px;
+  color: #b3b3b3;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.container{
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.heading{
+    font-size: 2rem;
+    margin-bottom: 25px;
+}
+
+.playlist-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.playlist-card{
+    background-color: #181818;
+    padding: 16px;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.playlist-card:hover{
+    background-color: #282828;
+}
+
+.playlist-card img{
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+}
+
+.playlist-card h3{
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.playlist-card p{
+    color: #b3b3b3;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.play-button{
+    position: absolute;
+    right: 25px;
+    bottom: 95px;
+    width: 50px;
+    height: 50px;
+    background: #1db954;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.playlist-card:hover .play-button{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.play-button:hover{
+    transform: scale(1.08);
+}
