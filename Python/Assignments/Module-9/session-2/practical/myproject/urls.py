@@ -1,5 +1,5 @@
 """
-URL configuration for foodiehub_project project.
+URL configuration for myproject project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/6.0/topics/http/urls/
@@ -15,11 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from playlists import views as playlist_views # Import views from the playlists app
+from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Map the URL path 'music/' to the home view function
-    path('music/', playlist_views.home, name='music-home'),
+    path("",include("playlists.urls"))
+    
+    
 ]
