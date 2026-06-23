@@ -17,9 +17,14 @@
             </div>
 
             <div class="card-body">
+             {% if student%}
               <span class="text-success">{{msg}}</span>
+
+              {% endif %}
+
                 <form method="POST" action="{%url 'add_student'%}">
                     {%csrf_token%}
+                    <input type="text" value="{{student.id}}">
                     <!-- Name -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -29,6 +34,7 @@
                             id="name"
                             placeholder="Enter your name"
                             name="name"
+                            value="{{student.name}}"
                             required
                         >
                     </div>
@@ -42,6 +48,7 @@
                             id="email"
                             placeholder="Enter your email"
                             name="email"
+                            value="{{student.email}}"
                             required
                         >
                     </div>
@@ -56,14 +63,24 @@
                             placeholder="Enter your age"
                             min="1"
                             name="age"
+                            value="{{student.age}}"
                             required
                         >
                     </div>
 
                     <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary w-100">
-                        Submit
+                     
+                    <button type="submit" class="btn btn-success w-100">
+                     {% if student %}   Submit {% else %} Update {% endif %}
                     </button>
+                   
+
+                     <br><br>
+               
+                  <a href="{% url 'display'%}" class="btn btn-primary w-100">
+    View Students
+</a>
+               
                 </form>
             </div>
         </div>
