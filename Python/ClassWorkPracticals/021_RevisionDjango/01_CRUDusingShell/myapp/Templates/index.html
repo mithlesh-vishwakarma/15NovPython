@@ -17,14 +17,13 @@
             </div>
 
             <div class="card-body">
-             {% if student%}
+          
               <span class="text-success">{{msg}}</span>
 
-              {% endif %}
 
                 <form method="POST" action="{%url 'add_student'%}">
                     {%csrf_token%}
-                    <input type="text" value="{{student.id}}">
+                    <input type="text" name="id" value="{{student.id}}">
                     <!-- Name -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -69,11 +68,16 @@
                     </div>
 
                     <!-- Submit Button -->
-                     
+                   {% if id%}  
                     <button type="submit" class="btn btn-success w-100">
-                     {% if student %}   Submit {% else %} Update {% endif %}
+                    Submit
                     </button>
+                    {% else %}
                    
+                    <button type="submit" class="btn btn-success w-100">
+                   Update 
+                    </button>
+                    {% endif%}
 
                      <br><br>
                

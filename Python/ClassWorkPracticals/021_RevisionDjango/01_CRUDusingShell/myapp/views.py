@@ -12,7 +12,7 @@ def add_student(request):
     data=request.POST
     id=data.get("id")
     name=data.get("name")
-    age=data.get("age")
+    age=data.get("age")    
     email=data.get("email")
 
     if id:
