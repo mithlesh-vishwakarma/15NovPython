@@ -1,29 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Font Awesome</title>
+    <title>Dashboard Layout</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main">
-    <div class="navbar">
-        <ul class="list">
-            <li class="list-items"><a href=" ">The Library</a></li>
-            <li class="list-items"><a href=" ">The Kit</a></li>
-            <li class="list-items"><a href=" ">Your Stack</a></li>
-            <li class="list-items"><a href=" ">Open Source</a></li>
-            <li class="list-items"><a href=" ">Compare Plans</a></li>
-        </ul>
+
+<nav>
+    <ul>
+        <li>Library</li>
+        <li>Kit</li>
+        <li>Stack</li>
+        <li>Open Source</li>
+        <li>Plans</li>
+    </ul>
+</nav>
+
+
+<div class="container">
+
+    <!-- Top Cards -->
+
+    <div class="top-cards">
+
+        <div class="small-card">
+            <h2>60k+</h2>
+            <p>Icons in Library</p>
+        </div>
+
+        <div class="small-card">
+            <h2>30+</h2>
+            <p>Icon Styles</p>
+        </div>
+
+        <div class="small-card">
+            <h2>200M+</h2>
+            <p>Users</p>
+        </div>
+
+        <div class="yellow-card">
+            <h2>7.3.0</h2>
+            <p>Latest Version</p>
+        </div>
+
     </div>
 
-    <div>
+
+    <!-- Main Cards -->
+
+    <div class="grid">
+
+        <div class="big-card dark">
+            <div class="image"></div>
+
+            <h2>New Animations</h2>
+
+            <p>
+                Rebuilt from the ground up using
+                classic animation principles.
+            </p>
+
+            <a href="#">Explore →</a>
+
+        </div>
+
+
+        <div class="big-card white">
+
+            <div class="image"></div>
+
+            <h2>Icon Wizard</h2>
+
+            <p>
+                Add modifiers to your icons.
+            </p>
+
+            <a href="#">Read More →</a>
+
+        </div>
+
+
+        <div class="big-card blue">
+
+            <div class="image"></div>
+
+            <h2>Icon Upload</h2>
+
+            <p>
+                Upload custom icons.
+            </p>
+
+            <a href="#">Upload →</a>
+
+        </div>
 
     </div>
 
 
 
+    <!-- Bottom Cards -->
+
+    <div class="bottom-grid">
+
+        <div class="mini"></div>
+        <div class="mini"></div>
+        <div class="mini"></div>
+        <div class="mini"></div>
+
     </div>
+
+</div>
+
 </body>
 </html>
