@@ -20,9 +20,20 @@
                     </div>
 
                     <div class="card-body p-4">
+                        {%if employee%}
+                            <span class="text-success">{{msg}}</span>
+                        {%else%}
                         <span class="text-success">{{msg}}</span>
+                        {%endif%}
+
+
+                        
                         <form method="post" action="{%url 'create'%}">
                                 {%csrf_token%}
+                                {% if employee %}
+        <input type="hidden" name="id" value="{{employee.id}}">
+             {% endif %}
+    
                             <div class="mb-3">
                                 <label for="name" class="form-label fw-semibold">Name</label>
                                 <input
@@ -66,10 +77,15 @@
                                 <button type="reset" class="btn btn-outline-secondary me-md-2">
                                     Reset
                                 </button>
-                                
-                                <button type="submit" class="btn btn-primary">
-                                    Submit
-                                </button>
+                                {% if employee %}
+                                    <button type="submit" class="btn btn-primary">
+                                        Update
+                                    </button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-primary">
+                                        Submit
+                                    </button>
+                                {% endif %}
                             
 
 

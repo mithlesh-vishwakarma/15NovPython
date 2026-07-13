@@ -19,10 +19,11 @@ def create(request):
             employee.email = email
             employee.designation = designation
             employee.save()
+            return render(request,"index.html",{"msg":"updated successfully"})
         else:
             Employee.objects.create(name=name,email=email,designation=designation)
             return render(request,"index.html",{"msg":"data saved successfully !!"})
-        return redirect("display",{"msg":"updated successfully"})
+        # return redirect("display")
 
     return render(request, "index.html")
 
