@@ -3,147 +3,775 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Management</title>
+    <meta name="description" content="A premium AJAX CRUD Student Management Application built with Django and Vanilla JavaScript.">
+    <title>Student Management Dashboard</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --primary-grad: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            --edit-grad: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --dark-grad: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #1e293b;
+        }
+
+        .premium-card {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header-gradient-primary {
+            background: var(--primary-grad);
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .card-header-gradient-edit {
+            background: var(--edit-grad);
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .card-header-gradient-dark {
+            background: var(--dark-grad);
+            color: white;
+            border-bottom: none;
+            padding: 1.5rem;
+        }
+
+        .btn-premium {
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-premium-primary {
+            background: var(--primary-grad);
+            color: white;
+        }
+
+        .btn-premium-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+            color: white;
+        }
+
+        .btn-premium-secondary {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-premium-secondary:hover {
+            background: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        .btn-premium-warning {
+            background: var(--edit-grad);
+            color: white;
+        }
+
+        .btn-premium-warning:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(217, 119, 6, 0.3);
+            color: white;
+        }
+
+        .form-control {
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Table styling */
+        .table-responsive {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead {
+            background: #f1f5f9;
+        }
+
+        .table th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 1rem;
+        }
+
+        .table td {
+            padding: 1rem;
+            color: #334155;
+            vertical-align: middle;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .student-row {
+            animation: fadeIn 0.5s ease both;
+            transition: all 0.3s ease;
+        }
+
+        .student-row:hover {
+            background-color: #f8fafc;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+
+        .custom-toast {
+            min-width: 300px;
+            background: white;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+            opacity: 0;
+            border-left: 5px solid transparent;
+        }
+
+        .custom-toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .custom-toast.success {
+            border-left-color: var(--success-color);
+        }
+
+        .custom-toast.error {
+            border-left-color: var(--danger-color);
+        }
+
+        .custom-toast.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .success .toast-icon { color: var(--success-color); }
+        .error .toast-icon { color: var(--danger-color); }
+        .warning .toast-icon { color: var(--warning-color); }
+
+        .toast-message {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        /* Loader */
+        .spinner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .spinner-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .stats-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.85rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        /* Delete Confirmation Dialog Modal Overlay */
+        .confirm-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .confirm-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .confirm-box {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .confirm-overlay.active .confirm-box {
+            transform: scale(1);
+        }
+
+        .confirm-icon {
+            font-size: 3rem;
+            color: var(--danger-color);
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
+<body>
 
-<body class="bg-light">
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
-<div class="container py-5">
-
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-
-            <!-- Student Form -->
-            <div class="card shadow">
-
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">Student Registration Form</h3>
-                </div>
-
-                <div class="card-body">
-
-                    <form id="studentForm">
-
-                        <div class="mb-3">
-                            <label for="studentName" class="form-label">
-                                Student Name
-                            </label>
-
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="studentName"
-                                placeholder="Enter student name"
-                            >
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="studentEmail" class="form-label">
-                                Email Address
-                            </label>
-
-                            <input
-                                type="email"
-                                class="form-control"
-                                id="studentEmail"
-                                placeholder="Enter email"
-                            >
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="studentAge" class="form-label">
-                                Age
-                            </label>
-
-                            <input
-                                type="number"
-                                class="form-control"
-                                id="studentAge"
-                                placeholder="Enter age"
-                            >
-                        </div>
-
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-success">
-                                Save Student
-                            </button>
-
-                            <button type="reset" class="btn btn-secondary">
-                                Reset
-                            </button>
-                        </div>
-
-                    </form>
-
-                </div>
-
+    <!-- Custom Confirmation Modal -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-box">
+            <i class="bi bi-exclamation-triangle-fill confirm-icon"></i>
+            <h4 class="mb-2">Are you sure?</h4>
+            <p class="text-muted mb-4">This action cannot be undone. This student record will be permanently deleted.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <button type="button" class="btn btn-premium btn-premium-secondary px-4" id="cancelDeleteBtn">Cancel</button>
+                <button type="button" class="btn btn-danger px-4" id="confirmDeleteBtn" style="border-radius: 8px;">Delete</button>
             </div>
-
-            <!-- Student Table -->
-            <div class="card shadow mt-4">
-
-                <div class="card-header bg-dark text-white">
-                    <h4 class="mb-0">Student List</h4>
-                </div>
-
-                <div class="card-body">
-
-                    <div class="table-responsive">
-
-                        <table class="table table-bordered table-hover align-middle text-center">
-
-                            <thead class="table-primary">
-
-                                <tr>
-                                    <th width="8%">#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th width="12%">Age</th>
-                                    <th width="20%">Action</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="studentTableBody">
-
-                                <!-- AJAX Data Will Come Here -->
-
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td>john@example.com</td>
-                                    <td>22</td>
-
-                                    <td>
-                                        <button class="btn btn-warning btn-sm">
-                                            Edit
-                                        </button>
-
-                                        <button class="btn btn-danger btn-sm">
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                <!-- Dynamic rows will be appended here -->
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
     </div>
 
-</div>
+    <!-- Main Workspace Container -->
+    <div class="container py-5">
+        
+        <!-- Header Section -->
+        <div class="row mb-5 text-center">
+            <div class="col-12">
+                <h1 class="fw-bold tracking-tight mb-2">Student Directory</h1>
+                <p class="text-muted">Manage your student records seamlessly using asynchronous AJAX operations.</p>
+            </div>
+        </div>
 
+        <div class="row g-4 justify-content-center">
+            <!-- Form Card -->
+            <div class="col-lg-4 col-md-5">
+                <div class="card premium-card position-relative">
+                    <!-- Loading overlay for the form -->
+                    <div class="spinner-overlay" id="formLoader">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div class="card-header-gradient-primary" id="formHeader">
+                        <h4 class="mb-0 fw-semibold" id="formTitle">
+                            <i class="bi bi-person-plus-fill me-2"></i>Register Student
+                        </h4>
+                    </div>
+
+                    <div class="card-body p-4">
+                        {% csrf_token %}
+                        <!-- Hidden input for tracking edit mode -->
+                        <input type="hidden" id="studentId">
+
+                        <form id="studentForm">
+                            <div class="mb-3">
+                                <label for="studentName" class="form-label fw-medium text-secondary small text-uppercase">Full Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-person"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0" id="studentName" placeholder="John Doe" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="studentEmail" class="form-label fw-medium text-secondary small text-uppercase">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control border-start-0 ps-0" id="studentEmail" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="studentAge" class="form-label fw-medium text-secondary small text-uppercase">Age</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-calendar-event"></i></span>
+                                    <input type="number" class="form-control border-start-0 ps-0" id="studentAge" placeholder="21" min="1" max="120" required>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-premium btn-premium-primary" id="submitBtn">
+                                    Save Student
+                                </button>
+                                <button type="button" class="btn btn-premium btn-premium-secondary" id="resetBtn">
+                                    Clear Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Card -->
+            <div class="col-lg-8 col-md-7">
+                <div class="card premium-card position-relative">
+                    <!-- Loading overlay for table -->
+                    <div class="spinner-overlay" id="tableLoader">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div class="card-header-gradient-dark d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0 fw-semibold">
+                            <i class="bi bi-list-stars me-2"></i>Student Records
+                        </h4>
+                        <span class="stats-badge" id="studentCountBadge">0 Students</span>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <!-- Search and filter -->
+                        <div class="mb-4">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control border-start-0 ps-0" id="searchInput" placeholder="Search by name or email...">
+                            </div>
+                        </div>
+
+                        <!-- Data table -->
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80px;">ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th style="width: 100px;">Age</th>
+                                        <th style="width: 160px;" class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentTableBody">
+                                    <!-- Dynamic rows loaded via AJAX -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Empty state placeholder -->
+                        <div class="text-center py-5 d-none" id="emptyState">
+                            <i class="bi bi-people text-muted" style="font-size: 3rem;"></i>
+                            <h5 class="mt-3 text-secondary">No records found</h5>
+                            <p class="text-muted small">Register a student to get started!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script to handle all AJAX logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // DOM Elements
+            const studentForm = document.getElementById("studentForm");
+            const studentIdInput = document.getElementById("studentId");
+            const studentNameInput = document.getElementById("studentName");
+            const studentEmailInput = document.getElementById("studentEmail");
+            const studentAgeInput = document.getElementById("studentAge");
+            const submitBtn = document.getElementById("submitBtn");
+            const resetBtn = document.getElementById("resetBtn");
+            
+            const formHeader = document.getElementById("formHeader");
+            const formTitle = document.getElementById("formTitle");
+            
+            const studentTableBody = document.getElementById("studentTableBody");
+            const studentCountBadge = document.getElementById("studentCountBadge");
+            const searchInput = document.getElementById("searchInput");
+            const emptyState = document.getElementById("emptyState");
+            
+            const formLoader = document.getElementById("formLoader");
+            const tableLoader = document.getElementById("tableLoader");
+            const toastContainer = document.getElementById("toastContainer");
+            
+            // Delete confirmation dialog elements
+            const confirmOverlay = document.getElementById("confirmOverlay");
+            const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+            const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+            
+            let deleteTargetId = null;
+            let activeStudents = [];
+
+            // Get CSRF Token
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            // Fetch and render students initially
+            fetchStudents();
+
+            // Handle Form Submission (Add or Update)
+            studentForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                const studentId = studentIdInput.value;
+                const name = studentNameInput.value.trim();
+                const email = studentEmailInput.value.trim();
+                const age = studentAgeInput.value.trim();
+
+                // Basic validation
+                if (!name || !email || !age) {
+                    showToast("Please fill all required fields.", "error");
+                    return;
+                }
+
+                if (parseInt(age) <= 0 || parseInt(age) > 120) {
+                    showToast("Please enter a valid age (1-120).", "error");
+                    return;
+                }
+
+                // Prepare parameters
+                const formData = new FormData();
+                formData.append("name", name);
+                formData.append("email", email);
+                formData.append("age", age);
+
+                let url = "/add-student/";
+                if (studentId) {
+                    formData.append("id", studentId);
+                    url = "/update-student/";
+                }
+
+                // Show spinner
+                setLoading(formLoader, true);
+
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrfToken
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    return response.json().then(data => {
+                        if (!response.ok) {
+                            throw new Error(data.error || "An error occurred while saving.");
+                        }
+                        return data;
+                    });
+                })
+                .then(data => {
+                    showToast(data.message, "success");
+                    clearForm();
+                    fetchStudents();
+                })
+                .catch(error => {
+                    showToast(error.message, "error");
+                })
+                .finally(() => {
+                    setLoading(formLoader, false);
+                });
+            });
+
+            // Handle Reset / Cancel Edit
+            resetBtn.addEventListener("click", function() {
+                clearForm();
+            });
+
+            // Handle Search filter
+            searchInput.addEventListener("input", function() {
+                renderFilteredTable(searchInput.value.trim());
+            });
+
+            // Fetch Students List
+            function fetchStudents() {
+                setLoading(tableLoader, true);
+                fetch("/get-students/")
+                .then(response => response.json())
+                .then(data => {
+                    activeStudents = data.students || [];
+                    renderFilteredTable(searchInput.value.trim());
+                })
+                .catch(error => {
+                    console.error("Error fetching students:", error);
+                    showToast("Failed to fetch student directory.", "error");
+                })
+                .finally(() => {
+                    setLoading(tableLoader, false);
+                });
+            }
+
+            // Render Table Rows
+            function renderFilteredTable(searchQuery = "") {
+                studentTableBody.innerHTML = "";
+                
+                const filtered = activeStudents.filter(student => {
+                    const query = searchQuery.toLowerCase();
+                    return student.name.toLowerCase().includes(query) || 
+                           student.email.toLowerCase().includes(query) ||
+                           String(student.id).includes(query);
+                });
+
+                studentCountBadge.textContent = `${activeStudents.length} Student${activeStudents.length === 1 ? '' : 's'}`;
+
+                if (filtered.length === 0) {
+                    emptyState.classList.remove("d-none");
+                } else {
+                    emptyState.classList.add("d-none");
+                    
+                    filtered.forEach(student => {
+                        const tr = document.createElement("tr");
+                        tr.className = "student-row";
+                        tr.innerHTML = `
+                            <td class="fw-bold text-secondary">#${student.id}</td>
+                            <td><span class="fw-medium">${escapeHtml(student.name)}</span></td>
+                            <td class="text-muted">${escapeHtml(student.email)}</td>
+                            <td><span class="badge bg-light text-dark px-3 py-2 border rounded-pill">${student.age}</span></td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-warning me-1 edit-btn" data-id="${student.id}" style="border-radius: 6px;">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${student.id}" style="border-radius: 6px;">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </td>
+                        `;
+                        
+                        // Add Event Listeners to actions
+                        tr.querySelector(".edit-btn").addEventListener("click", () => {
+                            editMode(student);
+                        });
+
+                        tr.querySelector(".delete-btn").addEventListener("click", () => {
+                            promptDelete(student.id);
+                        });
+
+                        studentTableBody.appendChild(tr);
+                    });
+                }
+            }
+
+            // Switch to Edit Mode
+            function editMode(student) {
+                studentIdInput.value = student.id;
+                studentNameInput.value = student.name;
+                studentEmailInput.value = student.email;
+                studentAgeInput.value = student.age;
+
+                // Adjust Header Gradient & Header Title
+                formHeader.className = "card-header-gradient-edit";
+                formTitle.innerHTML = `<i class="bi bi-pencil-square me-2"></i>Edit Student #${student.id}`;
+
+                // Adjust Submit Button
+                submitBtn.className = "btn btn-premium btn-premium-warning";
+                submitBtn.textContent = "Update Student";
+
+                // Adjust Reset Button -> Cancel Edit
+                resetBtn.textContent = "Cancel Edit";
+                resetBtn.className = "btn btn-premium btn-premium-secondary";
+                
+                // Scroll form into view on mobile
+                studentNameInput.focus();
+            }
+
+            // Clear / Reset Form
+            function clearForm() {
+                studentIdInput.value = "";
+                studentForm.reset();
+
+                // Revert Header styling
+                formHeader.className = "card-header-gradient-primary";
+                formTitle.innerHTML = `<i class="bi bi-person-plus-fill me-2"></i>Register Student`;
+
+                // Revert Submit Button styling
+                submitBtn.className = "btn btn-premium btn-premium-primary";
+                submitBtn.textContent = "Save Student";
+
+                // Revert Reset Button
+                resetBtn.textContent = "Clear Form";
+                resetBtn.className = "btn btn-premium btn-premium-secondary";
+            }
+
+            // Delete prompt confirmation
+            function promptDelete(id) {
+                deleteTargetId = id;
+                confirmOverlay.classList.add("active");
+            }
+
+            // Confirm Delete action
+            confirmDeleteBtn.addEventListener("click", function() {
+                if (!deleteTargetId) return;
+
+                confirmOverlay.classList.remove("active");
+                setLoading(tableLoader, true);
+
+                const formData = new FormData();
+                formData.append("id", deleteTargetId);
+
+                fetch("/delete-student/", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrfToken
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    return response.json().then(data => {
+                        if (!response.ok) {
+                            throw new Error(data.error || "Failed to delete student.");
+                        }
+                        return data;
+                    });
+                })
+                .then(data => {
+                    showToast(data.message, "success");
+                    // If we deleted the student currently being edited, clear the form
+                    if (studentIdInput.value === String(deleteTargetId)) {
+                        clearForm();
+                    }
+                    fetchStudents();
+                })
+                .catch(error => {
+                    showToast(error.message, "error");
+                })
+                .finally(() => {
+                    setLoading(tableLoader, false);
+                    deleteTargetId = null;
+                });
+            });
+
+            // Cancel Delete action
+            cancelDeleteBtn.addEventListener("click", function() {
+                confirmOverlay.classList.remove("active");
+                deleteTargetId = null;
+            });
+
+            // Utility to set spinner state
+            function setLoading(element, isLoading) {
+                if (isLoading) {
+                    element.classList.add("active");
+                } else {
+                    element.classList.remove("active");
+                }
+            }
+
+            // Utility for Toast notification
+            function showToast(message, type = "success") {
+                const toast = document.createElement("div");
+                toast.className = `custom-toast ${type}`;
+                
+                let iconClass = "bi-check-circle-fill";
+                if (type === "error") iconClass = "bi-x-circle-fill";
+                if (type === "warning") iconClass = "bi-exclamation-circle-fill";
+
+                toast.innerHTML = `
+                    <i class="bi ${iconClass} toast-icon"></i>
+                    <div class="toast-message">${escapeHtml(message)}</div>
+                `;
+
+                toastContainer.appendChild(toast);
+
+                // Trigger reflow to animate
+                setTimeout(() => {
+                    toast.classList.add("show");
+                }, 10);
+
+                // Remove after 3.5s
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 400);
+                }, 3500);
+            }
+
+            // HTML Escape helper
+            function escapeHtml(text) {
+                const map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+            }
+        });
+    </script>
 </body>
 </html>
