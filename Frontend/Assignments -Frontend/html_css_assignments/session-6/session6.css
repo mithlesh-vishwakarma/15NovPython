@@ -1,0 +1,110 @@
+.card-spacing {
+    margin: 15px;
+    padding: 15px;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.zomato-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    width: 250px;
+    background-color: #fff;
+}
+
+.zomato-title {
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.zomato-cuisine {
+    font-size: 14px;
+    color: #666;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.zomato-rating {
+    font-size: 14px;
+    color: green;
+    font-weight: bold;
+}
+
+.product-tile {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    width: 180px;
+    background-color: #fff;
+}
+
+.product-image {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.product-name {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    display: inline-block;
+    color: #2874f0;
+    font-weight: bold;
+}
+
+.hide-price .product-price {
+    display: none;
+}
+
+.whatsapp-badge {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.movie-grid {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.movie-poster {
+    position: relative;
+    width: 150px;
+}
+
+.movie-image {
+    display: block;
+}
+
+.movie-title {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.badge-new {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff3f6c;
+    color: white;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 2px;
+}

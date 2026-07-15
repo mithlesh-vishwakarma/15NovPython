@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 4 - HTML5 Semantic Elements</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>Session 4: HTML5 Semantic Elements</h1>
+        <p>Structuring web pages with meaningful, accessible markup</p>
+    </header>
+
+    <main class="dashboard-container">
+
+        <section class="card-section">
+            <h2>1. Simple Blog Post Layout</h2>
+            <div class="blog-preview">
+                <header class="blog-header">
+                    <h3>Tech Frontiers</h3>
+                </header>
+                <nav class="blog-nav">
+                    <a href="#">Home</a>
+                    <a href="#">Explore</a>
+                    <a href="#">About</a>
+                </nav>
+                <article class="blog-post">
+                    <h2>Understanding Semantics in Web Design</h2>
+                    <p>Semantic HTML introduces tags that carry meaning rather than just visual style. Utilizing elements like article, nav, header, and footer allows crawlers and assistant technologies to comprehend the page layout efficiently.</p>
+                    <p>This improves accessibility for screen readers and optimizes pages for search engine positioning.</p>
+                </article>
+                <footer class="blog-footer">
+                    <p>&copy; 2026 Tech Frontiers. All rights reserved.</p>
+                </footer>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>2. Zomato-Style Restaurant Listing Card</h2>
+            <div class="restaurant-flex">
+                <article class="restaurant-card">
+                    <div class="image-wrapper">
+                        <img src="pizza.png" alt="Wood-fired Pizza">
+                    </div>
+                    <header class="restaurant-header">
+                        <h3>Bella Italia</h3>
+                        <p class="restaurant-tags">Italian • Pizza • Pasta</p>
+                    </header>
+                    <footer class="restaurant-footer">
+                        <span class="restaurant-rating">4.6 ★</span>
+                        <span class="restaurant-time">25 Mins</span>
+                    </footer>
+                </article>
+
+                <article class="restaurant-card">
+                    <div class="image-wrapper">
+                        <img src="burger.png" alt="Gourmet Burger">
+                    </div>
+                    <header class="restaurant-header">
+                        <h3>Burger Craft</h3>
+                        <p class="restaurant-tags">Burgers • American • Sides</p>
+                    </header>
+                    <footer class="restaurant-footer">
+                        <span class="restaurant-rating">4.3 ★</span>
+                        <span class="restaurant-time">15 Mins</span>
+                    </footer>
+                </article>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>3. Flipkart-Style Product Page Section</h2>
+            <div class="product-page">
+                <nav class="breadcrumbs">
+                    <a href="#">Home</a> &rsaquo;
+                    <a href="#">Electronics</a> &rsaquo;
+                    <a href="#">Smart Wearables</a> &rsaquo;
+                    <span class="current-crumb">Smartwatches</span>
+                </nav>
+                <div class="product-grid">
+                    <header class="product-visual">
+                        <img src="watch.png" alt="Chronos Pro Smartwatch">
+                        <h1>Chronos Pro Smartwatch</h1>
+                    </header>
+                    <article class="product-info">
+                        <div class="price-tag">
+                            <span class="selling-price">$199</span>
+                            <span class="mrp">$299</span>
+                            <span class="discount">33% OFF</span>
+                        </div>
+                        <h3>Product Details</h3>
+                        <p>The Chronos Pro is designed to track your fitness metrics, manage notifications, and keep you connected. Featuring a high-definition always-on AMOLED display and up to 10 days of battery life, it blends style with utility.</p>
+                        <ul class="specs">
+                            <li>1.43" AMOLED display</li>
+                            <li>SpO2 & heart rate monitoring</li>
+                            <li>5 ATM water resistance</li>
+                        </ul>
+                    </article>
+                    <footer class="product-deals">
+                        <h4>Bank Offers &amp; Warranty</h4>
+                        <ul>
+                            <li>1 Year Brand Warranty</li>
+                            <li>10% instant discount on credit cards</li>
+                            <li>No cost EMI starting from $16.50/month</li>
+                        </ul>
+                    </footer>
+                </div>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>4. Movie Review Refactoring</h2>
+            <div class="refactor-comparison">
+                <div class="refactor-column">
+                    <h3>Before (Non-Semantic HTML)</h3>
+                    <div class="code-preview">&lt;div class="movie-review"&gt;
+    &lt;div class="movie-header"&gt;
+        &lt;span class="movie-title"&gt;Interstellar&lt;/span&gt;
+        &lt;span class="movie-genre"&gt;Sci-Fi / Adventure&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="movie-nav"&gt;
+        &lt;span class="nav-link"&gt;Overview&lt;/span&gt;
+        &lt;span class="nav-link"&gt;Cast&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="movie-content"&gt;
+        &lt;span class="author"&gt;By Jane Smith&lt;/span&gt;
+        &lt;span class="text"&gt;A masterpiece that explores love, space, and time.&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="movie-footer"&gt;
+        &lt;span class="rating"&gt;9.5/10&lt;/span&gt;
+        &lt;span class="copyright"&gt;&copy; 2026 FilmReviews&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</div>
+                </div>
+                <div class="refactor-column">
+                    <h3>After (Semantic Refactored HTML)</h3>
+                    <article class="movie-review-card">
+                        <header class="movie-header">
+                            <h3>Interstellar</h3>
+                            <p class="movie-genre">Sci-Fi / Adventure</p>
+                        </header>
+                        <nav class="movie-nav">
+                            <a href="#">Overview</a>
+                            <a href="#">Cast</a>
+                        </nav>
+                        <section class="movie-content">
+                            <p class="movie-author">By Jane Smith</p>
+                            <p class="movie-text">A masterpiece that explores love, space, and time.</p>
+                        </section>
+                        <footer class="movie-footer">
+                            <span class="movie-rating">9.5/10 Rating</span>
+                            <span class="movie-copyright">&copy; 2026 FilmReviews</span>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
