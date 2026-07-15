@@ -9,10 +9,17 @@ def index(request):
 
 
 def payment(request):
+    amount = request.GET.get('amount')
+    try:
+        amount_in_rupees = float(amount)
+        amount_in_paise = int(amount_in_rupees * 100)
+    except (ValueError, TypeError):
+        return JsonResponse({"error": "Invalid amount"}, status=400)
+        
     client = razorpay.Client(auth=("rzp_test_TDH7A8ecMTugCu", "qtRLJZgwYUYB71GD6XEPUgoE"))
-    data = { "amount": 50000, "currency": "INR", "receipt": "order_rcptid_11" }
+    data = { "amount": amount_in_paise, "currency": "INR", "receipt": "order_rcptid_11" }
     payment = client.order.create(data=data)
-    # Amount is in currency subunits.
+    # Return details containing the new order_id and amount
     return JsonResponse(payment)
 
 
