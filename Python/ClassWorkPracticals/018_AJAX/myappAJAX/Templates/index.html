@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX</title>
+
+    <script
+      src="https://code.jquery.com/jquery-4.0.0.js"
+      integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+
+            $(document).ready(function(){
+
+              countries()
+            })
+
+            const test =()=> {
+              var q = $("#q").val()
+              $.get("test", {q}, function(rt) {
+                //alert(rt)
+                $("#display").html(rt)
+              })
+            }
+
+            const search = (q) => {
+                $.get('search',{q},function(rt)
+                {
+                    $("#result").html(rt)
+                })
+            }
+
+            const countries = () => {
+              $.get('countries',{},function(rt){
+                var options="<option value='0'>----select Country----</option>"
+                rt.data.map(ele=>{
+                    options+=`<option value="${ele.id}">${ele.name}</option>`
+                })
+                 $("#country").html(options)
+              })
+            }
+             
+              
+              const states = (country_id) => {
+                 $.get('states',{country_id},function(rt){
+                var options="<option value='0'>----select State----</option>"
+                rt.data.map(ele=>{
+                    options+=`<option value="${ele.id}">${ele.name}</option>`
+                })
+                 $("#state").html(options)
+              })
+            }
+        
+
+              
+              const cities = (state_id) => {
+                 $.get('cities',{state_id},function(rt){
+                var options="<option value='0'>----select State----</option>"
+                rt.data.map(ele=>{
+                    options+=`<option value="${ele.id}">${ele.name}</option>`
+                })
+                 $("#city").html(options)
+              })
+              }
+  
+    </script>
+  </head>
+  <body>
+    <h3 class="mb-3">Hello, Good Morning</h3>
+
+    <input type="text" id="q" />
+
+    <button onclick="test()">Click Me</button>
+    <br />
+    <div id="display"></div>
+
+    <br />
+    <br />
+    <br />
+
+    <input type="text" onkeyup="search(value)" />
+    <div id="result"></div>
+
+    <br />
+    <br />
+    <br />
+    <select name="country" id="country" onchange="states(value)">
+      <option value="0">----select Country----</option>
+    </select>
+    <select name="state" id="state" onchange="cities(value)">
+      <option value="0">----select State----</option>
+    </select>
+    <select name="city" id="city">
+      <option value="0">----select City----</option>
+    </select>
+  </body>
+</html>

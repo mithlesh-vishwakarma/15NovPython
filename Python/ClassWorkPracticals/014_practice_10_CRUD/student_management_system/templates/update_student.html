@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Update Student</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body{
+            background: #f4f7fc;
+        }
+
+        .form-container{
+            max-width: 700px;
+            margin: 50px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .form-title{
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+
+        .btn-custom{
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 10px;
+        }
+
+        label{
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2 class="form-title">Update Student Record</h2>
+
+            <form method="POST" action="{% url 'update_data' student.id %}">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="name" value="{{ student.name }}">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Roll Number</label>
+                        <input type="number" class="form-control" name="rollnumber" value="{{ student.rollnumber }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" value="{{ student.email }}">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Age</label>
+                        <input type="text" class="form-control" name="age" value="{{ student.age }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Contact</label>
+                        <input type="tel" class="form-control" name="contact" value="{{ student.contact }}">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Course</label>
+                        <select class="form-select" name="course">
+                            <option value="BCA" {% if student.course == "BCA" %}selected{% endif %}>BCA</option>
+                            <option value="BBA" {% if student.course == "BBA" %}selected{% endif %}>BBA</option>
+                            <option value="B.Tech" {% if student.course == "B.Tech" %}selected{% endif %}>B.Tech</option>
+                            <option value="MCA" {% if student.course == "MCA" %}selected{% endif %}>MCA</option>
+                            <option value="MBA" {% if student.course == "MBA" %}selected{% endif %}>MBA</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary btn-custom">
+                        Update Student
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

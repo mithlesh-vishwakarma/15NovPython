@@ -65,8 +65,8 @@ endswith("st")
 # 3. SPLIT & JOIN
 # ============================================
 
-print(st.split("s", 2))
-print("abc".join("xyz"))
+print(st.split("s",2))
+print("abc".join("xyzf"))
 
 
 """
