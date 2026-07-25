@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 6 Assignment</title>
+    <link rel="stylesheet" href="session6.css">
+</head>
+<body>
+
+    <h1>Session 6 Assignments</h1>
+
+    <h2>Task 1: Zomato-style Restaurant Card</h2>
+    <div class="zomato-card card-spacing">
+        <div class="zomato-title">Spice Garden</div>
+        <div class="zomato-cuisine">North Indian, Chinese</div>
+        <div class="zomato-rating">4.5 ★</div>
+    </div>
+
+    <h2>Task 2: Flipkart-style Product Tile</h2>
+    <button onclick="document.getElementById('flipkart-product').classList.toggle('hide-price')">Toggle Price Class</button>
+    <div id="flipkart-product" class="product-tile card-spacing">
+        <svg class="product-image" width="150" height="150" viewBox="0 0 100 100">
+            <rect width="100%" height="100%" fill="#eee"/>
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#666" font-size="10">Product Image</text>
+        </svg>
+        <div class="product-name">Wireless Headphones</div>
+        <div class="product-price">₹1,999</div>
+    </div>
+
+    <h2>Task 3: Fixed-position WhatsApp Badge</h2>
+    <p>Scroll down or look at the bottom right corner of the page to see the fixed WhatsApp badge.</p>
+    <div class="whatsapp-badge">WhatsApp</div>
+
+    <h2>Task 4: BookMyShow Movie Poster Grid</h2>
+    <div class="movie-grid">
+        <div class="movie-poster">
+            <div class="badge-new">New</div>
+            <svg class="movie-image" width="150" height="220" viewBox="0 0 100 150">
+                <rect width="100%" height="100%" fill="#ccc"/>
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#333" font-size="12">Movie 1</text>
+            </svg>
+            <div class="movie-title">The Adventure</div>
+        </div>
+        <div class="movie-poster">
+            <svg class="movie-image" width="150" height="220" viewBox="0 0 100 150">
+                <rect width="100%" height="100%" fill="#ccc"/>
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#333" font-size="12">Movie 2</text>
+            </svg>
+            <div class="movie-title">Mystery Island</div>
+        </div>
+    </div>
+
+    <div style="height: 1000px;">
+        <p>This empty space is added to allow scrolling to test position: fixed on the WhatsApp badge.</p>
+    </div>
+
+</body>
+</html>
