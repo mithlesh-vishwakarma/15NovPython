@@ -3,36 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 8 Assignment</title>
-    <link rel="stylesheet" href="session8.css">
+    <title>Mini Project 6</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container py-4">
+        <div class="form-card p-4 mb-4">
+            <h2 class="mb-3">Music Links</h2>
+            <form id="musicLinksForm">
+                <div class="input-with-icon">
+                    <img class="input-icon" src="https://img.icons8.com/color/48/spotify.png" alt="Spotify">
+                    <input type="url" id="spotify" placeholder="Spotify profile URL" required>
+                </div>
+                <div class="input-with-icon">
+                    <img class="input-icon" src="https://img.icons8.com/color/48/youtube-play.png" alt="YouTube Music">
+                    <input type="url" id="youtube" placeholder="YouTube Music profile URL" required>
+                </div>
+                <div class="input-with-icon">
+                    <img class="input-icon" src="https://img.icons8.com/color/48/apple-logo.png" alt="Apple Music">
+                    <input type="url" id="apple" placeholder="Apple Music profile URL" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
 
-    <div class="card-container">
-        <div class="product-card">
-            <div class="product-image-container">
-                <img class="product-image" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80" alt="Sony Headphones">
-            </div>
-            <div class="product-details">
-                <span class="brand-name">SONY</span>
-                <h2 class="product-title">Sony WH-1000XM4 Noise Cancelling Wireless Headphones</h2>
-                <div class="rating-container">
-                    <span class="rating-badge">4.6 ★</span>
-                    <span class="reviews-count">2,453 Ratings & 352 Reviews</span>
+            <div id="previewArea" class="preview-grid"></div>
+        </div>
+
+        <div class="profile-card p-4">
+            <div class="profile-layout">
+                <div>
+                    <img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" alt="Gamer Avatar">
                 </div>
-                <div class="price-section">
-                    <span class="price">₹19,990</span>
-                    <span class="mrp">₹29,990</span>
-                    <span class="discount">33% off</span>
+                <div>
+                    <h2 class="mb-2">Gamer Tag: NovaX</h2>
+                    <p class="text-muted">Competitive FPS player • Streamer • Team strategist</p>
+                    <div class="social-buttons">
+                        <a href="https://www.twitch.tv" target="_blank" class="twitch">Twitch</a>
+                        <a href="https://discord.com" target="_blank" class="discord">Discord</a>
+                        <a href="https://store.steampowered.com" target="_blank" class="steam">Steam</a>
+                    </div>
                 </div>
-                <ul class="offers">
-                    <li>Bank Offer: 10% Instant Discount on SBI Credit Cards.</li>
-                    <li>Partner Offer: Get Google Nest Hub at ₹4,999.</li>
-                    <li>No Cost EMI: From ₹3,332/month.</li>
-                </ul>
             </div>
         </div>
     </div>
 
+    <script>
+        document.getElementById('musicLinksForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const spotify = document.getElementById('spotify').value;
+            const youtube = document.getElementById('youtube').value;
+            const apple = document.getElementById('apple').value;
+            const previewArea = document.getElementById('previewArea');
+            previewArea.innerHTML = '';
+
+            const links = [
+                { url: spotify, platform: 'Spotify', className: 'spotify' },
+                { url: youtube, platform: 'YouTube Music', className: 'youtube' },
+                { url: apple, platform: 'Apple Music', className: 'apple' }
+            ];
+
+            links.forEach(link => {
+                const handle = new URL(link.url).pathname.split('/').filter(Boolean).pop() || 'profile';
+                const card = document.createElement('div');
+                card.className = `preview-card ${link.className}`;
+                card.innerHTML = `
+                    <h5>${link.platform}</h5>
+                    <p>@${handle}</p>
+                    <a href="${link.url}" target="_blank">Visit</a>
+                `;
+                previewArea.appendChild(card);
+            });
+        });
+    </script>
 </body>
 </html>

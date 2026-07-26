@@ -3,36 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Session 8 Assignment</title>
-    <link rel="stylesheet" href="session8.css">
+    <title>Session 12 - Music Artist Landing Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="card-container">
-        <div class="product-card">
-            <div class="product-image-container">
-                <img class="product-image" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=80" alt="Sony Headphones">
-            </div>
-            <div class="product-details">
-                <span class="brand-name">SONY</span>
-                <h2 class="product-title">Sony WH-1000XM4 Noise Cancelling Wireless Headphones</h2>
-                <div class="rating-container">
-                    <span class="rating-badge">4.6 ★</span>
-                    <span class="reviews-count">2,453 Ratings & 352 Reviews</span>
-                </div>
-                <div class="price-section">
-                    <span class="price">₹19,990</span>
-                    <span class="mrp">₹29,990</span>
-                    <span class="discount">33% off</span>
-                </div>
-                <ul class="offers">
-                    <li>Bank Offer: 10% Instant Discount on SBI Credit Cards.</li>
-                    <li>Partner Offer: Get Google Nest Hub at ₹4,999.</li>
-                    <li>No Cost EMI: From ₹3,332/month.</li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Ariya</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
             </div>
         </div>
+    </nav>
+
+    <div class="container py-4">
+        <section id="home" class="hero-card rounded-4 p-4 p-md-5 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80" class="img-fluid rounded-circle" alt="Artist" style="width: 220px; height: 220px; object-fit: cover;">
+                </div>
+                <div class="col-md-8">
+                    <h1 class="display-6 fw-bold">Ariya Voss</h1>
+                    <p class="lead">Indie pop artist blending soulful melodies with cinematic storytelling.</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#" class="btn btn-light"><i class="bi bi-instagram"></i> Instagram</a>
+                        <a href="#" class="btn btn-outline-light"><i class="bi bi-youtube"></i> YouTube</a>
+                        <a href="#" class="btn btn-outline-light"><i class="bi bi-spotify"></i> Spotify</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="mb-4">
+            <h2 class="h4 fw-bold text-primary">Featured Playlists</h2>
+            <div class="row g-4 mt-2">
+                <div class="col-md-4">
+                    <div class="card playlist-card h-100">
+                        <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Playlist 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Midnight Vibes</h5>
+                            <p class="card-text">Soft beats and dreamy nights.</p>
+                            <a href="#" class="btn btn-primary">Listen Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card playlist-card h-100">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Playlist 2">
+                        <div class="card-body">
+                            <h5 class="card-title">City Lights</h5>
+                            <p class="card-text">A fresh mix of indie and chill.</p>
+                            <a href="#" class="btn btn-primary">Listen Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card playlist-card h-100">
+                        <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Playlist 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Golden Hour</h5>
+                            <p class="card-text">Warm tunes for every sunset.</p>
+                            <a href="#" class="btn btn-primary">Listen Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <h2 class="h4 fw-bold text-primary">Featured Products</h2>
+            <div class="row g-4 mt-2">
+                <div class="col-6 col-md-3">
+                    <div class="card product-card h-100">
+                        <img src="https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Product 1">
+                        <div class="card-body">
+                            <h6 class="fw-bold">Wireless Earbuds</h6>
+                            <p class="mb-2">$79</p>
+                            <button class="btn btn-outline-dark btn-sm">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card product-card h-100">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Product 2">
+                        <div class="card-body">
+                            <h6 class="fw-bold">Smart Watch</h6>
+                            <p class="mb-2">$109</p>
+                            <button class="btn btn-outline-dark btn-sm">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card product-card h-100">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Product 3">
+                        <div class="card-body">
+                            <h6 class="fw-bold">Laptop</h6>
+                            <p class="mb-2">$799</p>
+                            <button class="btn btn-outline-dark btn-sm">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card product-card h-100">
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="Product 4">
+                        <div class="card-body">
+                            <h6 class="fw-bold">Headphones</h6>
+                            <p class="mb-2">$89</p>
+                            <button class="btn btn-outline-dark btn-sm">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
+    <footer id="contact" class="bg-dark text-light py-4 mt-4">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <p class="mb-2 mb-md-0">© 2026 Ariya Voss | Music & Lifestyle</p>
+            <div class="footer-social">
+                <a href="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-light"><i class="bi bi-twitter-x"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

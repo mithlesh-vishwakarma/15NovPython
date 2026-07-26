@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f3ff;
+    color: #222;
+}
+
+.navbar {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.hero-card {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+}
+
+.playlist-card img,
+.product-card img {
+    height: 180px;
+    object-fit: cover;
+}
+
+.footer-social a {
+    font-size: 1.2rem;
+}
