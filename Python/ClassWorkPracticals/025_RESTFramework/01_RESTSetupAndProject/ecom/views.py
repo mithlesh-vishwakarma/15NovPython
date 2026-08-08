@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from ecom.models import *
-from rest_framework import Response
+from rest_framework.response import Response
 from rest_framework.decorators import APIView
+from ecom.serializer import *
 
 # Create your views here.
 
 class CategoryAPI(APIView):
     def get(self,request):
         categories=Category.objects.all()
-        ser=CategorySerializer(categories,many=true)
+        ser=CategorySerialaizer(categories,many=true)
         return Response({"data":ser.data})
 
     def post(self,request):
