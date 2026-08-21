@@ -1,0 +1,67 @@
+================================================================================
+INTERVIEW QUESTION: What is the difference between TokenAuthentication and 
+SessionAuthentication in Django REST Framework (DRF)?
+================================================================================
+
+Answer:
+
+In Django REST Framework (DRF), both SessionAuthentication and TokenAuthentication 
+are used to authenticate API requests, but they differ fundamentally in how user 
+identity is stored, passed, and validated.
+
+Here is a breakdown of the key differences:
+
+1. Statefulness & Storage Mechanism
+-----------------------------------
+- SessionAuthentication:
+  * Stateful: The server creates a session record stored in the database or cache 
+    and sends a session ID back to the client in a browser cookie ('sessionid').
+  * The client includes this cookie automatically in subsequent HTTP requests.
+- TokenAuthentication:
+  * Stateless (on the transport layer): The server generates a unique alphanumeric 
+    token string associated with a user account stored in the database (authtoken table).
+  * The client must explicitly store this token (e.g., in localStorage or secure storage) 
+    and send it in the HTTP request header: `Authorization: Token <token_key>`.
+
+2. Primary Use Cases & Client Types
+-----------------------------------
+- SessionAuthentication:
+  * Best for web applications running in a browser where the frontend and backend 
+    are hosted on the same domain or integrated within Django.
+- TokenAuthentication:
+  * Best for cross-platform clients such as mobile applications (iOS/Android), 
+    Single Page Applications (React, Angular, Vue), or third-party API consumers.
+
+3. CSRF Protection (Cross-Site Request Forgery)
+-----------------------------------------------
+- SessionAuthentication:
+  * Relies on cookies, so DRF enforces CSRF token checks for non-GET HTTP requests 
+    (POST, PUT, DELETE) to protect against CSRF attacks.
+- TokenAuthentication:
+  * Does not use browser cookies to automatically transmit credentials, making it 
+    inherently immune to CSRF attacks. Thus, CSRF validation is disabled for token requests.
+
+4. Scalability & Cross-Domain Requests
+--------------------------------------
+- SessionAuthentication:
+  * Can be trickier to handle across multiple domain names or microservices because 
+    browsers restrict third-party cookies (CORS policy).
+- TokenAuthentication:
+  * Highly scalable and flexible for cross-origin APIs (CORS) because HTTP authorization 
+    headers work standardly across any domain or client environment.
+
+--------------------------------------------------------------------------------
+Summary Comparison Table:
+--------------------------------------------------------------------------------
+Feature                | SessionAuthentication         | TokenAuthentication
+-----------------------+-------------------------------+------------------------
+Credential Passed Via   | HTTP Cookie (`sessionid`)     | HTTP Header (`Authorization`)
+Client Type            | Web Browsers                  | Mobile Apps, SPAs, APIs
+CSRF Protection Required| Yes (for POST/PUT/DELETE)     | No
+Storage Location       | Server Session Store          | Database (rest_framework.authtoken)
+Statefulness           | Stateful (Cookie-based)       | Stateless transport (Token-based)
+
+Conclusion:
+In an interview scenario, I summarize: "Use SessionAuthentication when building a 
+standard browser-based Django app with frontend integration, and use TokenAuthentication 
+when building APIs for mobile clients, standalone SPAs, or third-party developers."
