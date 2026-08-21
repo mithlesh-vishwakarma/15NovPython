@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "session5-drf-api-collection",
+		"name": "Session-5 DRF External API Collection",
+		"description": "Postman Collection for Django REST Framework External API Tasks (Music Weather, Food Location Geocoding, Country Info, GitHub Repos)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Music Weather Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test 1: Check status code is 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Test 2: Task 5 - Check response contains 'temperature' and 'description' keys",
+							"pm.test(\"Response contains temperature and description keys\", function () {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.have.property('temperature');",
+							"    pm.expect(responseJson).to.have.property('description');",
+							"});",
+							"",
+							"// Test 3: Check response contains city and festival tip",
+							"pm.test(\"Response contains city and festival_tip\", function () {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson).to.have.property('city');",
+							"    pm.expect(responseJson).to.have.property('festival_tip');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/music-weather/London/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"music-weather",
+						"London",
+						""
+					]
+				},
+				"description": "Task 1 & Task 5: Fetches music festival weather info for a city."
+			},
+			"response": []
+		},
+		{
+			"name": "2. Food Location Geocoding",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Contains latitude and longitude\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data).to.have.property('latitude');",
+							"    pm.expect(data).to.have.property('longitude');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/food-location/?name=Hard Rock Cafe",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"food-location",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Hard Rock Cafe"
+						}
+					]
+				},
+				"description": "Task 2: Finds latitude and longitude for a restaurant using Google Maps Geocoding."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Country Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Contains capital and population\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data).to.have.property('capital');",
+							"    pm.expect(data).to.have.property('population');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/country-info/Japan/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"country-info",
+						"Japan",
+						""
+					]
+				},
+				"description": "Task 3: Fetches country facts (population and capital)."
+			},
+			"response": []
+		},
+		{
+			"name": "4. GitHub Public Repos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Contains list of repositories\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data).to.have.property('repositories');",
+							"    pm.expect(Array.isArray(data.repositories)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/github-repos/torvalds/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"github-repos",
+						"torvalds",
+						""
+					]
+				},
+				"description": "Task 4: Fetches public repositories list for a GitHub user."
+			},
+			"response": []
+		}
+	]
+}
