@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <fieldset>
+        <h1>Add Todo list</h1>
+        <label for="">Enter task:</label>
+        <input type="text" name="" id="txt1">
+
+        <button onclick="addTask()">Add</button>
+    </fieldset>
+    <ul id="tasklist"></ul>
+
+
+    <script>
+        let i=1;
+        function addTask(){
+            
+            let taskName = document.getElementById('txt1').value;
+            let li1= document.createElement('li');
+           
+            li1.innerText=taskName;
+            let div1= document.createElement('div');
+            let checkBox = document.createElement('input')
+            checkBox.type="checkbox"
+            checkBox.setAttribute('id','chck_'+i)
+
+             div1.appendChild(li1)
+             div1.appendChild(checkBox)
+             li1.setAttribute('id','liid_'+i)
+              div1.setAttribute('id','chck_'+i)
+              console.log(div1);
+            document.getElementById('tasklist').appendChild(div1);
+             document.getElementById('txt1').value="";
+             i++;
+        }
+
+         
+        document.getElementById('tasklist').addEventListener('click',(e)=>{
+               let id = e.target.id.split('_');
+               console.log(id);
+               let removeLi = document.getElementById('liid_'+id[1])
+               console.log(removeLi);
+               removeLi.style.textDecoration = "line-through"
+       
+        })
+        
+    </script>
+</body>
+</html>

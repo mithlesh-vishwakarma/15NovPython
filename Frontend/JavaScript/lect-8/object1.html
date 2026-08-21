@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<fieldset>
+    <input type="text" name="uname" id="txt1" class="txt">
+   
+</fieldset>
+    <script>
+        let user ={
+            username:"john",
+            email:'john@gmail.com',
+            'total exp':'5 year'
+            
+        }
+        console.log(user['total exp']);
+
+        let product = new Object();
+        product.pname="laptop";
+        product.price=210000;
+
+        console.log(product);
+
+        console.log('pricezzz' in product);
+
+        for(key in product){
+             let pro = `${key}  = ${product[key]}`
+              console.log(pro);
+              
+        }
+        
+        
+
+        document.getElementById('txt1').addEventListener('change',(event)=>{
+              let user= {};
+            let key = event.target.name;
+            let value=event.target.value;
+            user[key]=value;
+            console.log(user);
+            
+        })
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function User(name,email){
+            this.uname=name,
+            this.email=email
+        }
+
+        let u1 = new User('kaif','kaif@test.com');
+        let u2 = new User ('Sufiyan','s@test.com')
+
+        console.log(u1);
+        console.log(u2);
+
+        let editData = {'name':'john',cat:{exp:2}};
+
+        //console.log(editData.cat ? editData.cat.exp:"");
+        console.log(editData?.cat?.exp);
+        
+        
+        let username ;
+
+        console.log(username && username);
+        
+        
+        
+    </script>
+</body>
+</html>

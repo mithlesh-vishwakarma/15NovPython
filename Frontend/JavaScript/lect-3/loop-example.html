@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        console.log("while example");
+        let i=19;
+        while(i<=10){
+            console.log("i=",i);
+            i++;
+            
+        }
+
+        console.log("for loop");
+
+        for(i=12;i<=20;i++){
+            console.log("i=",i);
+            
+        }
+
+        console.log("Exit control loop:Do while");
+
+        let j=19;
+        do{
+            console.log("j=",j);
+            j++
+            
+        }while(i<=10)
+        
+        function createTable(){
+            let num = document.getElementById('num').value;
+            console.log(num);
+            let str="";
+            for(i=1;i<=10;i++){
+                 str += `${num} * ${i}= ${num*i}<br>`
+            }
+            document.getElementById('result').innerHTML=str; 
+        }
+        
+    </script>
+</head>
+<body>
+    <fieldset>
+        <legend>
+           Create Table
+        </legend>
+         <label for="">Enter number</label>
+            <input type="text" name="" id="num" Library and package also two different package also difference check. What is the difference between package and library normal library and package versus two different message called problem a message package display package during the multiple or single library file that is called library file export functionality functionality user is the process of reconciliation in a react? What is the process of reconciliation in a react? React reconciliation process virtual dom or active compiler or compile terminated by the changes virtual dogma copy generate virtual dominant copy generate correct to you is it change virtual document necessary total message comparison same class effect effective copy of actual dump lightweight copy of actual dump and the state has changed first update virtual dump then react compile the virtual dumb and actual dump and change minimal change which are necessary what is a state state external state counter component val>
+            <button onclick="createTable()">Create Table</button>
+            <p id="result"></p>
+    </fieldset>
+
+</body>
+</html>

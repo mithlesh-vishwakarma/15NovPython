@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        let Addition = function(x,y){
+            console.log(`add=${x+y}`);
+            
+        }
+
+        console.log(Addition);
+        console.log(typeof(Addition));
+        Addition(12,34);
+
+        function even(num){
+            console.log(`${num} is Even  number`);
+            
+        }
+         function odd(num){
+            console.log(`${num} is Odd  number`);
+            
+        }
+        function FindEvenOdd(cb1,cb2){
+            let num= prompt("Enter num");
+            if(num%2==0){
+                console.log("typeof",typeof(cb1));
+                
+                cb1(num)
+            }
+            else{
+                cb2(num)
+            }
+        }
+
+        FindEvenOdd(even,odd);
+        
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

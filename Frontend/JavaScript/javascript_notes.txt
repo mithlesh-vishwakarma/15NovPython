@@ -1,0 +1,574 @@
+================================================================================
+  ██████╗ █████╗ ██╗   ██╗██╗███████╗██████╗██████╗ ██╗██████╗ ████████╗
+  ╚════██╗██╔══██╗██║   ██║██║██╔════╝██╔════╝██╔══██╗██║██╔══██╗╚══██╔══╝
+   █████═╝███████║██║   ██║██║███████╗██║     ██████╔╝██║██████╔╝   ██║   
+  ██╔═══╝ ██╔══██║╚██╗ ██╔╝██║╚════██║██║     ██╔══██╗██║██╔═══╝    ██║   
+  ███████╗██║  ██║ ╚████╔╝ ██║███████║╚██████╗██║  ██║██║██║        ██║   
+  ╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝   
+                    EXHAUSTIVE MASTER STUDY NOTES (.TXT)
+================================================================================
+ Reference Materials: js/lect-1 to js/lect-8 + Foundational JS Core Topics
+ Organization Strategy: Comprehensive Topic-Wise Master Guide
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+ 1. Topic 1: JavaScript Fundamentals & Core Concepts
+    1.1 Execution Context & Hoisting
+    1.2 Strict Mode ("use strict")
+    1.3 Variable Declarations (var, let, const)
+    1.4 Comments & Template Literals
+    1.5 User Interaction Modals
+
+ 2. Topic 2: Data Types, Conversion & Operators
+    2.1 Primitive vs Non-Primitive Types
+    2.2 Truthy & Falsy Values
+    2.3 Loose Equality (==) vs Strict Equality (===)
+    2.4 Type Conversion & Type Coercion
+    2.5 Advanced Operators (??, &&, ||, Ternary)
+
+ 3. Topic 3: Control Flow & Loops
+    3.1 Conditional Statements (if, else if, else)
+    3.2 Switch-Case Statements
+    3.3 Iterative Loops & Loop Control (break, continue)
+
+ 4. Topic 4: Functions & Functional Programming
+    4.1 Function Declarations, Scope Chain & Rest Parameters
+    4.2 Function Expressions, Arrow Functions & IIFE
+    4.3 Callback Functions & Pure vs Impure Functions
+
+ 5. Topic 5: Objects & Constructor Functions
+    5.1 Object Creation, Dynamic Keys & Property Access
+    5.2 Built-in Object Utility Methods & Destructuring
+    5.3 Object Methods, "this" Keyword & Reference Copying
+    5.4 Constructor Functions & Optional Chaining (?.)
+
+ 6. Topic 6: Document Object Model (DOM) Manipulation
+    6.1 DOM Selection & Traversal Methods
+    6.2 Content Modification, Attributes & Styles
+    6.3 Class Manipulation & Node Removal
+    6.4 Dynamic Element Creation (Interactive Todo App)
+
+ 7. Topic 7: Event Handling & Event Propagation
+    7.1 Common Browser Events & Form Interception
+    7.2 Event Propagation: Capturing vs Bubbling
+    7.3 Event Delegation
+--------------------------------------------------------------------------------
+
+
+================================================================================
+TOPIC 1: JAVASCRIPT FUNDAMENTALS & CORE CONCEPTS
+================================================================================
+
+[ 1.1 ] EXECUTION CONTEXT & HOISTING
+--------------------------------------------------------------------------------
+JavaScript executes code in two distinct phases within an Execution Context:
+  1. Memory Creation Phase : Memory allocated for variables & functions.
+                             (var initialized to undefined, functions loaded)
+  2. Code Execution Phase  : Code runs line-by-line assigning values.
+
+Hoisting is JS's behavior of hoisting declarations to top during Memory Phase.
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Hoisting Behavior                                          |
+  +--------------------------------------------------------------------------+
+  |  // Function Hoisting                                                    |
+  |  sayHello(); // [OK] Works because function declaration is fully hoisted |
+  |  function sayHello() { console.log("Hello World!"); }                    |
+  |                                                                          |
+  |  // Variable Hoisting                                                    |
+  |  console.log(a); // Output: undefined                                    |
+  |  var a = 10;                                                             |
+  |                                                                          |
+  |  // console.log(b); // [ERROR] ReferenceError (Temporal Dead Zone - TDZ)  |
+  |  let b = 20;                                                             |
+  +--------------------------------------------------------------------------+
+
+
+[ 1.2 ] STRICT MODE ("use strict")
+--------------------------------------------------------------------------------
+Strict mode enforces cleaner code and prevents silent errors by throwing 
+exceptions for undeclared variables or unsafe actions.
+Place "use strict"; at the top of a script file or function scope.
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Strict Mode                                                |
+  +--------------------------------------------------------------------------+
+  |  "use strict";                                                           |
+  |  console.log("Hello World");                                             |
+  |  m = 100; // [ERROR] ReferenceError: m is not defined                    |
+  +--------------------------------------------------------------------------+
+
+
+[ 1.3 ] VARIABLE DECLARATIONS (var, let, const)
+--------------------------------------------------------------------------------
+JavaScript provides three keywords to declare variables: var, let, and const.
+
+  +--------------+------------------+------------------+------------------+
+  | FEATURE      | var              | let              | const            |
+  +--------------+------------------+------------------+------------------+
+  | Scope        | Function scope   | Block scope {}   | Block scope {}   |
+  | Redeclarable | YES              | NO               | NO               |
+  | Redefinable  | YES              | YES              | NO               |
+  | Hoisting     | Initialized to   | Temporal Dead    | Temporal Dead    |
+  |              | undefined        | Zone (TDZ)       | Zone (TDZ)       |
+  +--------------+------------------+------------------+------------------+
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Variable Declarations                                      |
+  +--------------------------------------------------------------------------+
+  |  // --- let ---                                                          |
+  |  let cName = "Tops Tech";                                                |
+  |  cName = "CodeBite";    // [OK] Re-definition allowed                    |
+  |  // let cName = "abc";  // [ERROR] SyntaxError: Already declared         |
+  |                                                                          |
+  |  // --- const ---                                                        |
+  |  const PI = 3.14;                                                        |
+  |  // PI = 2.7;           // [ERROR] TypeError: Assignment to constant    |
+  |                                                                          |
+  |  // --- var ---                                                          |
+  |  var m = 100;                                                            |
+  |  var m = 400;           // [OK] Redeclaration and re-definition allowed  |
+  |  console.log(m);        // Output: 400                                   |
+  +--------------------------------------------------------------------------+
+
+
+[ 1.4 ] COMMENTS & TEMPLATE LITERALS
+--------------------------------------------------------------------------------
+  • Single-line Comment  : //
+  • Multi-line Comment   : /* ... */
+  • Template Literals    : Backticks `` ` `` allow string interpolation 
+                           `${expression}` and multi-line formatting.
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Template Literals                                          |
+  +--------------------------------------------------------------------------+
+  |  let name = "Megha";                                                     |
+  |  let role = "Instructor";                                                |
+  |  let greeting = `Hello ${name}, role: ${role}.                           |
+  |  Welcome to JS!`;                                                        |
+  |  console.log(greeting);                                                  |
+  +--------------------------------------------------------------------------+
+
+
+[ 1.5 ] USER INTERACTION MODALS
+--------------------------------------------------------------------------------
+JavaScript provides three built-in modal dialog boxes:
+
+  1. alert(message)   : Displays an informational pop-up to the user.
+  2. prompt(message)  : Prompts the user for text input (returns string/null).
+  3. confirm(message) : Asks for confirmation (returns boolean: true/false).
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Interaction Modals                                         |
+  +--------------------------------------------------------------------------+
+  |  alert("Welcome to JS tutorial");                                        |
+  |  let userName = prompt("Enter your name");                               |
+  |  let isConfirmed = confirm("Are you sure to delete items?");             |
+  |  if (isConfirmed) alert("Deleted!");                                     |
+  +--------------------------------------------------------------------------+
+
+
+================================================================================
+TOPIC 2: DATA TYPES, CONVERSION & OPERATORS
+================================================================================
+
+[ 2.1 ] PRIMITIVE VS NON-PRIMITIVE DATA TYPES
+--------------------------------------------------------------------------------
+  • Primitive Types    : Number, BigInt, String, Symbol, Null, Undefined, Boolean
+  • Non-Primitive Type : Object (including Arrays & Functions)
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Checking Types with typeof                                 |
+  +--------------------------------------------------------------------------+
+  |  let num1 = 123;                         // typeof -> "number"          |
+  |  let largeNum = 12378797987878978998n;   // typeof -> "bigint"          |
+  |  let name = "Manthan";                   // typeof -> "string"          |
+  |  let sym = Symbol("id");                 // typeof -> "symbol"          |
+  |  let res = null;                         // typeof -> "object" (quirk)  |
+  |  let m;                                  // typeof -> "undefined"       |
+  |  let flag = true;                        // typeof -> "boolean"         |
+  |  let user = { name: 'abc' };             // typeof -> "object"          |
+  +--------------------------------------------------------------------------+
+
+
+[ 2.2 ] TRUTHY & FALSY VALUES
+--------------------------------------------------------------------------------
+The 6 Falsy Values in JavaScript:
+  1. false
+  2. 0 (and -0, 0n)
+  3. "" (empty string)
+  4. null
+  5. undefined
+  6. NaN
+
+*Every other value in JS is TRUTHY (including "0", "false", [], {}, function(){}).
+
+
+[ 2.3 ] LOOSE EQUALITY (==) VS STRICT EQUALITY (===)
+--------------------------------------------------------------------------------
+  • Loose Equality (==)   : Performs implicit coercion before comparing.
+  • Strict Equality (===) : Compares both VALUE and DATA TYPE without coercion.
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Equality Comparison                                        |
+  +--------------------------------------------------------------------------+
+  |  console.log(5 == "5");         // Output: true  (string coerced)       |
+  |  console.log(5 === "5");        // Output: false (different types)      |
+  |  console.log(null == undefined);// Output: true                         |
+  |  console.log(null === undefined);// Output: false                        |
+  +--------------------------------------------------------------------------+
+
+
+[ 2.4 ] TYPE CONVERSION & TYPE COERCION
+--------------------------------------------------------------------------------
+Implicit Coercion : Automatic conversion during evaluation (+, *, /).
+Explicit Conversion: Manual conversion via Number(), String(), Boolean().
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Type Conversion Rules                                      |
+  +--------------------------------------------------------------------------+
+  |  console.log("12" + 3);    // Output: "123" (String concatenation)        |
+  |  console.log(2 + 2 + "1"); // Output: "41"  (Left to right)              |
+  |  console.log("12" * 3);    // Output: 36    (Numeric coercion)          |
+  |  console.log("6" / "2");   // Output: 3                                    |
+  |                                                                          |
+  |  console.log(Number("123")); // Output: 123                              |
+  |  console.log(Number("abc")); // Output: NaN                              |
+  |                                                                          |
+  |  let num = +prompt("Enter num"); // Unary + converts to number           |
+  |  console.log(3 > 2 > 1);     // Output: false (true > 1 -> 1 > 1)        |
+  +--------------------------------------------------------------------------+
+
+
+[ 2.5 ] ADVANCED OPERATORS (??, &&, ||, Ternary)
+--------------------------------------------------------------------------------
+  • Ternary Operator        : condition ? valIfTrue : valIfFalse
+  • Nullish Coalescing (??) : Returns right side ONLY if left is null/undefined.
+  • Logical OR (||)         : Returns right side if left is ANY falsy value.
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Ternary & Nullish vs Logical OR                            |
+  +--------------------------------------------------------------------------+
+  |  let age = 20;                                                           |
+  |  let status = (age >= 18) ? "Adult" : "Minor";                           |
+  |                                                                          |
+  |  let count = 0;                                                          |
+  |  console.log(count || 10); // Output: 10 (0 is falsy, falls back)        |
+  |  console.log(count ?? 10); // Output: 0  (0 is preserved!)              |
+  +--------------------------------------------------------------------------+
+
+
+================================================================================
+TOPIC 3: CONTROL FLOW & LOOPS
+================================================================================
+
+[ 3.1 ] CONDITIONAL STATEMENTS (if, else if, else)
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Dynamic CSS Filter Manipulator                             |
+  +--------------------------------------------------------------------------+
+  |  function filterImg(filterProp) {                                       |
+  |      let img = document.getElementById('img1');                          |
+  |      if (filterProp == "gray") img.style.filter = "grayscale(60%)";      |
+  |      else if (filterProp == "blur") img.style.filter = "blur(4px)";      |
+  |      else img.style.filter = "none";                                     |
+  |  }                                                                       |
+  +--------------------------------------------------------------------------+
+
+
+[ 3.2 ] SWITCH-CASE STATEMENTS
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Calculator via Switch-Case                                 |
+  +--------------------------------------------------------------------------+
+  |  function calculate(num1, num2, op) {                                    |
+  |      let res;                                                            |
+  |      switch(op) {                                                        |
+  |          case '+': res = num1 + num2; break;                             |
+  |          case '-': res = num1 - num2; break;                             |
+  |          default: alert("Invalid operator"); return;                     |
+  |      }                                                                   |
+  |      console.log("Result:", res);                                        |
+  |  }                                                                       |
+  +--------------------------------------------------------------------------+
+
+
+[ 3.3 ] ITERATIVE LOOPS & LOOP CONTROL (break, continue)
+--------------------------------------------------------------------------------
+  • while & for : Entry-controlled loops.
+  • do...while  : Exit-controlled loop (executes at least ONCE).
+  • break       : Exits the loop entirely.
+  • continue    : Skips current iteration and moves to next.
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Loops, Controls & Chessboard Grid                         |
+  +--------------------------------------------------------------------------+
+  |  // Loop Control Statements                                              |
+  |  for (let k = 1; k <= 10; k++) {                                         |
+  |      if (k === 3) continue; // Skip 3                                    |
+  |      if (k === 7) break;    // Stop loop at 7                            |
+  |      console.log(k);        // Prints 1, 2, 4, 5, 6                      |
+  |  }                                                                       |
+  |                                                                          |
+  |  // Chessboard Grid Generation                                           |
+  |  function chessGen() {                                                   |
+  |      let str = "";                                                       |
+  |      for (let i = 1; i <= 8; i++) {                                      |
+  |          str += "<div>";                                                 |
+  |          for (let j = 1; j <= 8; j++) {                                  |
+  |              str += ((i+j)%2 === 0) ? `<span class="black">${i}</span>`  |
+  |                                     : `<span class="white">${i}</span>`; |
+  |          }                                                               |
+  |          str += "</div>";                                                |
+  |      }                                                                   |
+  |      document.getElementById('main').innerHTML = str;                    |
+  |  }                                                                       |
+  +--------------------------------------------------------------------------+
+
+
+================================================================================
+TOPIC 4: FUNCTIONS & FUNCTIONAL PROGRAMMING
+================================================================================
+
+[ 4.1 ] FUNCTION DECLARATIONS, SCOPE CHAIN & REST PARAMETERS
+--------------------------------------------------------------------------------
+  • Rest Parameters (...args) : Collects arbitrary arguments into an array.
+  • Scope Chain              : Inner functions can access variables from 
+                               outer lexical environments.
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Declarations, Rest Params & Scope                          |
+  +--------------------------------------------------------------------------+
+  |  // Rest Parameters                                                      |
+  |  function sumAll(...numbers) {                                           |
+  |      return numbers.reduce((total, n) => total + n, 0);                  |
+  |  }                                                                       |
+  |  console.log(sumAll(10, 20, 30)); // Output: 60                          |
+  |                                                                          |
+  |  // Scope Chain                                                          |
+  |  let globalVar = "Global";                                               |
+  |  function outer() {                                                      |
+  |      let outerVar = "Outer";                                             |
+  |      function inner() { console.log(outerVar, globalVar); }              |
+  |      inner();                                                            |
+  |  }                                                                       |
+  +--------------------------------------------------------------------------+
+
+
+[ 4.2 ] FUNCTION EXPRESSIONS, ARROW FUNCTIONS & IIFE
+--------------------------------------------------------------------------------
+  • IIFE : Immediately Invoked Function Expression runs immediately upon creation.
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Expressions, Arrows & IIFE                                 |
+  +--------------------------------------------------------------------------+
+  |  const add = function(a, b) { return a + b; };                           |
+  |  const multiply = (a, b) => a * b;                                       |
+  |                                                                          |
+  |  // IIFE                                                                 |
+  |  (function() {                                                           |
+  |      console.log("IIFE executed immediately!");                          |
+  |  })();                                                                   |
+  +--------------------------------------------------------------------------+
+
+
+[ 4.3 ] CALLBACK FUNCTIONS & PURE VS IMPURE FUNCTIONS
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Callback Pattern                                           |
+  +--------------------------------------------------------------------------+
+  |  function even(num) { console.log(`${num} is Even`); }                  |
+  |  function odd(num)  { console.log(`${num} is Odd`); }                   |
+  |                                                                          |
+  |  function FindEvenOdd(cb1, cb2) {                                       |
+  |      let num = prompt("Enter number");                                   |
+  |      (num % 2 == 0) ? cb1(num) : cb2(num);                               |
+  |  }                                                                       |
+  |  FindEvenOdd(even, odd);                                                 |
+  +--------------------------------------------------------------------------+
+
+
+================================================================================
+TOPIC 5: OBJECTS & CONSTRUCTOR FUNCTIONS
+================================================================================
+
+[ 5.1 ] OBJECT CREATION & DYNAMIC PROPERTY KEYS
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Object Access & Dynamic Keys                               |
+  +--------------------------------------------------------------------------+
+  |  let user = { username: "john", 'total exp': '5 year' };                 |
+  |  console.log(user["total exp"]); // Bracket notation required            |
+  |                                                                          |
+  |  // Dynamic Property Assignment                                       |
+  |  document.getElementById('txt1').addEventListener('change', (e) => {     |
+  |      let obj = {};                                                       |
+  |      obj[e.target.name] = e.target.value;                                |
+  |  });                                                                     |
+  +--------------------------------------------------------------------------+
+
+
+[ 5.2 ] BUILT-IN OBJECT UTILITY METHODS & DESTRUCTURING
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Object Utilities & Destructuring                           |
+  +--------------------------------------------------------------------------+
+  |  let product = { name: "Laptop", price: 50000 };                         |
+  |  console.log(Object.keys(product));   // ["name", "price"]               |
+  |  console.log(Object.values(product)); // ["Laptop", 50000]               |
+  |  console.log(Object.entries(product));// [["name","Laptop"],...]         |
+  |                                                                          |
+  |  Object.freeze(product); // Prevents property addition/deletion/mutation |
+  |                                                                          |
+  |  // Object Destructuring                                                 |
+  |  const { name, price } = product;                                        |
+  |  console.log(name, price);                                               |
+  +--------------------------------------------------------------------------+
+
+
+[ 5.3 ] OBJECT METHODS, THIS KEYWORD & PASS-BY-REFERENCE
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Pass-by-Reference vs Object.assign()                       |
+  +--------------------------------------------------------------------------+
+  |  let user = { uname: "abc" };                                            |
+  |  let admin = user;        // Copies memory address reference             |
+  |  admin.uname = "john";                                                   |
+  |  console.log(user.uname); // Output: "john" (original mutated)           |
+  |                                                                          |
+  |  // Shallow Copy via Object.assign()                                     |
+  |  let copy = {};                                                          |
+  |  Object.assign(copy, user);                                              |
+  |  copy.uname = "Sufiyan";                                                 |
+  |  console.log(user.uname); // Output: "john" (original safe)              |
+  +--------------------------------------------------------------------------+
+
+
+[ 5.4 ] CONSTRUCTOR FUNCTIONS & OPTIONAL CHAINING (?.)
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Constructors & Optional Chaining                           |
+  +--------------------------------------------------------------------------+
+  |  function User(name, email) {                                            |
+  |      this.uname = name;                                                  |
+  |      this.email = email;                                                 |
+  |  }                                                                       |
+  |  let u1 = new User('kaif', 'kaif@test.com');                             |
+  |                                                                          |
+  |  let editData = { name: 'john', cat: { exp: 2 } };                      |
+  |  console.log(editData?.cat?.exp);     // Output: 2                       |
+  |  console.log(editData?.profile?.age); // Output: undefined (No crash!)   |
+  +--------------------------------------------------------------------------+
+
+
+================================================================================
+TOPIC 6: DOCUMENT OBJECT MODEL (DOM) MANIPULATION
+================================================================================
+
+[ 6.1 ] DOM SELECTION & TRAVERSAL METHODS
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: DOM Traversal & Selection                                  |
+  +--------------------------------------------------------------------------+
+  |  let child = document.getElementById('para-1');                          |
+  |  let parent = child.parentElement;                                       |
+  |  let nextSib = child.nextElementSibling;                                 |
+  |  let prevSib = child.previousElementSibling;                             |
+  +--------------------------------------------------------------------------+
+
+
+[ 6.2 ] CONTENT MODIFICATION & CLASS MANIPULATION
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Attributes & ClassList                                     |
+  +--------------------------------------------------------------------------+
+  |  let p1 = document.getElementById('parar1');                             |
+  |  p1.setAttribute("data-test", "val");                                    |
+  |  p1.innerHTML = "<b>Bold</b>";                                           |
+  |                                                                          |
+  |  let box = document.getElementById('box1');                              |
+  |  box.classList.toggle('show');                                           |
+  |  box.remove(); // Removes node from DOM                                  |
+  +--------------------------------------------------------------------------+
+
+
+[ 6.3 ] DYNAMIC ELEMENT CREATION (Interactive Todo App)
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Dynamic Element Creation                                   |
+  +--------------------------------------------------------------------------+
+  |  let counter = 1;                                                        |
+  |  function addTask() {                                                    |
+  |      let taskName = document.getElementById('txt1').value;               |
+  |      let li = document.createElement('li');                              |
+  |      li.innerText = taskName;                                            |
+  |      li.setAttribute('id', 'liid_' + counter);                           |
+  |                                                                          |
+  |      let containerDiv = document.createElement('div');                   |
+  |      containerDiv.appendChild(li);                                       |
+  |      document.getElementById('tasklist').appendChild(containerDiv);      |
+  |      counter++;                                                          |
+  |  }                                                                       |
+  +--------------------------------------------------------------------------+
+
+
+================================================================================
+TOPIC 7: EVENT HANDLING & EVENT PROPAGATION
+================================================================================
+
+[ 7.1 ] COMMON BROWSER EVENTS & FORM INTERCEPTION
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Keyup, Focus, Blur & Submit Interception                   |
+  +--------------------------------------------------------------------------+
+  |  document.getElementById('txt1').addEventListener('focus', (e) => {      |
+  |      e.target.style.backgroundColor = "lightgray";                       |
+  |  });                                                                     |
+  |                                                                          |
+  |  document.getElementById('frm1').addEventListener('submit', (e) => {     |
+  |      e.preventDefault(); // Prevents HTTP page reload                    |
+  |  });                                                                     |
+  +--------------------------------------------------------------------------+
+
+
+[ 7.2 ] EVENT PROPAGATION: CAPTURING VS BUBBLING
+--------------------------------------------------------------------------------
+Event propagation occurs in 3 phases:
+  1. Capturing Phase : Event travels down from window -> document -> ancestors -> target
+  2. Target Phase    : Event reaches target element
+  3. Bubbling Phase  : Event bubbles back up from target -> ancestors -> window
+
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Event Bubbling & stopPropagation()                         |
+  +--------------------------------------------------------------------------+
+  |  child.addEventListener('click', (e) => {                                |
+  |      console.log("Child clicked");                                       |
+  |      e.stopPropagation(); // Halts bubbling up to parent!               |
+  |  });                                                                     |
+  |                                                                          |
+  |  parent.addEventListener('click', (e) => {                               |
+  |      console.log("Target:", e.target);                                   |
+  |      console.log("Current Target:", e.currentTarget);                   |
+  |  });                                                                     |
+  +--------------------------------------------------------------------------+
+
+
+[ 7.3 ] EVENT DELEGATION
+--------------------------------------------------------------------------------
+  +--------------------------------------------------------------------------+
+  | CODE EXAMPLE: Delegation via Parent Container                            |
+  +--------------------------------------------------------------------------+
+  |  document.getElementById('tasklist').addEventListener('click', (e) => {   |
+  |      let id = e.target.id.split('_');                                    |
+  |      let removeLi = document.getElementById('liid_' + id[1]);            |
+  |      if (removeLi) {                                                     |
+  |          removeLi.style.textDecoration = "line-through";                 |
+  |      }                                                                   |
+  |  });                                                                     |
+  +--------------------------------------------------------------------------+
+
+================================================================================
+                    END OF EXHAUSTIVE MASTER NOTES (.TXT)
+================================================================================

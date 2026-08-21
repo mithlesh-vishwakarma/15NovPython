@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function addPara(){
+            let text1 = prompt('Enter text');
+            let p1 = document.getElementById('parar1');
+            //p1.innerText=text1;
+            p1.textContent="<b>Tops tech</b>"
+           // p1.innerHTML="<b>Tops tech</b>"
+        }
+    </script>
+</head>
+<body>
+    <fieldset>
+        <p id="parar1"></p>
+        <button onclick="addPara()">Click</button>
+    </fieldset>
+</body>
+</html>

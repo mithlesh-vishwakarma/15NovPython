@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function findEvenOdd(){
+            let num = prompt("Enter num");
+            if(num%2==0){
+                alert("Even num")
+            }
+            else{
+                alert("Odd num");
+            }
+        }
+
+        function filterImg(filterProp){
+            let img1 = document.getElementById('img1');
+            console.log(img1);
+            console.log(filterProp);
+            
+            if(filterProp=="gray"){
+                img1.style.filter="grayscale(60%)"
+            }
+            else if(filterProp=="blur"){
+                img1.style.filter="blur(4px)"
+            }
+             else if(filterProp=="bright"){
+                img1.style.filter="brightness(80%)"
+            }
+             else if(filterProp=="contrast"){
+                img1.style.filter="contrast(70%)"
+            }
+            else{
+                img1.style.filter="none"
+            }
+        }
+    </script>
+</head>
+<body>
+    
+    <button onclick="findEvenOdd()">
+        Find Even Odd 
+    </button>
+    <fieldset>
+        <legend>Image Filter</legend>
+        <img src="bird.jpeg" alt="" id="img1">
+        <div>
+            <button onclick="filterImg('gray')">Gray scale</button>
+            <button onclick="filterImg('blur')">Blur image</button>
+            <button onclick="filterImg('bright')">Brightness</button>
+            <button onclick="filterImg('contrast')">Contrast</button>
+        </div>
+    </fieldset>
+</body>
+</html>

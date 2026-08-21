@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        console.log("12" + 3);
+        console.log("12"*3);
+        console.log(2+2+"1");
+        console.log("6"/"2");
+
+        console.log(Number("123"));
+         console.log(Number("abc"));
+          console.log(Number(true));
+
+        console.log(Boolean(undefined));
+        console.log(Boolean("false"));
+        
+        
+        function numTypeCheck(){
+            let num1 = +prompt('Enter number');
+            console.log(typeof(num1));
+            let num2 = +prompt('Enter num 2');
+            console.log(num1+num2);
+            
+            
+        }
+
+        console.log(3>2>1);
+        
+        
+        
+        
+        
+        
+    </script>
+</head>
+<body>
+    <button onclick="numTypeCheck()">Check type</button>
+</body>
+</html>

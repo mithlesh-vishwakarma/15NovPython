@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #txt1{
+            border:none;
+        }
+    </style>
+   
+</head>
+<body>
+    <input type="text" name="" id="txt1" placeholder="Enter your Name">
+
+    <form method="post" id="frm1">
+        <input type="text" name="name" id="">
+        <input type="submit" value="Submit">
+    </form>
+
+     <script >
+        document.getElementById('txt1').addEventListener('keyup',(event)=>{
+            console.log(event.target.value);
+            
+        })
+         document.getElementById('txt1').addEventListener('focus',(e)=>{
+             e.target.style.padding="10px 20px"
+             e.target.style.backgroundColor="gray"
+        })
+
+        document.getElementById('frm1').addEventListener('submit',function(e){
+            e.preventDefault();
+            console.log("form submitted");
+            
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let user={
+            uname:"abc"
+        }
+
+        user.printName= function(){
+              console.log(this.uname);
+              
+        }
+        user.printName();
+
+        let admin=user;//address
+
+        admin.uname="jhon";
+
+        console.log(user);
+        console.log(user===admin);
+
+        const product={
+            panme:'laptop',
+            price:200000
+        }
+
+        product.price=10000;
+
+        console.log(product);
+
+        let pro={};
+
+        // for(key in product){
+        //     pro[key]=product[key]
+        // }
+
+        Object.assign(pro,product)
+
+        console.log(pro);
+
+        pro.price=20;
+        console.log(pro);
+
+        console.log(product);
+        
+        
+        
+        
+
+    </script>
+</body>
+</html>

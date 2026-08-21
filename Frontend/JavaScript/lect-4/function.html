@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+        //basic function
+        function Display(){
+            console.log('welcome to js lec');
+            
+        }
+        Display();
+
+        //function with parameter
+        function add(x,y){
+            console.log(`addition= ${x+y}`);
+        }
+        add(123,45);
+
+        //function returing value
+        function converToUpper(str){
+             let upr = str.toUpperCase();
+             return upr
+        }
+
+        let Name= converToUpper('megha');
+        console.log(Name);
+
+
+        let y=200;
+        //local varible
+        function test(){
+            let m=100;//local varible
+            console.log(m);
+            console.log(y);
+            
+        }
+        test();
+
+        function Addition(x,y,z=0){
+            console.log(`addition=${x+y+z}`);
+            
+        }
+
+        Addition(1,2);
+        Addition(3,4,5);
+
+        let add1 = (a,b)=> a+b;
+
+         console.log( add1(2,4));
+         
+
+        let handleChange=()=>{
+            alert('arrow function example')
+        }
+        
+
+
+      
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            height: 100px;
+            width: 100px;
+            background-color: red;
+        }
+        .hide{
+            display: none;
+        }
+        .show{
+            display: block;
+        }
+    </style>
+    <script>
+        let visiblity="show"
+        function changeStyle(){
+            let box1= document.getElementById('box1');
+            if(visiblity=="show"){
+                box1.classList.remove('show');
+                box1.classList.add('hide');
+                visiblity="hide"
+            }
+            else{
+                 box1.classList.remove('hide');
+                box1.classList.add('show');
+                visiblity="show"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="box" id="box1">
+
+    </div>
+    <button onclick="changeStyle()">Hide/Show</button>
+    
+</body>
+</html>
