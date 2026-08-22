@@ -1,3 +1,35 @@
-from django.shortcuts import render
+from django.db import transaction
+from rest_framework import viewsets, filters
 
-# Create your views here.
+from .models import Doctor, DoctorProfileUpdateLog
+from .serializers import DoctorSerializer
+
+
+class DoctorViewSet(viewsets.ModelViewSet):
+
+    queryset = Doctor.objects.all()
+    serializer_class = DoctorSerializer
+
+    filter_backends = [
+        filters.OrderingFilter,
+    ]
+
+    ordering_fields = [
+        "name",
+        "specialization",
+        "experience",
+        "city",
+        "created_at",
+    ]
+
+    ordering = ["name"]
+
+    @transaction.atomic
+    def perform_update(self, serializer):
+
+        doctor = serializer.save()
+
+        DoctorProfileUpdateLog.objects.create(
+            doctor=doctor,
+            message="Doctor profile updated"
+        )
