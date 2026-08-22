@@ -569,6 +569,853 @@ Event propagation occurs in 3 phases:
   |  });                                                                     |
   +--------------------------------------------------------------------------+
 
+
+============================================================
+              JAVASCRIPT NUMBER DATATYPE
+                    CHEAT SHEET
+============================================================
+
+
+============================================================
+1. NUMBER DATATYPE
+============================================================
+
+JavaScript uses "number" for:
+
+    Integer
+    Decimal
+    Positive number
+    Negative number
+    Infinity
+    NaN
+
+Examples:
+
+    let a = 10;
+    let b = 10.5;
+    let c = -20;
+    let d = 0;
+
+Check datatype:
+
+    typeof 10;
+    // "number"
+
+    typeof 10.5;
+    // "number"
+
+
+============================================================
+2. NUMBER()
+============================================================
+
+Converts a value into a number.
+
+    Number("10");
+    // 10
+
+    Number("10.5");
+    // 10.5
+
+    Number(true);
+    // 1
+
+    Number(false);
+    // 0
+
+    Number("");
+    // 0
+
+    Number("hello");
+    // NaN
+
+    Number(null);
+    // 0
+
+    Number(undefined);
+    // NaN
+
+
+============================================================
+3. Number.isInteger()
+============================================================
+
+Checks whether a value is an integer.
+
+    Number.isInteger(10);
+    // true
+
+    Number.isInteger(10.5);
+    // false
+
+    Number.isInteger("10");
+    // false
+
+    Number.isInteger(-5);
+    // true
+
+
+============================================================
+4. Number.isNaN()
+============================================================
+
+Checks whether a value is NaN.
+
+    Number.isNaN(NaN);
+    // true
+
+    Number.isNaN(10);
+    // false
+
+    Number.isNaN("hello");
+    // false
+
+
+IMPORTANT:
+
+    NaN === NaN;
+    // false
+
+Use:
+
+    Number.isNaN(value);
+
+
+============================================================
+5. Number.isFinite()
+============================================================
+
+Checks whether a value is a finite number.
+
+    Number.isFinite(100);
+    // true
+
+    Number.isFinite(10.5);
+    // true
+
+    Number.isFinite(Infinity);
+    // false
+
+    Number.isFinite(NaN);
+    // false
+
+    Number.isFinite("100");
+    // false
+
+
+============================================================
+6. Number.isSafeInteger()
+============================================================
+
+Checks whether an integer is safely represented.
+
+    Number.isSafeInteger(100);
+    // true
+
+    Number.isSafeInteger(10.5);
+    // false
+
+    Number.isSafeInteger(9007199254740991);
+    // true
+
+
+============================================================
+7. Number.parseInt()
+============================================================
+
+Converts a string into an integer.
+
+    Number.parseInt("10");
+    // 10
+
+    Number.parseInt("10.99");
+    // 10
+
+    Number.parseInt("50px");
+    // 50
+
+
+Using radix:
+
+    Number.parseInt("101", 2);
+    // 5
+
+
+Binary 101 = Decimal 5
+
+
+============================================================
+8. Number.parseFloat()
+============================================================
+
+Converts a string into a decimal number.
+
+    Number.parseFloat("10.5");
+    // 10.5
+
+    Number.parseFloat("100.75px");
+    // 100.75
+
+    Number.parseFloat("10.99");
+    // 10.99
+
+
+Difference:
+
+    Number.parseInt("10.99");
+    // 10
+
+    Number.parseFloat("10.99");
+    // 10.99
+
+
+============================================================
+9. toFixed()
+============================================================
+
+Returns a number formatted with fixed decimal places.
+
+    let price = 10.5678;
+
+    price.toFixed(2);
+    // "10.57"
+
+    price.toFixed(3);
+    // "10.568"
+
+
+IMPORTANT:
+
+toFixed() returns a STRING.
+
+    typeof price.toFixed(2);
+    // "string"
+
+
+============================================================
+10. toPrecision()
+============================================================
+
+Formats a number using significant digits.
+
+    let num = 123.456;
+
+    num.toPrecision(4);
+    // "123.5"
+
+    num.toPrecision(5);
+    // "123.46"
+
+
+============================================================
+11. toString()
+============================================================
+
+Converts a number into a string.
+
+    let num = 100;
+
+    num.toString();
+    // "100"
+
+
+Check:
+
+    typeof num;
+    // "number"
+
+    typeof num.toString();
+    // "string"
+
+
+Different bases:
+
+    (10).toString(2);
+    // "1010"
+
+    (10).toString(8);
+    // "12"
+
+    (10).toString(16);
+    // "a"
+
+
+============================================================
+12. toLocaleString()
+============================================================
+
+Formats a number according to a locale.
+
+    let num = 1234567.89;
+
+    num.toLocaleString("en-IN");
+    // "12,34,567.89"
+
+
+Currency:
+
+    num.toLocaleString("en-IN", {
+        style: "currency",
+        currency: "INR"
+    });
+
+    // "₹12,34,567.89"
+
+
+============================================================
+13. valueOf()
+============================================================
+
+Returns the primitive number value.
+
+    let num = new Number(100);
+
+    num.valueOf();
+    // 100
+
+
+Usually not needed in normal JavaScript.
+
+
+============================================================
+                 NUMBER CONSTANTS
+============================================================
+
+
+14. Number.MAX_VALUE
+------------------------------------------------------------
+
+Largest positive number.
+
+    Number.MAX_VALUE
+
+
+============================================================
+15. Number.MIN_VALUE
+============================================================
+
+Smallest positive number greater than zero.
+
+    Number.MIN_VALUE
+
+
+IMPORTANT:
+
+MIN_VALUE is NOT the most negative number.
+
+
+============================================================
+16. Number.MAX_SAFE_INTEGER
+------------------------------------------------------------
+
+Largest safe integer.
+
+    Number.MAX_SAFE_INTEGER;
+
+    // 9007199254740991
+
+
+============================================================
+17. Number.MIN_SAFE_INTEGER
+------------------------------------------------------------
+
+Smallest safe integer.
+
+    Number.MIN_SAFE_INTEGER;
+
+    // -9007199254740991
+
+
+============================================================
+18. Number.POSITIVE_INFINITY
+------------------------------------------------------------
+
+Positive infinity.
+
+    Number.POSITIVE_INFINITY;
+
+    // Infinity
+
+
+Example:
+
+    10 / 0;
+
+    // Infinity
+
+
+============================================================
+19. Number.NEGATIVE_INFINITY
+------------------------------------------------------------
+
+Negative infinity.
+
+    Number.NEGATIVE_INFINITY;
+
+    // -Infinity
+
+
+Example:
+
+    -10 / 0;
+
+    // -Infinity
+
+
+============================================================
+20. Number.NaN
+------------------------------------------------------------
+
+Represents Not-a-Number.
+
+    Number.NaN;
+
+    // NaN
+
+
+Example:
+
+    Number("hello");
+
+    // NaN
+
+
+============================================================
+                    MATH METHODS
+============================================================
+
+
+21. Math.round()
+------------------------------------------------------------
+
+Rounds to nearest integer.
+
+    Math.round(10.4);
+    // 10
+
+    Math.round(10.5);
+    // 11
+
+    Math.round(10.8);
+    // 11
+
+
+============================================================
+22. Math.floor()
+------------------------------------------------------------
+
+Rounds DOWN.
+
+    Math.floor(10.9);
+    // 10
+
+    Math.floor(10.1);
+    // 10
+
+
+Negative numbers:
+
+    Math.floor(-10.1);
+    // -11
+
+
+============================================================
+23. Math.ceil()
+------------------------------------------------------------
+
+Rounds UP.
+
+    Math.ceil(10.1);
+    // 11
+
+    Math.ceil(10.9);
+    // 11
+
+
+Negative numbers:
+
+    Math.ceil(-10.1);
+    // -10
+
+
+============================================================
+24. Math.trunc()
+------------------------------------------------------------
+
+Removes decimal part.
+
+    Math.trunc(10.99);
+    // 10
+
+    Math.trunc(10.01);
+    // 10
+
+    Math.trunc(-10.99);
+    // -10
+
+
+Difference:
+
+    Math.floor(-10.99);
+    // -11
+
+    Math.trunc(-10.99);
+    // -10
+
+
+============================================================
+25. Math.abs()
+------------------------------------------------------------
+
+Returns absolute value.
+
+    Math.abs(10);
+    // 10
+
+    Math.abs(-10);
+    // 10
+
+    Math.abs(-25.5);
+    // 25.5
+
+
+============================================================
+26. Math.max()
+------------------------------------------------------------
+
+Returns largest number.
+
+    Math.max(10, 20, 30);
+    // 30
+
+
+With array:
+
+    let numbers = [10, 20, 30];
+
+    Math.max(...numbers);
+    // 30
+
+
+============================================================
+27. Math.min()
+------------------------------------------------------------
+
+Returns smallest number.
+
+    Math.min(10, 20, 30);
+    // 10
+
+
+With array:
+
+    let numbers = [10, 20, 30];
+
+    Math.min(...numbers);
+    // 10
+
+
+============================================================
+28. Math.pow()
+------------------------------------------------------------
+
+Raises a number to a power.
+
+    Math.pow(2, 3);
+    // 8
+
+Modern way:
+
+    2 ** 3;
+    // 8
+
+
+============================================================
+29. Math.sqrt()
+------------------------------------------------------------
+
+Returns square root.
+
+    Math.sqrt(25);
+    // 5
+
+    Math.sqrt(100);
+    // 10
+
+
+============================================================
+30. Math.cbrt()
+------------------------------------------------------------
+
+Returns cube root.
+
+    Math.cbrt(27);
+    // 3
+
+    Math.cbrt(8);
+    // 2
+
+
+============================================================
+31. Math.random()
+------------------------------------------------------------
+
+Returns random number:
+
+    0 <= number < 1
+
+Example:
+
+    Math.random();
+
+Possible results:
+
+    0.1234
+    0.5678
+    0.9012
+
+
+Random number from 1 to 10:
+
+    Math.floor(Math.random() * 10) + 1;
+
+
+============================================================
+32. Math.sign()
+------------------------------------------------------------
+
+Returns the sign of a number.
+
+    Math.sign(10);
+    // 1
+
+    Math.sign(-10);
+    // -1
+
+    Math.sign(0);
+    // 0
+
+
+============================================================
+33. Math.hypot()
+------------------------------------------------------------
+
+Returns square root of sum of squares.
+
+    Math.hypot(3, 4);
+    // 5
+
+
+Because:
+
+    3² + 4² = 25
+    √25 = 5
+
+
+============================================================
+34. Math.clz32()
+------------------------------------------------------------
+
+Counts leading zero bits in a 32-bit number.
+
+    Math.clz32(1);
+    // 31
+
+Mostly used for low-level/bitwise operations.
+
+
+============================================================
+35. Math.imul()
+------------------------------------------------------------
+
+Performs 32-bit integer multiplication.
+
+    Math.imul(2, 3);
+    // 6
+
+Mostly useful for low-level operations.
+
+
+============================================================
+36. Math.fround()
+------------------------------------------------------------
+
+Converts a number to 32-bit floating-point representation.
+
+    Math.fround(10.5);
+    // 10.5
+
+Mostly used for specialized numeric calculations.
+
+
+============================================================
+              QUICK COMPARISON
+============================================================
+
+
+ROUNDING
+------------------------------------------------------------
+
+Math.round(10.5)
+    → 11
+
+Math.floor(10.9)
+    → 10
+
+Math.ceil(10.1)
+    → 11
+
+Math.trunc(10.9)
+    → 10
+
+
+============================================================
+CONVERSION
+============================================================
+
+Number("10")
+    → 10
+
+Number.parseInt("10.99")
+    → 10
+
+Number.parseFloat("10.99")
+    → 10.99
+
+(10).toString()
+    → "10"
+
+
+============================================================
+CHECKING
+============================================================
+
+Number.isInteger(10)
+    → true
+
+Number.isNaN(NaN)
+    → true
+
+Number.isFinite(10)
+    → true
+
+Number.isSafeInteger(10)
+    → true
+
+
+============================================================
+FORMATTING
+============================================================
+
+(10.567).toFixed(2)
+    → "10.57"
+
+(1234567).toLocaleString("en-IN")
+    → "12,34,567"
+
+
+============================================================
+COMPARISON
+============================================================
+
+Math.max(10, 20, 30)
+    → 30
+
+Math.min(10, 20, 30)
+    → 10
+
+Math.abs(-20)
+    → 20
+
+
+============================================================
+MATHEMATICAL
+============================================================
+
+Math.pow(2, 3)
+    → 8
+
+2 ** 3
+    → 8
+
+Math.sqrt(25)
+    → 5
+
+Math.cbrt(27)
+    → 3
+
+Math.hypot(3, 4)
+    → 5
+
+
+============================================================
+RANDOM
+============================================================
+
+Math.random()
+    → random decimal between 0 and 1
+
+Random 1-10:
+
+    Math.floor(Math.random() * 10) + 1;
+
+
+Random 1-100:
+
+    Math.floor(Math.random() * 100) + 1;
+
+
+============================================================
+              MOST IMPORTANT TO LEARN FIRST
+============================================================
+
+1.  Number()
+2.  Number.isInteger()
+3.  Number.isNaN()
+4.  Number.isFinite()
+5.  Number.parseInt()
+6.  Number.parseFloat()
+7.  toFixed()
+8.  toString()
+9.  Math.round()
+10. Math.floor()
+11. Math.ceil()
+12. Math.trunc()
+13. Math.abs()
+14. Math.max()
+15. Math.min()
+16. Math.random()
+17. Math.sqrt()
+
+
+============================================================
+
+
+
+| Method               | Example                     | Main use             |
+| -------------------- | --------------------------- | -------------------- |
+| `Number()`           | `Number("10")`              | Convert to number    |
+| `Number.isInteger()` | `Number.isInteger(10)`      | Check integer        |
+| `Number.isNaN()`     | `Number.isNaN(x)`           | Check invalid number |
+| `Number.isFinite()`  | `Number.isFinite(x)`        | Validate number      |
+| `parseInt()`         | `parseInt("10px")`          | Extract integer      |
+| `parseFloat()`       | `parseFloat("10.5px")`      | Extract decimal      |
+| `toFixed()`          | `(10.567).toFixed(2)`       | Decimal formatting   |
+| `toString()`         | `(100).toString()`          | Number → string      |
+| `toLocaleString()`   | `1000000..toLocaleString()` | Display formatting   |
+| `Math.round()`       | `Math.round(10.5)`          | Normal rounding      |
+| `Math.floor()`       | `Math.floor(10.9)`          | Round down           |
+| `Math.ceil()`        | `Math.ceil(10.1)`           | Round up             |
+| `Math.max()`         | `Math.max(1, 5, 2)`         | Largest              |
+| `Math.min()`         | `Math.min(1, 5, 2)`         | Smallest             |
+| `Math.abs()`         | `Math.abs(-10)`             | Absolute value       |
+| `Math.random()`      | `Math.random()`             | Random number        |
+
+
+
+
+
+
 ================================================================================
                     END OF EXHAUSTIVE MASTER NOTES (.TXT)
 ================================================================================
