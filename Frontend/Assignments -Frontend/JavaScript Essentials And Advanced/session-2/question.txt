@@ -1,0 +1,18 @@
+Tasks:
+-----------
+1.Create an HTML file named welcome.html, add a <script> tag, and display an alert with the message 'Welcome to your Playlist Builder!' when the page loads.
+
+2.Create an HTML file named insta-bio.html and use the <script> tag to display an alert with the message 'Welcome to your Insta Bio-Link Page!' when the page loads.
+
+3.Open Chrome DevTools on any website you visit daily (like Instagram or Zomato), go to the Console tab, and type console.log('Hello from the console!') to see the output.
+
+
+4.Add a <button> to your HTML file labeled 'Show Bio', and use JavaScript inside a <script> tag to display an alert with your name and favorite app when the button is clicked.
+
+
+5.Modify your insta-bio.html file to add a <button> labeled 'Show Greeting'. When the button is clicked, use JavaScript to show an alert that says 'Hello from JS!'.<br><br><em><strong>Hint:</strong> Use document.querySelector and addEventListener to connect the button with your JS code.</em>
+
+6.Edit your HTML file to include a <h2> tag with the text 'Top 3 Food Apps'. Use JavaScript in a <script> tag to change the color of this heading to green when the page loads.<br><br><em><strong>Hint:</strong> Use document.querySelector to select the heading and style.color to change its color.</em>
+
+
+12.Use VS Code Live Server to open your insta-bio.html file, then change the alert message to include your own name and refresh to see the update.
