@@ -40,6 +40,8 @@ INSTALLED_APPS = [
 
     # Third-party
     'rest_framework',
+    'drf_spectacular',
+
 
     # Local
     'APIdoctorFinder',
@@ -139,4 +141,12 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": [
         "rest_framework.filters.OrderingFilter",
     ],
+    "DEFAULT_SCHEMA_CLASS":"drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "DoctorFinder API",
+    "DESCRIPTION": "API for managing doctors and their profiles",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }

@@ -1,5 +1,5 @@
 from django.db import transaction
-from rest_framework import viewsets, filters
+from rest_framework import filters, viewsets
 
 from .models import Doctor, DoctorProfileUpdateLog
 from .serializers import DoctorSerializer
@@ -25,8 +25,11 @@ class DoctorViewSet(viewsets.ModelViewSet):
     ordering = ["name"]
 
     @transaction.atomic
-    def perform_update(self, serializer):
+    def perform_create(self, serializer):
+        serializer.save()
 
+    @transaction.atomic
+    def perform_update(self, serializer):
         doctor = serializer.save()
 
         DoctorProfileUpdateLog.objects.create(
