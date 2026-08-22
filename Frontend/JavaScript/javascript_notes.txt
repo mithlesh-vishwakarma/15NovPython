@@ -1415,6 +1415,1648 @@ Random 1-100:
 
 
 
+============================================================
+              JAVASCRIPT STRING DATATYPE
+                 METHODS + SLICING
+                    CHEAT SHEET
+============================================================
+
+
+============================================================
+1. STRING DATATYPE
+============================================================
+
+A string is a sequence of characters.
+
+Examples:
+
+    let name = "John";
+
+    let city = 'Ahmedabad';
+
+    let message = `Hello World`;
+
+
+Strings can contain:
+
+    Letters
+    Numbers
+    Spaces
+    Symbols
+    Special characters
+
+
+Examples:
+
+    "Hello"
+    "Hello World"
+    "12345"
+    "Hello@123"
+    ""
+
+
+Check datatype:
+
+    typeof "Hello";
+
+    // "string"
+
+
+============================================================
+2. CREATING STRINGS
+============================================================
+
+Using double quotes:
+
+    let name = "John";
+
+
+Using single quotes:
+
+    let name = 'John';
+
+
+Using backticks:
+
+    let name = `John`;
+
+
+Backticks are called:
+
+    Template Literals
+
+
+============================================================
+3. STRING LENGTH
+============================================================
+
+.length returns the number of characters.
+
+    let name = "John";
+
+    name.length;
+
+    // 4
+
+
+Example:
+
+    let message = "Hello World";
+
+    message.length;
+
+    // 11
+
+
+IMPORTANT:
+
+Spaces are also counted.
+
+    "Hello World".length;
+
+    // 11
+
+
+============================================================
+4. ACCESSING CHARACTERS
+============================================================
+
+
+Using index:
+
+    let name = "John";
+
+    name[0];
+    // "J"
+
+    name[1];
+    // "o"
+
+    name[2];
+    // "h"
+
+    name[3];
+    // "n"
+
+
+Index starts from 0:
+
+    J   o   h   n
+    0   1   2   3
+
+
+Last character:
+
+    name[name.length - 1];
+
+    // "n"
+
+
+============================================================
+5. charAt()
+============================================================
+
+Returns character at a specific index.
+
+    let name = "John";
+
+    name.charAt(0);
+    // "J"
+
+    name.charAt(2);
+    // "h"
+
+
+Invalid index:
+
+    name.charAt(10);
+    // ""
+
+
+============================================================
+6. charCodeAt()
+============================================================
+
+Returns UTF-16 character code.
+
+    "A".charCodeAt(0);
+    // 65
+
+    "a".charCodeAt(0);
+    // 97
+
+    "A".charCodeAt(0);
+    // 65
+
+
+Example:
+
+    let name = "John";
+
+    name.charCodeAt(0);
+    // 74
+
+
+============================================================
+7. at()
+============================================================
+
+Returns character at index.
+
+    let name = "John";
+
+    name.at(0);
+    // "J"
+
+    name.at(2);
+    // "h"
+
+
+IMPORTANT:
+
+at() supports negative indexes.
+
+    name.at(-1);
+    // "n"
+
+    name.at(-2);
+    // "h"
+
+
+This is useful for getting characters from the end.
+
+
+============================================================
+                    STRING SLICING
+============================================================
+
+
+============================================================
+8. slice()
+============================================================
+
+Extracts part of a string.
+
+Syntax:
+
+    string.slice(start, end)
+
+
+Example:
+
+    let text = "JavaScript";
+
+    text.slice(0, 4);
+
+    // "Java"
+
+
+Indexes:
+
+    J a v a S c r i p t
+    0 1 2 3 4 5 6 7 8 9
+
+
+    text.slice(0, 4);
+
+Means:
+
+    Start at 0
+    Stop BEFORE 4
+
+
+Result:
+
+    "Java"
+
+
+============================================================
+9. slice() WITH ONE VALUE
+============================================================
+
+If only start is provided:
+
+    let text = "JavaScript";
+
+    text.slice(4);
+
+    // "Script"
+
+
+Meaning:
+
+    Start from index 4
+    Continue until the end
+
+
+============================================================
+10. slice() WITH NEGATIVE VALUES
+============================================================
+
+Negative indexes count from the end.
+
+    let text = "JavaScript";
+
+
+    text.slice(-6);
+
+    // "Script"
+
+
+Example:
+
+    "Hello World".slice(-5);
+
+    // "World"
+
+
+Last 3 characters:
+
+    "JavaScript".slice(-3);
+
+    // "ipt"
+
+
+============================================================
+11. slice() NEGATIVE START + END
+============================================================
+
+    let text = "JavaScript";
+
+    text.slice(-6, -3);
+
+    // "Scr"
+
+
+Remember:
+
+    Start → included
+    End   → NOT included
+
+
+============================================================
+12. substring()
+============================================================
+
+Similar to slice().
+
+Syntax:
+
+    string.substring(start, end)
+
+
+Example:
+
+    let text = "JavaScript";
+
+    text.substring(0, 4);
+
+    // "Java"
+
+
+Difference from slice():
+
+    slice() supports negative indexes.
+
+    substring() treats negative values as 0.
+
+
+Example:
+
+    "JavaScript".slice(-6);
+
+    // "Script"
+
+
+    "JavaScript".substring(-6);
+
+    // "JavaScript"
+
+
+============================================================
+13. substr()
+============================================================
+
+OLD / DEPRECATED METHOD
+
+Avoid using:
+
+    substr()
+
+
+Use:
+
+    slice()
+
+instead.
+
+
+============================================================
+              SLICE vs SUBSTRING
+============================================================
+
+slice():
+
+    "JavaScript".slice(4, 10);
+    // "Script"
+
+
+substring():
+
+    "JavaScript".substring(4, 10);
+    // "Script"
+
+
+Negative values:
+
+    "JavaScript".slice(-6);
+    // "Script"
+
+
+    "JavaScript".substring(-6);
+    // "JavaScript"
+
+
+RECOMMENDATION:
+
+    Prefer slice().
+
+
+============================================================
+                  CHANGING CASE
+============================================================
+
+
+============================================================
+14. toUpperCase()
+============================================================
+
+Converts string to uppercase.
+
+    let name = "john";
+
+    name.toUpperCase();
+
+    // "JOHN"
+
+
+============================================================
+15. toLowerCase()
+============================================================
+
+Converts string to lowercase.
+
+    let name = "JOHN";
+
+    name.toLowerCase();
+
+    // "john"
+
+
+Example:
+
+    "JaVaScRiPt".toLowerCase();
+
+    // "javascript"
+
+
+============================================================
+16. toLocaleUpperCase()
+============================================================
+
+Locale-aware uppercase conversion.
+
+    "hello".toLocaleUpperCase();
+
+    // "HELLO"
+
+
+============================================================
+17. toLocaleLowerCase()
+============================================================
+
+Locale-aware lowercase conversion.
+
+    "HELLO".toLocaleLowerCase();
+
+    // "hello"
+
+
+============================================================
+                   SEARCHING STRINGS
+============================================================
+
+
+============================================================
+18. indexOf()
+============================================================
+
+Returns the index of the first occurrence.
+
+    let text = "Hello World";
+
+    text.indexOf("World");
+
+    // 6
+
+
+If not found:
+
+    text.indexOf("JavaScript");
+
+    // -1
+
+
+Example:
+
+    "Hello Hello".indexOf("Hello");
+
+    // 0
+
+
+============================================================
+19. lastIndexOf()
+============================================================
+
+Returns the index of the LAST occurrence.
+
+    let text = "Hello Hello";
+
+    text.lastIndexOf("Hello");
+
+    // 6
+
+
+============================================================
+20. includes()
+============================================================
+
+Checks whether a string contains another string.
+
+Returns:
+
+    true
+    or
+    false
+
+
+Example:
+
+    let text = "Hello World";
+
+    text.includes("World");
+
+    // true
+
+
+    text.includes("JavaScript");
+
+    // false
+
+
+Very useful:
+
+    if (name.includes("John")) {
+        console.log("Found");
+    }
+
+
+============================================================
+21. startsWith()
+============================================================
+
+Checks whether a string starts with something.
+
+    let text = "JavaScript";
+
+    text.startsWith("Java");
+
+    // true
+
+
+    text.startsWith("Script");
+
+    // false
+
+
+============================================================
+22. endsWith()
+============================================================
+
+Checks whether a string ends with something.
+
+    let file = "photo.jpg";
+
+    file.endsWith(".jpg");
+
+    // true
+
+
+Example:
+
+    "Hello World".endsWith("World");
+
+    // true
+
+
+============================================================
+23. search()
+============================================================
+
+Searches using a regular expression.
+
+    let text = "Hello World";
+
+    text.search("World");
+
+    // 6
+
+
+Example with RegEx:
+
+    "Hello123".search(/[0-9]/);
+
+    // 5
+
+
+Returns:
+
+    index
+
+If not found:
+
+    -1
+
+
+============================================================
+24. match()
+============================================================
+
+Finds matches using regular expressions.
+
+    let text = "Hello 123";
+
+    text.match(/[0-9]+/);
+
+    // ["123"]
+
+
+Example:
+
+    let text = "cat dog cat";
+
+    text.match(/cat/g);
+
+    // ["cat", "cat"]
+
+
+============================================================
+25. matchAll()
+============================================================
+
+Returns all matches as an iterator.
+
+Example:
+
+    let text = "cat dog cat";
+
+    let matches = text.matchAll(/cat/g);
+
+    for (let match of matches) {
+        console.log(match[0]);
+    }
+
+
+Output:
+
+    cat
+    cat
+
+
+============================================================
+                    REPLACING STRINGS
+============================================================
+
+
+============================================================
+26. replace()
+============================================================
+
+Replaces the first matching occurrence.
+
+    let text = "Hello World";
+
+    text.replace("World", "John");
+
+    // "Hello John"
+
+
+Example:
+
+    "Hello Hello".replace("Hello", "Hi");
+
+    // "Hi Hello"
+
+
+Only the first match is replaced.
+
+
+============================================================
+27. replaceAll()
+============================================================
+
+Replaces ALL matching occurrences.
+
+    let text = "Hello Hello";
+
+    text.replaceAll("Hello", "Hi");
+
+    // "Hi Hi"
+
+
+Difference:
+
+    replace()
+        → first match
+
+    replaceAll()
+        → all matches
+
+
+============================================================
+28. replace() WITH REGEX
+============================================================
+
+Using /g replaces all matches.
+
+    "cat cat cat".replace(/cat/g, "dog");
+
+    // "dog dog dog"
+
+
+============================================================
+                    REMOVING SPACES
+============================================================
+
+
+============================================================
+29. trim()
+============================================================
+
+Removes spaces from BOTH beginning and end.
+
+    let name = "   John   ";
+
+    name.trim();
+
+    // "John"
+
+
+Very useful when cleaning user input.
+
+
+============================================================
+30. trimStart()
+============================================================
+
+Removes spaces from the beginning.
+
+    let name = "   John   ";
+
+    name.trimStart();
+
+    // "John   "
+
+
+============================================================
+31. trimEnd()
+============================================================
+
+Removes spaces from the end.
+
+    let name = "   John   ";
+
+    name.trimEnd();
+
+    // "   John"
+
+
+============================================================
+                    SPLITTING STRINGS
+============================================================
+
+
+============================================================
+32. split()
+============================================================
+
+Converts a string into an ARRAY.
+
+Example:
+
+    let text = "Apple,Banana,Orange";
+
+    text.split(",");
+
+
+Result:
+
+    [
+        "Apple",
+        "Banana",
+        "Orange"
+    ]
+
+
+Example:
+
+    "Hello World".split(" ");
+
+    // ["Hello", "World"]
+
+
+Example:
+
+    "A-B-C-D".split("-");
+
+    // ["A", "B", "C", "D"]
+
+
+Very important:
+
+    split()
+        String → Array
+
+
+============================================================
+33. split() WITHOUT SEPARATOR
+============================================================
+
+    "Hello".split("");
+
+
+Result:
+
+    ["H", "e", "l", "l", "o"]
+
+
+Useful for working with individual characters.
+
+
+============================================================
+34. split() WITH LIMIT
+============================================================
+
+    "A-B-C-D".split("-", 2);
+
+    // ["A", "B"]
+
+
+============================================================
+                    JOINING STRINGS
+============================================================
+
+
+============================================================
+35. concat()
+============================================================
+
+Combines strings.
+
+    let first = "Hello";
+
+    let second = "World";
+
+    first.concat(" ", second);
+
+    // "Hello World"
+
+
+However, modern JavaScript usually uses:
+
+    first + " " + second;
+
+
+or template literals:
+
+    `${first} ${second}`;
+
+
+============================================================
+36. repeat()
+============================================================
+
+Repeats a string.
+
+    "Hi".repeat(3);
+
+    // "HiHiHi"
+
+
+Example:
+
+    "-".repeat(10);
+
+    // "----------"
+
+
+============================================================
+37. padStart()
+============================================================
+
+Adds characters to the beginning.
+
+    let number = "5";
+
+    number.padStart(3, "0");
+
+    // "005"
+
+
+Example:
+
+    "123".padStart(5, "0");
+
+    // "00123"
+
+
+============================================================
+38. padEnd()
+============================================================
+
+Adds characters to the end.
+
+    "5".padEnd(3, "0");
+
+    // "500"
+
+
+Example:
+
+    "123".padEnd(5, "0");
+
+    // "12300"
+
+
+============================================================
+                    COMPARING STRINGS
+============================================================
+
+
+============================================================
+39. ===
+============================================================
+
+Checks whether strings are exactly equal.
+
+    "hello" === "hello";
+
+    // true
+
+
+    "hello" === "Hello";
+
+    // false
+
+
+JavaScript strings are case-sensitive.
+
+
+============================================================
+40. !==
+============================================================
+
+Checks whether strings are different.
+
+    "hello" !== "Hello";
+
+    // true
+
+
+============================================================
+41. localeCompare()
+============================================================
+
+Compares two strings.
+
+    "apple".localeCompare("banana");
+
+    // negative number
+
+
+    "banana".localeCompare("apple");
+
+    // positive number
+
+
+    "apple".localeCompare("apple");
+
+    // 0
+
+
+Commonly used for sorting.
+
+
+============================================================
+                    TEMPLATE LITERALS
+============================================================
+
+
+============================================================
+42. TEMPLATE LITERAL
+============================================================
+
+Uses backticks:
+
+    `Hello World`
+
+
+Main advantage:
+
+    Variable insertion
+
+
+Example:
+
+    let name = "John";
+
+    let message = `Hello ${name}`;
+
+    // "Hello John"
+
+
+============================================================
+43. MULTIPLE VARIABLES
+============================================================
+
+    let firstName = "John";
+
+    let age = 25;
+
+    let city = "Ahmedabad";
+
+    let message =
+        `My name is ${firstName}, I am ${age} years old
+         and I live in ${city}.`;
+
+
+============================================================
+44. EXPRESSIONS INSIDE ${}
+============================================================
+
+    let a = 10;
+
+    let b = 20;
+
+    let result = `Total: ${a + b}`;
+
+    // "Total: 30"
+
+
+Can call functions:
+
+    let name = "john";
+
+    `Hello ${name.toUpperCase()}`;
+
+    // "Hello JOHN"
+
+
+============================================================
+45. MULTI-LINE STRINGS
+============================================================
+
+Using backticks:
+
+    let message = `
+        Hello
+        World
+        JavaScript
+    `;
+
+
+No need for:
+
+    "\n"
+
+
+============================================================
+                    ESCAPE CHARACTERS
+============================================================
+
+
+============================================================
+46. NEW LINE \n
+============================================================
+
+    "Hello\nWorld"
+
+
+Result:
+
+    Hello
+    World
+
+
+============================================================
+47. TAB \t
+============================================================
+
+    "Hello\tWorld"
+
+
+============================================================
+48. QUOTE ESCAPING
+============================================================
+
+    "He said \"Hello\"";
+
+
+Result:
+
+    He said "Hello"
+
+
+Single quote:
+
+    'It\'s JavaScript'
+
+
+============================================================
+49. BACKSLASH \\
+============================================================
+
+    "C:\\Users\\John"
+
+
+Result:
+
+    C:\Users\John
+
+
+============================================================
+                STRING IMMUTABILITY
+============================================================
+
+Strings are IMMUTABLE.
+
+This means string methods do not change
+the original string.
+
+
+Example:
+
+    let name = "john";
+
+    name.toUpperCase();
+
+
+Original:
+
+    name
+
+Still:
+
+    "john"
+
+
+You must store the result:
+
+    name = name.toUpperCase();
+
+
+Now:
+
+    name
+
+    // "JOHN"
+
+
+Same with slice():
+
+    let text = "JavaScript";
+
+    text.slice(0, 4);
+
+    // "Java"
+
+
+But:
+
+    text
+
+    // "JavaScript"
+
+
+============================================================
+              COMMON STRING COMBINATIONS
+============================================================
+
+
+------------------------------------------------------------
+Convert to uppercase
+------------------------------------------------------------
+
+    name.toUpperCase()
+
+
+------------------------------------------------------------
+Convert to lowercase
+------------------------------------------------------------
+
+    name.toLowerCase()
+
+
+------------------------------------------------------------
+Remove extra spaces
+------------------------------------------------------------
+
+    name.trim()
+
+
+------------------------------------------------------------
+Check if contains text
+------------------------------------------------------------
+
+    name.includes("John")
+
+
+------------------------------------------------------------
+Check beginning
+------------------------------------------------------------
+
+    name.startsWith("Jo")
+
+
+------------------------------------------------------------
+Check ending
+------------------------------------------------------------
+
+    name.endsWith(".com")
+
+
+------------------------------------------------------------
+Get first 5 characters
+------------------------------------------------------------
+
+    name.slice(0, 5)
+
+
+------------------------------------------------------------
+Get last 5 characters
+------------------------------------------------------------
+
+    name.slice(-5)
+
+
+------------------------------------------------------------
+Replace text
+------------------------------------------------------------
+
+    name.replace("John", "Mike")
+
+
+------------------------------------------------------------
+Replace all
+------------------------------------------------------------
+
+    name.replaceAll("John", "Mike")
+
+
+------------------------------------------------------------
+Convert string to array
+------------------------------------------------------------
+
+    name.split(",")
+
+
+------------------------------------------------------------
+Repeat string
+------------------------------------------------------------
+
+    name.repeat(3)
+
+
+------------------------------------------------------------
+Add zeros to beginning
+------------------------------------------------------------
+
+    "5".padStart(3, "0")
+
+    // "005"
+
+
+============================================================
+                 STRING SLICING GUIDE
+============================================================
+
+
+Suppose:
+
+    let text = "JavaScript";
+
+
+Indexes:
+
+    J  a  v  a  S  c  r  i  p  t
+    0  1  2  3  4  5  6  7  8  9
+
+Negative indexes:
+
+    J   a   v   a   S   c   r   i   p   t
+   -10 -9  -8  -7  -6  -5  -4  -3  -2  -1
+
+
+------------------------------------------------------------
+First 4 characters
+------------------------------------------------------------
+
+    text.slice(0, 4);
+
+    // "Java"
+
+
+------------------------------------------------------------
+From index 4
+------------------------------------------------------------
+
+    text.slice(4);
+
+    // "Script"
+
+
+------------------------------------------------------------
+Last 3 characters
+------------------------------------------------------------
+
+    text.slice(-3);
+
+    // "ipt"
+
+
+------------------------------------------------------------
+Last 6 characters
+------------------------------------------------------------
+
+    text.slice(-6);
+
+    // "Script"
+
+
+------------------------------------------------------------
+Remove first character
+------------------------------------------------------------
+
+    text.slice(1);
+
+    // "avaScript"
+
+
+------------------------------------------------------------
+Remove last character
+------------------------------------------------------------
+
+    text.slice(0, -1);
+
+    // "JavaScrip"
+
+
+------------------------------------------------------------
+Characters from index 2 to 5
+------------------------------------------------------------
+
+    text.slice(2, 5);
+
+    // "vas"
+
+
+Remember:
+
+    START = included
+    END   = excluded
+
+
+============================================================
+              SLICE / SUBSTRING SUMMARY
+============================================================
+
+
+slice():
+
+    text.slice(start, end)
+
+
+    Supports negative indexes.
+
+    Recommended.
+
+
+substring():
+
+    text.substring(start, end)
+
+
+    Does NOT properly support negative indexes.
+
+
+substr():
+
+    Deprecated.
+
+    Avoid using it.
+
+
+BEST CHOICE:
+
+    slice()
+
+
+============================================================
+                STRING METHODS SUMMARY
+============================================================
+
+
+PROPERTY
+------------------------------------------------------------
+
+.length
+
+
+CHARACTER ACCESS
+------------------------------------------------------------
+
+.charAt()
+.charCodeAt()
+.at()
+
+
+CASE
+------------------------------------------------------------
+
+.toUpperCase()
+.toLowerCase()
+.toLocaleUpperCase()
+.toLocaleLowerCase()
+
+
+SLICING
+------------------------------------------------------------
+
+.slice()
+.substring()
+
+
+SEARCHING
+------------------------------------------------------------
+
+.indexOf()
+.lastIndexOf()
+.includes()
+.startsWith()
+.endsWith()
+.search()
+.match()
+.matchAll()
+
+
+REPLACING
+------------------------------------------------------------
+
+.replace()
+.replaceAll()
+
+
+TRIMMING
+------------------------------------------------------------
+
+.trim()
+.trimStart()
+.trimEnd()
+
+
+SPLITTING
+------------------------------------------------------------
+
+.split()
+
+
+COMBINING
+------------------------------------------------------------
+
+.concat()
+
+
+REPEATING
+------------------------------------------------------------
+
+.repeat()
+
+
+PADDING
+------------------------------------------------------------
+
+.padStart()
+.padEnd()
+
+
+COMPARISON
+------------------------------------------------------------
+
+===
+!==
+.localeCompare()
+
+
+CONVERSION
+------------------------------------------------------------
+
+.toString()
+
+
+FORMATTING
+------------------------------------------------------------
+
+.toLocaleString()
+
+
+TEMPLATE LITERALS
+------------------------------------------------------------
+
+`${variable}`
+
+
+============================================================
+              MOST IMPORTANT TO MEMORIZE
+============================================================
+
+
+1.  .length
+2.  .charAt()
+3.  .at()
+4.  .slice()
+5.  .substring()
+6.  .toUpperCase()
+7.  .toLowerCase()
+8.  .trim()
+9.  .includes()
+10. .startsWith()
+11. .endsWith()
+12. .indexOf()
+13. .replace()
+14. .replaceAll()
+15. .split()
+16. .repeat()
+17. .padStart()
+18. .padEnd()
+19. .match()
+20. .search()
+
+
+============================================================
+                 QUICK MEMORY GUIDE
+============================================================
+
+
+"Hello".length
+    → number of characters
+
+
+"Hello".toUpperCase()
+    → "HELLO"
+
+
+"HELLO".toLowerCase()
+    → "hello"
+
+
+"  Hello  ".trim()
+    → "Hello"
+
+
+"Hello World".includes("World")
+    → true
+
+
+"Hello World".startsWith("Hello")
+    → true
+
+
+"Hello World".endsWith("World")
+    → true
+
+
+"JavaScript".slice(0, 4)
+    → "Java"
+
+
+"JavaScript".slice(-6)
+    → "Script"
+
+
+"Hello".charAt(1)
+    → "e"
+
+
+"Hello".at(-1)
+    → "o"
+
+
+"Hello World".indexOf("World")
+    → 6
+
+
+"Hello World".replace("World", "John")
+    → "Hello John"
+
+
+"Hello Hello".replaceAll("Hello", "Hi")
+    → "Hi Hi"
+
+
+"A,B,C".split(",")
+    → ["A", "B", "C"]
+
+
+"Hi".repeat(3)
+    → "HiHiHi"
+
+
+"5".padStart(3, "0")
+    → "005"
+
+
+"5".padEnd(3, "0")
+    → "500"
+
+
+============================================================
+
+============================================================
+                 MOST IMPORTANT ONES
+============================================================
+
+                    FUNCTION
+                       ↓
+.length              → Count characters
+.charAt()            → Get character
+.at()                → Get character
+.slice()             → Cut/extract
+.toUpperCase()       → Uppercase
+.toLowerCase()       → Lowercase
+.trim()              → Remove spaces
+.includes()          → Check contains
+.indexOf()           → Find position
+.startsWith()        → Check beginning
+.endsWith()          → Check ending
+.replace()           → Replace
+.replaceAll()        → Replace everything
+.split()             → String → Array
+.concat()            → Combine
+.repeat()            → Repeat
+.padStart()          → Add to beginning
+.padEnd()            → Add to end
+
+
 
 ================================================================================
                     END OF EXHAUSTIVE MASTER NOTES (.TXT)
