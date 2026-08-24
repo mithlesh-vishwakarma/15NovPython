@@ -1,0 +1,18 @@
+Tasks
+1.Create a function declaration called createSpotifyButton(label, color) that returns an HTML button element with the given label and background color, and display it on the page.
+
+2. Declare a function expression called getGreeting that takes a user's name as a parameter and returns a message like 'Hello, Rahul!'.
+
+3. Write a function expression named getDiscountedPrice that takes a price and a discount percent, and returns the final price after applying the discount (e.g., for Flipkart-style sale banners).
+
+4.Write an arrow function called formatFollowers that takes a number and returns it formatted as '1.5K' for 1500 or '2M' for 2000000, similar to how Instagram displays follower counts.<br><br><em><strong>Hint:</strong> Use conditional logic to check the number's size and format accordingly.</em>
+
+5.Rewrite the following function as an arrow function: function formatFollowers(count) { if(count >= 1000) { return (count/1000).toFixed(1) + 'K'; } return count; }
+
+6.Create a function declaration called createLikeButton(label, color) that returns a styled HTML button element with the given label and background color. Append the button to the document body.
+
+7.Build a mini Zomato-style feature: write a function showMenuItem(name, price) that returns a styled HTML div with the food item's name and price, then call it for three different items and display them on the page.<br><br><em><strong>Hint:</strong> Use template literals and document.body.appendChild or innerHTML to add the divs.</em>
+
+8.Refactor the following code to use an arrow function instead of a function declaration: <br><br>function double(x) { return x * 2; }
+
+9.Build a reusable function called createPlaylistButton(songName, themeColor) that returns a button element styled with the given color and displaying the song name. Use this function to create and display three buttons for your favorite Spotify tracks.

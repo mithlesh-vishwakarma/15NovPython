@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn"></button>
+
+
+    <script>
+        function createSpotifyButton(lable, color) {
+            let btn = document.getElementById("btn");
+            btn.innerHTML = lable;
+            btn.style.backgroundColor = color;
+
+            return btn;
+        }
+        createSpotifyButton("Play button", "green");
+
+
+        function getGreeting() {
+            let greeting = "Hello,";
+            let user = prompt("Enter your name");
+            console.log(greeting + user + "!");
+        }
+        getGreeting();
+
+        function getDiscountedPrice(price, discount) {
+            let discountAmount = price * discount / 100;
+            let finalPrice = price - discountAmount;
+            console.log(finalPrice);
+            return finalPrice;
+
+        }
+        getDiscountedPrice(100, 10);
+
+
+
+        function formatFollowers(count) {
+            if (count >= 1000 && count <= 999999) {
+                console.log((count / 1000).toFixed(1) + 'K');
+                return (count / 1000).toFixed(1) + 'K';
+            } else if (count >= 1000000 && count <= 999999999) {
+                console.log((count / 1000000).toFixed(1) + 'M');
+                return (count / 1000000).toFixed(1) + 'M';
+            } else {
+                console.log("count is less than 1000")
+            }
+            console.log(count);
+            return count;
+
+        }
+        formatFollowers(100000000);
+
+        let formatFollowers = (count) => {
+            if (count >= 1000 && count <= 999999) {
+                // console.log((count / 1000).toFixed(1) + 'K');
+                return (count / 1000).toFixed(1) + 'K';
+            } else if (count >= 1000000 && count <= 999999999) {
+                // console.log((count / 1000000).toFixed(1) + 'M');
+                return (count / 1000000).toFixed(1) + 'M';
+            } else {
+                console.log("count is less than 1000")
+            }
+            console.log(count);
+            return count;
+        }
+        console.log(formatFollowers(1500));
+
+        function createLikeButton(label, color) {
+            let btn = document.createElement("button");
+            btn.innerHTML = label;
+            btn.style.backgroundColor = color;
+            btn.style.color = "white";
+            btn.style.border = "none";
+            btn.style.padding = "10px 20px";
+            btn.style.borderRadius = "5px";
+            btn.style.cursor = "pointer";
+            document.body.appendChild(btn);
+            return btn;
+        }
+        createLikeButton("Like", "red");
+
+
+        function showMenuItem(name, price) {
+            let div = document.createElement("div");
+            div.innerHTML = `Name: ${name} <br> Price: ${price}`;
+            div.style.backgroundColor = "pink";
+            div.style.color = "black";
+            div.style.border = "none";
+            div.style.padding = "10px 20px";
+            div.style.borderRadius = "5px";
+            div.style.cursor = "pointer";
+            div.style.margin = "10px";
+            document.body.appendChild(div);
+            return div;
+        }
+        showMenuItem("Pizza", "100");
+        showMenuItem("Burger", "200");
+        showMenuItem("French Fries", "150");
+
+
+        function double(x) {
+            return x * 2;
+        }
+        console.log(double(2));
+
+        let double = (x) => {
+            return x * 2;
+        }
+        console.log(double(2));
+
+
+        function createPlaylistButton(songName, themeColor) {
+            let btn = document.createElement("button");
+            btn.innerHTML = songName;
+            btn.style.backgroundColor = themeColor;
+            btn.style.color = "black";
+            btn.style.border = "none";
+            btn.style.padding = "10px 20px";
+            btn.style.borderRadius = "5px";
+            btn.style.cursor = "pointer";
+            btn.style.margin = "10px";
+            document.body.appendChild(btn);
+            return btn;
+        }
+        createPlaylistButton("Song Name", "Theme Color");
+
+    </script>
+</body>
+
+</html>
