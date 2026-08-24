@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let userName = "mithlesh";
+    let followers = 1000000;
+    let isVerified = true;
+
+    console.log("user name : ", userName);
+    console.log("followers :", followers);
+    console.log("verified  :", isVerified);
+
+    var FavApp = "Zomato";
+    console.log(FavApp);
+
+    var FavApp = "Swiggy";
+    console.log(FavApp);
+
+    const MAX_POSTS = 100;
+    console.log(MAX_POSTS);
+
+    //   const MAX_POSTS = 200;
+    //   console.log(MAX_POSTS);
+
+    //   userprofile.html:27 Uncaught SyntaxError: Identifier 'MAX_POSTS' has already been declared (at userprofile.html:27:13) : getting error of SyntaxError
+
+    const favoriteSongs = ["Hanuman chalisa", "mere prabhu", "rockstar"];
+    console.log(favoriteSongs);
+    favoriteSongs.push("anuv jain");
+    console.log(favoriteSongs);
+
+    //   Because const prevents  you from reassigning the variable, but it does not make the array itself immutable.
+
+    let spotifyProfile = {
+      userName: "ordinarycoder",
+      playlists: ["hindi", "english"],
+      isPremium: true
+    }
+    console.log(spotifyProfile.playlists);
+
+
+    let user1 = "Priya"
+    let user2 = user1
+    console.log(user1);
+    console.log(user2);
+    user2 = "Riya"
+    console.log(user1);
+    console.log(user2);
+
+    // this changes the variable user2 only , not affecting user1 because it is primitive type and it copies only values not address or reference
+
+    let favApps1 = ["instagram", "spotify"]
+    let favApps2 = favApps1
+    console.log(favApps1);
+    console.log(favApps2);
+    favApps2.pop();
+    console.log(favApps1);
+    console.log(favApps2);
+
+    //this changes the variable in both favApps1 and favApps2 because it is reference type and it copies both address and reference
+
+    // Observe and comment on the difference in behavior between primitive and reference types.
+    // ans:-Primitive types are copied by value, meaning each variable has its own independent copy of the data. Reference types are copied by reference, meaning both variables point to the same underlying data structure.
+
+
+
+    let favFood = "pizza"
+    let favFoodCopy = favFood
+    console.log(favFood);
+    console.log(favFoodCopy);
+
+    favFoodCopy = "burger"
+    console.log(favFood);
+    console.log(favFoodCopy);
+    // ans:-this changes the variable favFoodCopy only , not affecting favFood because it is primitive type and it copies only values not address or reference
+
+    let zomatoUser = {
+      city: "surat"
+    }
+    let zomatoUserCopy = zomatoUser
+    console.log(zomatoUser);
+    console.log(zomatoUserCopy);
+
+    zomatoUserCopy.city = "vadodara"
+    console.log(zomatoUser);
+    console.log(zomatoUserCopy);
+
+    // ans:- this changes the variable in both zomatoUser and zomatoUserCopy because it is reference type and it copies both address and reference
+
+
+    function showProfile(name, followers, isPremium) {
+      followers = "1000000";
+      console.log("type of followers : ", typeof followers);
+
+    }
+    showProfile();
+
+    function displayProfile(userName, followers) {
+      const msg = `${userName} has ${followers} followers`;
+      console.log(msg);
+    }
+    displayProfile("Aarya", 1500);
+
+
+
+  </script>
+</body>
+
+</html>
