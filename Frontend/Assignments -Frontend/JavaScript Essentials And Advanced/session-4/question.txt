@@ -1,0 +1,20 @@
+Tasks
+1. Create an array called favApps with the names of 5 apps you use daily (like Instagram, Zomato, Paytm, etc.) and use a for loop to print each app name in the console.
+
+2. Create an array called playlist containing 5 of your favorite song names and use a for loop to print each song name in the console.
+
+3. Given an array of cricket team names for IPL, use a while loop to print each team name in uppercase.
+
+4. Given an array of Instagram usernames, use a while loop to print each username in uppercase.
+
+5. Create an array called playlist with 4 song names (strings). Use a do-while loop to print each song name along with its index (e.g., '0: Kesariya') in the console.
+
+6. Use a do-while loop to simulate a Zomato order tracker that prints 'Order status: Preparing', 'Order status: Out for delivery', and 'Order status: Delivered' in sequence, stopping after the last status.
+
+7. Given an array of objects representing Flipkart products (each with name and price), use a for-of loop to print only the product names.
+
+8.  Given an array of Flipkart product prices, use a for-of loop to calculate and print the total price of all products.
+
+9. Create an array of your 5 most-used WhatsApp contacts (just names as strings). Use the forEach method to print a message for each: 'Sending hi to [name] on WhatsApp!'.<br><br><em><strong>Hint:</strong> Use an arrow function as the callback for forEach.</em>
+
+10. Use the forEach method to loop through an array of cricket team names (e.g., 'MI', 'CSK', 'RCB', 'GT') and print 'Go [team]!' for each.<br><br><em><strong>Hint:</strong> forEach takes a callback function with the current element as a parameter.</em>
