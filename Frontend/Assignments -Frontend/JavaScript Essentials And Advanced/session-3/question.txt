@@ -1,0 +1,20 @@
+Tasks
+1. Create a JavaScript file that declares two variables: likes and comments. Use arithmetic operators to calculate the total engagement (likes + comments) and display the result using console.log.
+
+2. Create a JavaScript file called likeCounter.js that declares a variable likes with value 0, increments it by 1 using the += operator, and logs the updated likes count to the console.
+
+3. Write a function showDiscountTag(price) that checks if a product's price is less than 500 using a comparison operator. If true, print 'Special Discount!', otherwise, print 'Regular Price'.
+
+4. Write a function isEligibleForDiscount(totalAmount) that returns true if the totalAmount is greater than or equal to 500, otherwise false. Test it with values 300 and 700.
+
+5. Build a mini Instagram-style verification badge logic: declare a variable followers and use a ternary operator to set a variable badge to 'Verified Creator' if followers is more than 1000, or 'Regular User' otherwise. Print the badge value.
+
+6. Build a function getBadge(followers) that returns 'Verified Creator ⭐' if followers is 1000 or more, otherwise returns 'Regular User'. Use the ternary operator to implement this logic.
+
+7. Given a variable isPremiumUser and hasActiveSubscription, use logical operators to check if both are true. If so, print 'Access Granted'; otherwise, print 'Upgrade Needed'.<em><strong>Hint:</strong> Use the && operator for this check.</em>
+
+8. Given a variable username, write a condition that checks if username is truthy, and if so, logs 'Welcome, [username]!', otherwise logs 'Guest Login'.<em><strong>Hint:</strong> Try with username = '', username = null, and username = 'Priya'.</em>
+
+9. Write a function isTruthy(input) that takes any value and returns 'Truthy' or 'Falsy' based on JavaScript's truthy/falsy evaluation. Test it with '', 0, null, 'hello', and 42.<em><strong>Constraint:</strong> Do not use if-else; use the ternary operator.</em>
+
+10. Create a function canOrderFood(isLoggedIn, hasPaymentMethod) that returns true only if both isLoggedIn and hasPaymentMethod are true, using logical operators. Test your function with all possible combinations of true/false.
