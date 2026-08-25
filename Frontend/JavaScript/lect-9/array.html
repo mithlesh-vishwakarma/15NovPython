@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let fruits=['apple','banana','kiwi'];
+        console.log(fruits[0]);
+         console.log(fruits[fruits.length-1]);
+          console.log(fruits.at(0));
+            console.log(fruits.at(-2));
+
+        //push:add element at last
+        fruits.push('mango');
+        console.log(fruits);
+
+        //pop:remove element from last
+        fruits.pop();
+        console.log(fruits);
+
+        //shift:remove element from first index
+        fruits.shift();
+        console.log(fruits);
+
+        //unshift:add element at first index
+        fruits.unshift('apricot');
+        console.log(fruits);
+        
+    </script>
+</body>
+</html>

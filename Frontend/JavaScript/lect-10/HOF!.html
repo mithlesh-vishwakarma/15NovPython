@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let salary=[12000,10000,30000,450000];
+        let upSalary = salary.map((item,index)=>{
+               item = item + (item*0.1);
+               return item;
+        })
+
+
+        console.log(upSalary);
+
+        let numArray = [1,2,12,34,5,16,22,45];
+
+        console.log(numArray.sort((a,b)=>{
+              return a-b;
+        }));
+
+        console.log(numArray.reverse());
+
+        let str ="patel megha denish";
+
+        let nameArr= str.split(" ");
+        console.log(nameArr);
+
+        console.log(nameArr.join(" "));
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>

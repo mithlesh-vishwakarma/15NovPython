@@ -1,0 +1,20 @@
+Tasks
+1. Create an HTML file with a button labeled 'Add to Playlist' and use the onclick event to display an alert saying 'Song added!' when the button is clicked.
+
+2. Create an HTML page with a button labeled 'Add Song' — when the button is clicked, use onclick to instantly add a new card below showing a random song title from your favorite playlist.
+
+3. Build a mini form with an input for 'Username' and use the onchange event to log the entered username to the console every time the input changes.
+
+4. Build a simple Zomato-style food order form with a dropdown for cuisine and an input for quantity — use the onchange event on the dropdown to display a message showing which cuisine was selected.
+
+5. Create a 'Like' button similar to Instagram's and use addEventListener to increment and display the like count each time the button is clicked.<br><br><em><strong>Hint:</strong> Use a variable to track the count and update the button text on each click.</em>
+
+6. Write a function addToCart that adds a product name to a visible cart section when a 'Add to Cart' button is clicked, but attach the click event using addEventListener instead of the onclick attribute.<br><br><em><strong>Hint:</strong> Use document.querySelector and addEventListener to connect the button and function.</em>
+
+7. Display a list of 3 movies (hardcoded) and add a 'Remove' button next to each. Use addEventListener to remove the movie card from the DOM when its button is clicked.
+
+8. Display the X and Y coordinates of the mouse when you click anywhere inside a div by using the event object in your click event handler.<br><br><em><strong>Hint:</strong> Use event.clientX and event.clientY to get coordinates.</em>
+
+9. Log the type and coordinates (clientX, clientY) of any mouse event (click, mouseover, etc.) when the user interacts with a Flipkart-style 'Add to Cart' button, using the event object.<br><br><em><strong>Hint:</strong> Access event.type, event.clientX, and event.clientY inside your event handler.</em>
+
+10. Briefly explain (in 2-3 sentences) what event flow is in the DOM, and give one example of how event bubbling could affect a shopping cart app like Flipkart.

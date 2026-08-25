@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let fruits =['apple','banana','kiwi'];
+
+        delete fruits[1];
+
+        console.log(fruits);
+
+        //delete in-between array
+        fruits.splice(1,1);
+        console.log(fruits);
+
+        //add element in-between
+        fruits.splice(1,0,'mango');
+
+        console.log(fruits);
+
+        //update element in-between
+        fruits.splice(1,1,"watermallon");
+        
+        console.log(fruits);
+        
+
+        let numArray =[1,23,45,67,89,90,99];
+
+        let sliceArray = numArray.slice(3,6);
+        console.log(sliceArray);
+
+        let soft=['php','java','python'];
+        let hard=['a+','n+'];
+
+        let allSubject=soft.concat(hard);
+
+        console.log(allSubject);
+
+        fruits.forEach(function(item,index){
+                 console.log(item.toUpperCase());
+                 
+        })
+        
+
+        console.log(fruits.indexOf('apple'));
+
+        console.log(fruits.includes('avacado'));
+        
+        
+        
+        
+        
+        
+    </script>
+</body>
+</html>

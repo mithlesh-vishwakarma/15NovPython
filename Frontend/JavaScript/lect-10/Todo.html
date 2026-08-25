@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Todo App</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="bg-light">
+
+    <div class="container mt-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-6">
+
+                <div class="card shadow">
+
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3 class="mb-0">Todo App</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Add Todo -->
+                        <div class="input-group mb-4">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="txt1"
+                                placeholder="Enter your todo"
+                            >
+
+                            <button class="btn btn-success" id="btnsubmit">
+                                Add
+                            </button>
+                        </div>
+
+                        <!-- Todo List -->
+                        <h5>Todo List</h5>
+
+                        <ul class="list-group" id="listdata">
+
+                          
+
+                        </ul>
+
+                    </div>
+
+                   
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        let todoArray =[];
+
+        document.getElementById('btnsubmit').addEventListener('click',()=>{
+               let taskname= document.getElementById('txt1');
+               todoArray.push(taskname.value);
+               console.log(todoArray);
+               taskname.value=""
+               printTodo();
+               
+        })
+
+        function printTodo(){
+             let str="";
+            for(i=0;i<todoArray.length;i++){
+               str+=`
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>${todoArray[i]}</span>
+
+                                <div>
+                                    <button class="btn btn-sm btn-warning">
+                                        Edit
+                                    </button>
+
+                                    <button class="btn btn-sm btn-danger">
+                                        Delete
+                                    </button>
+                                </div>
+                            </li>
+
+               `
+
+            }
+            console.log(str);
+            document.getElementById('listdata').innerHTML=str;
+        }
+
+    </script>
+</body>
+</html>
