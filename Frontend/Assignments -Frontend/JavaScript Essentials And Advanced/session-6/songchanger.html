@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>spotify</title>
+</head>
+<style>
+    fieldset {
+        border: 2px solid black;
+        width: 40%;
+        height: 70%;
+
+        margin-left: 30px;
+    }
+
+    span {
+        padding: 10px;
+        margin: 10px;
+        width: 20%;
+        margin-top: 30px;
+        text-align: center;
+        font-size: 20px;
+        font-style: italic;
+        font-weight: bold;
+        color: green;
+
+    }
+
+    button {
+        padding: 10px;
+        margin: 10px;
+        margin-left: 50px;
+        cursor: pointer;
+        background-color: rgb(182, 217, 182);
+        border: 1px solid green;
+        border-radius: 10px;
+
+
+    }
+</style>
+
+<body>
+
+    <fieldset>
+        <legend>Now Playing</legend>
+        <span id="song-title">Dhoom Dhadaka</span>
+
+    </fieldset>
+    <button id="change-song">Change Song</button>
+
+
+    <script>
+
+        let songtitle = document.getElementById("song-title");
+        let chngsong = document.getElementById("change-song");
+
+
+        let songs = ["tera hone laga hoon", "kun faya kun", "tera ban jaunga", "teri ore", "main rang sharbaton ka", "kafan", "pashmina", "kal ho na ho", "tere sang yaara", "tere bin", "dicso diwane", "rockstar", "shadda haq", "subhanallah", "sanam re", "tujhe kitna chahne lage hum",];
+        let i = 0;
+        chngsong.addEventListener("click", function () {
+            songtitle.innerHTML = songs[i];
+            i++;
+            if (i == songs.length) {
+                i = 0;
+            }
+        })
+
+    </script>
+</body>
+
+</html>

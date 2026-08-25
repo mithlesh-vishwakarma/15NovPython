@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    div {
+        margin-top: 20px;
+        padding: 20px;
+
+    }
+
+    div ul {
+        list-style: none;
+        border: 2px solid green;
+        width: 40%;
+        padding: 10px;
+        background-color: rgb(178, 190, 178);
+        margin: 10px;
+
+    }
+
+    #inputtxt {
+        margin: 10px;
+        padding: 10px;
+
+    }
+
+    #btnadd {
+        padding: 10px;
+        background-color: green;
+        color: white;
+        border: none;
+        cursor: pointer;
+
+    }
+</style>
+
+<body>
+    <div id="greeting"></div>
+    <fieldset style="margin: 20px; width: 30%; height: 20%;">
+        <legend>Add Song</legend>
+        <div id="songs">
+            <input type="text" id="inputtxt">
+            <button type="submit" id="btnadd">Add Song</button>
+        </div>
+    </fieldset>
+    <fieldset style="margin: 20px; width: 30%; height: 20%;">
+        <legend>Playlist</legend>
+        <div id="playlist">
+
+        </div>
+    </fieldset>
+
+
+    <h2 id="offer"></h2>
+    <script>
+        // gretting task h1 here
+        let greet = document.getElementById("greeting");
+        greet.innerHTML = "Welcome to the IPL Fan Zone!";
+        greet.innerHTML = "Hello, welcome to your playlist!";
+
+
+
+        // task add songs here
+        let inputsongs = document.getElementById("inputtxt");
+        let btadd = document.getElementById("btnadd");
+        let playlist = document.getElementById("playlist");
+
+        btadd.addEventListener("click", function () {
+            playlist.innerHTML += '<ul><li>' + inputsongs.value + '</li></ul>';
+            inputsongs.value = "";
+        })
+
+
+        // offers task h2 here
+        let offer = document.getElementById("offer");
+        offer.innerText = "Flat 50% Off on Zomato Today!";
+        offer.style.color = "red";
+
+
+    </script>
+</body>
+
+</html>

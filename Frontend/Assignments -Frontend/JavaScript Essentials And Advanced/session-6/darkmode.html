@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode</title>
+</head>
+
+<style>
+    /* * {
+        background-color: gray;
+    } */
+</style>
+
+<body>
+    <h2>this is the test text for the toggle modes</h2>
+    <button id="toggle-btn">Dark Mode</button>
+
+
+
+    <script>
+        let toggle = document.getElementById("toggle-btn");
+        toggle.addEventListener("click", function () {
+            if (toggle.innerText == "Dark Mode") {
+                document.body.style.backgroundColor = "black";
+                document.body.style.color = "white";
+                toggle.innerText = "Light Mode";
+            } else {
+                document.body.style.backgroundColor = "white";
+                document.body.style.color = "black";
+                toggle.innerText = "Dark Mode";
+            }
+
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>

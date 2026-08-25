@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>colour changer</title>
+</head>
+<style>
+    #inputtxt {
+        padding: 10px;
+        margin: 10px;
+        width: 20%;
+        margin-left: 38%;
+        margin-top: 30px;
+        padding-right: 20px;
+
+    }
+
+    #moodbox {
+        background-color: whitesmoke;
+        margin: 20px;
+        border: 2px solid black;
+        height: 500px;
+        width: 95%;
+    }
+
+    h4 {
+        color: red;
+        text-align: center;
+        width: 95%;
+    }
+</style>
+
+<body>
+    <fieldset>
+        <legend>colour changer</legend>
+        <input type="text" id="inputtxt">
+        <h4>Input any colour name in the input box to see the box colour but make sure the correct spellings like,
+            pink,orange, red and black, yellow,purple and many more</h4>
+    </fieldset>
+    <div id="moodbox">
+
+    </div>
+
+    <script>
+        let inputtxt = document.getElementById("inputtxt");
+        let moodbox = document.getElementById("moodbox");
+
+        inputtxt.addEventListener("input", function () {
+            moodbox.style.backgroundColor = inputtxt.value;
+        })
+
+    </script>
+</body>
+
+</html>

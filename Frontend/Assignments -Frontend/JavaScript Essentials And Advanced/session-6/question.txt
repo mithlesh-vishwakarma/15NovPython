@@ -1,0 +1,16 @@
+1. Create an HTML page with a <div id="greeting"></div> and use getElementById in your script to set its innerHTML to 'Welcome to the IPL Fan Zone!'.
+
+2. Create an HTML file with a <div id="greeting"></div> and use getElementById in a script to set its innerHTML to 'Hello, welcome to your playlist!'
+
+3. Build a small form with an input box and a button labeled 'Add Song'. When the button is clicked, use querySelector to get the input value and dynamically add a new <li> element with the song name to a <ul id="playlist"> on the page.
+
+4. Build a simple form with an input for a new friend's name and a button labeled 'Add Friend'; when the button is clicked, use querySelector to read the input value and dynamically add a new <li> with that name to a <ul id="friend-list">.
+
+5. Select an existing <h2> element with the id 'offer' and use JavaScript to change its text to 'Flat 50% Off on Zomato Today!' and set its color to red using the style property.<br><br><em><strong>Hint:</strong> Use getElementById to select and .style.color to update the color.</em>
+
+6. Create a 'Dark Mode' toggle button that, when clicked, uses getElementById to change the background color of the page and updates the button text to 'Light Mode'.<br><br><em><strong>Hint:</strong> Use the style property to change document.body's background color.</em>
+
+7. Create a function that updates the background color of a <div id="moodbox"></div> in real-time as the user types a color name (like 'pink' or 'yellow') into an input box.<br><br><em><strong>Hint:</strong> Listen for the input event and use .style.backgroundColor.</em>
+
+8. Build a mini 'Now Playing' display like Spotify: show a song title in a <span id="song-title"></span> and a button 'Change Song'; when the button is clicked, update the innerHTML of the span to a new song name from a predefined array.
+*/

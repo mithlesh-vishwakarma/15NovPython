@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 20%;
+        }
+
+        button {
+            padding: 10px;
+            margin: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        div ul {
+            text-decoration: none;
+            list-style: none;
+            border: 2px solid green;
+            width: 40%;
+            padding: 10px;
+            background-color: rgb(178, 190, 178);
+            margin: 10px;
+        }
+
+        form {
+            border: 2px solid black;
+            width: 50%;
+            height: 70%;
+            margin: auto;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <fieldset>
+        <form action="">
+            <fieldset style="margin: 20px; width: 90%; height: 15%;">
+                <legend>Add Friend</legend>
+                <div id="friends">
+                    <input type="text" id="inputtxt">
+                    <button type="submit" id="btnadd">Add Friend</button>
+                </div>
+            </fieldset>
+            <fieldset style="margin: 20px; width: 90%; height: 60%;">
+                <legend>Friend List</legend>
+                <div id="friend-list">
+
+                </div>
+            </fieldset>
+        </form>
+    </fieldset>
+    <script>
+
+        let inputname = document.getElementById("inputtxt");
+        let btadd = document.getElementById("btnadd");
+        let list = document.getElementById("friend-list");
+
+        btadd.addEventListener("click", function () {
+            list.innerHTML += '<ul><li>' + inputname.value + '</li></ul>';
+            inputname.value = "";
+        })
+
+    </script>
+</body>
+
+</html>
