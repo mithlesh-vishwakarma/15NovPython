@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const playlists = [
+        {
+          name: "Chill Vibes",
+          creator: "Arjun",
+          numberOfSongs: 25,
+        },
+        {
+          name: "Workout Hits",
+          creator: "Rahul",
+          numberOfSongs: 40,
+        },
+        {
+          name: "Party Mix",
+          creator: "Priya",
+          numberOfSongs: 30,
+        },
+      ];
+
+      // Add a new playlist using push()
+      playlists.push({
+        name: "Rock Classics",
+        creator: "Aman",
+        numberOfSongs: 20,
+      });
+
+      console.log("After push:", playlists);
+
+      // Remove the last playlist using pop()
+      console.log(playlists.pop());
+
+      console.log("After pop:", playlists);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const playlists = [
+        {
+          name: "Chill Vibes",
+          creator: "Arjun",
+          numberOfSongs: 25,
+        },
+        {
+          name: "Workout Hits",
+          creator: "Rahul",
+          numberOfSongs: 40,
+        },
+        {
+          name: "Party Mix",
+          creator: "Priya",
+          numberOfSongs: 30,
+        },
+      ];
+
+      // Remove the second playlist and add a new one
+      playlists.splice(1, 1, {
+        name: "Morning Motivation",
+        creator: "Aman",
+        numberOfSongs: 15,
+      });
+
+      console.log(playlists);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+Tasks:
+1.Create an array called playlists containing three objects, each representing a Spotify playlist with properties: name, creator, and numberOfSongs. Log the entire array to the console.
+
+2.Add a new playlist object to your playlists array using the push() method. The new playlist should have a unique name, creator, and numberOfSongs. Print the updated array.
+
+3.Use the push() method to add a new playlist object to your playlists array with your favorite genre. Then, use pop() to remove the last playlist and log the updated array after each operation.
+
+4.Remove the last playlist from your playlists array using the pop() method and display the removed object in the console.
+
+5.Build an array called cart containing 4 objects, each representing a Flipkart product with properties: productName, price, and quantity. Write a loop to display each product's name and total price (price × quantity) in the console.
+
+6.Use the splice() method to remove the second playlist from your playlists array and insert a new playlist at that position. Print the resulting array.<br><br><em><strong>Hint:</strong> splice(startIndex, deleteCount, newItem) can both remove and add in one call.</em>
+
+7.Given an array of objects called movies, where each object has properties: title, year, and a nested object rating with keys imdb and rottenTomatoes, write code to print each movie's title and its IMDb rating.
+
+8.Create an array called orders, where each order is an object with properties: orderId, items (an array of objects with itemName and price), and delivery (an object with address and status). Write a loop to display each order's orderId and total price of all items.<br><br><em><strong>Hint:</strong> Use a nested loop or array method to sum the prices inside each order.</em>
+
+9.Create an array called favApps with 5 objects, each having title and url. Use splice() to remove the third app and insert a new app object for your most-used app at that position. Log the final array.<br><br><em><strong>Hint:</strong> splice(index, deleteCount, newItem) lets you remove and add in one step.</em>

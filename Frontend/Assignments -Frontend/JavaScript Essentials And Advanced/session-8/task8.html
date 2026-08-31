@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=
+    , initial-scale=1.0"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const orders = [
+        {
+          orderId: 101,
+          items: [
+            {
+              itemName: "Pizza",
+              price: 300,
+            },
+            {
+              itemName: "Burger",
+              price: 150,
+            },
+          ],
+          delivery: {
+            address: "Ahmedabad",
+            status: "Delivered",
+          },
+        },
+
+        {
+          orderId: 102,
+          items: [
+            {
+              itemName: "Biryani",
+              price: 250,
+            },
+            {
+              itemName: "Cold Drink",
+              price: 50,
+            },
+          ],
+          delivery: {
+            address: "Mumbai",
+            status: "Out for delivery",
+          },
+        },
+
+        {
+          orderId: 103,
+          items: [
+            {
+              itemName: "Pasta",
+              price: 200,
+            },
+            {
+              itemName: "Garlic Bread",
+              price: 100,
+            },
+          ],
+          delivery: {
+            address: "Delhi",
+            status: "Processing",
+          },
+        },
+      ];
+
+      // Loop through each order
+      for (let order of orders) {
+        let totalPrice = 0;
+
+        // Loop through items of the current order
+        for (let item of order.items) {
+          totalPrice += item.price;
+        }
+
+        console.log(
+          "Order ID: " + order.orderId + " - Total Price: ₹" + totalPrice,
+        );
+      }
+    </script>
+  </body>
+</html>

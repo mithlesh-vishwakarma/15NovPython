@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const favApps = [
+        {
+          title: "YouTube",
+          url: "https://www.youtube.com",
+        },
+        {
+          title: "Instagram",
+          url: "https://www.instagram.com",
+        },
+        {
+          title: "Spotify",
+          url: "https://www.spotify.com",
+        },
+        {
+          title: "Amazon",
+          url: "https://www.amazon.com",
+        },
+        {
+          title: "WhatsApp",
+          url: "https://www.whatsapp.com",
+        },
+      ];
+
+      // Remove the third app and insert a new app
+      favApps.splice(2, 1, {
+        title: "Google Chrome",
+        url: "https://www.google.com/chrome",
+      });
+
+      // Print the final array
+      console.log(favApps);
+    </script>
+  </body>
+</html>
