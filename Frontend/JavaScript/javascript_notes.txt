@@ -3840,6 +3840,1230 @@ ES2023 introduced non-mutating copy alternatives:
 
 
 ================================================================================
+================================================================================
+                       JAVASCRIPT MAP & SET MASTER NOTES
+================================================================================
+================================================================================
+
+
+============================================================
+              1. WHY USE MAP & SET? (REASONS & BENEFITS)
+============================================================
+
+JavaScript historically relied on Objects for key-value storage and Arrays
+for lists of elements. ES6 (ES2015) introduced Map and Set to solve several
+fundamental limitations of Objects and Arrays.
+
+
+------------------------------------------------------------
+A. WHY USE MAP INSTEAD OF OBJECT?
+------------------------------------------------------------
+
+1. ANY DATA TYPE AS KEYS:
+   - Object: Keys MUST be Strings or Symbols. If you use numbers, booleans,
+     or objects as keys, JavaScript automatically converts them to strings
+     (e.g., key `1` becomes `"1"`, `{}` becomes `"[object Object]"`).
+   - Map: Keys can be ANYTHING — Objects, Functions, Numbers, Booleans, NaN,
+     or even other Maps!
+
+2. FAST & ACCURATE SIZE LOOKUP:
+   - Object: No built-in `.size` property. Finding the size requires:
+     `Object.keys(obj).length` which is O(N) linear time complexity.
+   - Map: Has a built-in `.size` property that returns key count in O(1) time.
+
+3. GUARANTEED KEY ORDERING:
+   - Object: Key iteration order can be complex and unpredictable (integer keys
+     get sorted first, string keys stay in insertion order).
+   - Map: Iterates keys in pure, strict INSERTION ORDER.
+
+4. HIGH PERFORMANCE FOR FREQUENT ADD/DELETE:
+   - Object: Not optimized for frequent additions and deletions of keys.
+   - Map: Optimized for frequent additions, updates, and key deletions.
+
+5. NO PROTOTYPE POLLUTION / DEFAULT KEYS:
+   - Object: Inherits properties from `Object.prototype` (like `toString`,
+     `valueOf`, `constructor`). Standard keys can accidentally overwrite or
+     conflict with prototype methods.
+   - Map: Pure data structure. Does NOT contain default keys. Contains ONLY
+     what you put into it.
+
+6. DIRECT ITERATION:
+   - Object: Not directly iterable with `for...of` (requires `Object.keys()`,
+     `Object.values()`, or `Object.entries()`).
+   - Map: Directly iterable with `for...of`, yielding `[key, value]` pairs.
+
+
+------------------------------------------------------------
+B. WHY USE SET INSTEAD OF ARRAY?
+------------------------------------------------------------
+
+1. AUTOMATIC UNIQUENESS (NO DUPLICATES):
+   - Array: Allows duplicate values. To prevent duplicates, manual checks are
+     required (`arr.includes(val)` before pushing).
+   - Set: Automatically prevents duplicate values. Storing duplicate values is
+     impossible.
+
+2. O(1) CONSTANT TIME LOOKUP vs O(N) LINEAR SEARCH:
+   - Array: `arr.includes(val)` searches elements one by one from start to end
+     (O(N) complexity). On large datasets (e.g., 100,000 items), this is slow!
+   - Set: `set.has(val)` uses hash-table lookup under the hood, running in
+     O(1) constant time regardless of size!
+
+3. EFFICIENT O(1) ELEMENT DELETION:
+   - Array: Deleting an element requires finding its index O(N) and shifting
+     subsequent elements using `splice()` O(N).
+   - Set: `set.delete(val)` removes elements in O(1) constant time.
+
+4. ESIEST DEDUPLICATION TECHNIQUE:
+   - Array: Deduplicating takes loop or `filter` code.
+   - Set: Can deduplicate an array instantly in one clean line:
+     `let unique = [...new Set(array)];`
+
+5. NATIVE MATHEMATICAL SET OPERATIONS:
+   - Set supports set operations like Union, Intersection, and Difference
+     natively (ES2024+) or easily via helper methods.
+
+
+============================================================
+                     2. JAVASCRIPT MAP
+============================================================
+
+A Map is a collection of key-value pairs where both keys and values can be
+of any data type (primitives or objects).
+
+
+------------------------------------------------------------
+CREATING A MAP
+------------------------------------------------------------
+
+1. Empty Map:
+   let myMap = new Map();
+
+2. Initialized Map (passing array of key-value pairs):
+   let userRoles = new Map([
+       ["alice", "Admin"],
+       ["bob", "Editor"],
+       ["charlie", "Viewer"]
+   ]);
+
+
+------------------------------------------------------------
+ESSENTIAL MAP METHODS & PROPERTIES
+------------------------------------------------------------
+
+1. set(key, value)
+   - Adds or updates key-value pair.
+   - Returns the Map instance (supports Method Chaining!).
+
+   Example:
+     let map = new Map();
+     map.set("name", "John");
+     map.set(101, "Employee ID");
+     map.set(true, "Is Active");
+
+     // Method Chaining:
+     map.set("a", 1).set("b", 2).set("c", 3);
+
+2. get(key)
+   - Returns value associated with key.
+   - Returns `undefined` if key does not exist.
+
+   Example:
+     map.get("name") → "John"
+     map.get(101)    → "Employee ID"
+     map.get("age")  → undefined
+
+3. has(key)
+   - Returns `true` if key exists, `false` otherwise.
+
+   Example:
+     map.has("name") → true
+     map.has("age")  → false
+
+4. delete(key)
+   - Removes entry associated with key.
+   - Returns `true` if element existed and was deleted, `false` otherwise.
+
+   Example:
+     map.delete("name") → true
+     map.delete("name") → false (already deleted)
+
+5. clear()
+   - Removes ALL key-value pairs from Map.
+
+   Example:
+     map.clear();
+     map.size → 0
+
+6. size (Property, not a method)
+   - Returns total number of key-value pairs.
+
+   Example:
+     let map = new Map([["x", 1], ["y", 2]]);
+     map.size → 2
+
+
+------------------------------------------------------------
+MAP KEYS: OBJECTS & FUNCTIONS AS KEYS
+------------------------------------------------------------
+
+Unlike regular objects, Map can use reference types (Objects, Arrays, Functions)
+as keys.
+
+IMPORTANT NOTE ON KEY REFERENCE EQUALITY:
+Map compares keys using SameValueZero algorithm (similar to `===`).
+Two distinct object instances are NOT equal even if they have identical properties!
+
+Example:
+    let map = new Map();
+
+    let objKey1 = { id: 1 };
+    let objKey2 = { id: 1 };
+
+    map.set(objKey1, "Data for User 1");
+
+    console.log(map.get(objKey1)); // → "Data for User 1"
+    console.log(map.get(objKey2)); // → undefined (different object reference in memory!)
+
+    // Using object literal directly in set/get will NOT match:
+    map.set({ role: "admin" }, "Access Granted");
+    console.log(map.get({ role: "admin" })); // → undefined!
+
+
+------------------------------------------------------------
+ITERATING OVER A MAP
+------------------------------------------------------------
+
+Map provides multiple ways to iterate over entries in insertion order.
+
+1. for...of Loop (Destructuring Key and Value):
+   let map = new Map([
+       ["a", 100],
+       ["b", 200]
+   ]);
+
+   for (let [key, value] of map) {
+       console.log(`${key} => ${value}`);
+   }
+   // Output:
+   // a => 100
+   // b => 200
+
+2. forEach(callback):
+   NOTE: Callback order is (value, key, map)! Value comes FIRST!
+
+   map.forEach((value, key) => {
+       console.log(key, value);
+   });
+
+3. map.keys() Iterator:
+   for (let key of map.keys()) {
+       console.log(key); // "a", "b"
+   }
+
+4. map.values() Iterator:
+   for (let val of map.values()) {
+       console.log(val); // 100, 200
+   }
+
+5. map.entries() Iterator:
+   for (let entry of map.entries()) {
+       console.log(entry); // ["a", 100], ["b", 200]
+   }
+
+
+------------------------------------------------------------
+CONVERTING MAP TO ARRAY / OBJECT & VICE VERSA
+------------------------------------------------------------
+
+1. Map → Array:
+   let map = new Map([["a", 1], ["b", 2]]);
+
+   // Array of [key, value] pairs:
+   let arr = [...map];          // [["a", 1], ["b", 2]]
+   let arr2 = Array.from(map);  // [["a", 1], ["b", 2]]
+
+   // Keys Array / Values Array:
+   let keys = [...map.keys()];     // ["a", "b"]
+   let values = [...map.values()]; // [1, 2]
+
+2. Map → Object:
+   let map = new Map([["name", "Alice"], ["age", 25]]);
+   let obj = Object.fromEntries(map);
+   // obj → { name: "Alice", age: 25 }
+
+3. Object → Map:
+   let obj = { x: 10, y: 20 };
+   let map = new Map(Object.entries(obj));
+   // map has keys "x" and "y"
+
+
+============================================================
+                     3. JAVASCRIPT SET
+============================================================
+
+A Set is a collection of UNIQUE values of any type. Duplicate values are
+automatically ignored.
+
+
+------------------------------------------------------------
+CREATING A SET
+------------------------------------------------------------
+
+1. Empty Set:
+   let mySet = new Set();
+
+2. Initialized Set from Array / Iterable:
+   let numbers = new Set([1, 2, 3, 3, 4, 4, 5]);
+   console.log(numbers); // Set(5) { 1, 2, 3, 4, 5 } (Duplicates removed!)
+
+3. Initialized Set from String:
+   let letters = new Set("hello");
+   console.log(letters); // Set(4) { 'h', 'e', 'l', 'o' }
+
+
+------------------------------------------------------------
+ESSENTIAL SET METHODS & PROPERTIES
+------------------------------------------------------------
+
+1. add(value)
+   - Appends value to Set if not already present.
+   - Returns Set instance (Method Chaining!).
+
+   Example:
+     let set = new Set();
+     set.add(10);
+     set.add(20);
+     set.add(10); // Duplicate! Ignored silently.
+
+     // Method Chaining:
+     set.add(1).add(2).add(3);
+
+2. has(value)
+   - Returns `true` if value exists in Set, `false` otherwise.
+   - Runs in O(1) constant time!
+
+   Example:
+     set.has(20) → true
+     set.has(99) → false
+
+3. delete(value)
+   - Removes value from Set.
+   - Returns `true` if element was present and removed, `false` otherwise.
+
+   Example:
+     set.delete(20) → true
+     set.delete(20) → false
+
+4. clear()
+   - Removes ALL elements from Set.
+
+   Example:
+     set.clear();
+     set.size → 0
+
+5. size (Property)
+   - Returns total count of unique elements in Set.
+
+   Example:
+     let set = new Set([1, 2, 3]);
+     set.size → 3
+
+
+------------------------------------------------------------
+PRACTICAL USE CASES OF SET
+------------------------------------------------------------
+
+1. DEDUPLICATING AN ARRAY:
+   let numbersWithDupes = [1, 2, 2, 3, 4, 4, 4, 5];
+   let uniqueNumbers = [...new Set(numbersWithDupes)];
+   // uniqueNumbers → [1, 2, 3, 4, 5]
+
+2. FAST MEMBERSHIP LOOKUP (O(1)):
+   let allowedRoles = new Set(["admin", "editor", "superadmin"]);
+   function canEdit(role) {
+       return allowedRoles.has(role); // O(1) instant check
+   }
+
+3. TRACKING UNIQUE VISITOR IDs / TAGS:
+   let activeUsers = new Set();
+   activeUsers.add("user_101");
+   activeUsers.add("user_102");
+   activeUsers.add("user_101"); // Won't duplicate
+   console.log(activeUsers.size); // → 2
+
+
+------------------------------------------------------------
+ITERATING OVER A SET
+------------------------------------------------------------
+
+1. for...of Loop:
+   let set = new Set(["Apple", "Banana", "Cherry"]);
+   for (let fruit of set) {
+       console.log(fruit);
+   }
+
+2. forEach(callback):
+   NOTE: For compatibility with Map, the callback takes (value, valueAgain, set).
+
+   set.forEach((value) => {
+       console.log(value);
+   });
+
+3. set.values() / set.keys():
+   In Set, keys() and values() return the exact same iterator!
+
+   for (let val of set.values()) {
+       console.log(val);
+   }
+
+
+------------------------------------------------------------
+SET MATHEMATICAL OPERATIONS (UNION, INTERSECTION, DIFFERENCE)
+------------------------------------------------------------
+
+Let A = new Set([1, 2, 3, 4]) and B = new Set([3, 4, 5, 6]):
+
+1. UNION (All unique elements from both sets):
+   // Modern ES2024: A.union(B)
+   // Classic / Spread approach:
+   let union = new Set([...A, ...B]);
+   // union → Set(6) { 1, 2, 3, 4, 5, 6 }
+
+2. INTERSECTION (Common elements in both sets):
+   // Modern ES2024: A.intersection(B)
+   // Classic filter approach:
+   let intersection = new Set([...A].filter(x => B.has(x)));
+   // intersection → Set(2) { 3, 4 }
+
+3. DIFFERENCE (Elements in A but NOT in B):
+   // Modern ES2024: A.difference(B)
+   // Classic filter approach:
+   let difference = new Set([...A].filter(x => !B.has(x)));
+   // difference → Set(2) { 1, 2 }
+
+4. SYMMETRIC DIFFERENCE (Elements in A or B, but NOT both):
+   // Modern ES2024: A.symmetricDifference(B)
+   // Classic filter approach:
+   let symDiff = new Set([...A].filter(x => !B.has(x)).concat([...B].filter(x => !A.has(x))));
+   // symDiff → Set(4) { 1, 2, 5, 6 }
+
+
+============================================================
+              4. WEAKMAP AND WEAKSET (BRIEF OVERVIEW)
+============================================================
+
+1. WeakMap:
+   - Keys MUST be Objects or non-registered Symbols.
+   - Keys are held "weakly", meaning if there are no other references to a key
+     object, it can be garbage collected automatically.
+   - Non-iterable (no `for...of`, no `.keys()`, no `.values()`, no `.size`).
+   - Use Case: Storing private data associated with an object, DOM node metadata.
+
+2. WeakSet:
+   - Values MUST be Objects.
+   - Objects held weakly for garbage collection.
+   - Non-iterable (no `.size`).
+   - Use Case: Tracking object state (e.g., whether an object has been processed).
+
+
+============================================================
+                    5. COMPARISON TABLES
+============================================================
+
++-----------------------+-----------------------+-----------------------+
+| FEATURE               | OBJECT                | MAP                   |
++-----------------------+-----------------------+-----------------------+
+| Key Types             | String, Symbol only   | ANY type (Object, etc)|
+| Key Ordering          | Complex rules         | Strict Insertion order|
+| Size Lookup           | O(N) Object.keys      | O(1) via .size        |
+| Direct Iteration      | No (requires keys())  | Yes (for...of)        |
+| Default Keys          | Has prototype keys    | Pure (no defaults)    |
+| Performance (Add/Del) | Slower for frequent   | Faster for frequent   |
+| JSON Serialization    | Native (JSON.stringify)| Manual conversion    |
++-----------------------+-----------------------+-----------------------+
+
++-----------------------+-----------------------+-----------------------+
+| FEATURE               | ARRAY                 | SET                   |
++-----------------------+-----------------------+-----------------------+
+| Duplicates            | Allowed               | Strictly Unique       |
+| Ordering              | Indexed (0, 1, 2...)  | Insertion Order       |
+| Element Lookup        | O(N) includes()       | O(1) .has()           |
+| Element Deletion      | O(N) splice()         | O(1) .delete()        |
+| Access by Index       | arr[0]                | Not supported         |
++-----------------------+-----------------------+-----------------------+
+
+
+============================================================
+              6. MAP & SET QUICK CHEAT SHEET
+============================================================
+
+MAP METHODS & SYNTAX:
+------------------------------------------------------------
+let map = new Map();
+map.set(key, val)      → Add / update key-value pair
+map.get(key)           → Retrieve value (or undefined)
+map.has(key)           → Check if key exists (true/false)
+map.delete(key)        → Remove entry (true/false)
+map.clear()            → Remove all entries
+map.size               → Count of entries
+
+SET METHODS & SYNTAX:
+------------------------------------------------------------
+let set = new Set();
+set.add(val)           → Add unique value
+set.has(val)           → O(1) membership check (true/false)
+set.delete(val)        → Remove value (true/false)
+set.clear()            → Remove all values
+set.size               → Count of unique elements
+
+COMMON ONE-LINERS:
+------------------------------------------------------------
+// Array Deduplication:
+const unique = [...new Set(array)];
+
+// Object to Map:
+const map = new Map(Object.entries(obj));
+
+// Map to Object:
+const obj = Object.fromEntries(map);
+
+
+================================================================================
+================================================================================
+                    JAVASCRIPT OBJECT METHODS MASTER NOTES
+================================================================================
+================================================================================
+
+
+============================================================
+              1. CORE OBJECT ITERATION & CONVERSION
+============================================================
+
+1. Object.keys(obj)
+   - Returns an Array of an object's own enumerable property NAMES (keys).
+   - Order matches `for...in` loop (excluding prototype properties).
+
+   Example:
+     let user = { name: "Alice", age: 25, role: "Admin" };
+     Object.keys(user) → ["name", "age", "role"]
+
+2. Object.values(obj)
+   - Returns an Array of an object's own enumerable property VALUES.
+
+   Example:
+     let user = { name: "Alice", age: 25, role: "Admin" };
+     Object.values(user) → ["Alice", 25, "Admin"]
+
+3. Object.entries(obj)
+   - Returns an Array of an object's own enumerable `[key, value]` pairs.
+   - Useful for iterating objects with `for...of` loops or Map conversion.
+
+   Example:
+     let user = { name: "Alice", age: 25 };
+     Object.entries(user) → [["name", "Alice"], ["age", 25]]
+
+     // Iterating key-value pairs:
+     for (let [key, val] of Object.entries(user)) {
+         console.log(`${key}: ${val}`);
+     }
+
+4. Object.fromEntries(iterable)
+   - Transforms a list of key-value pairs (Array or Map) into an Object.
+   - Exact inverse of `Object.entries()`.
+
+   Example 1: Array of pairs to Object
+     let entries = [["x", 10], ["y", 20]];
+     Object.fromEntries(entries) → { x: 10, y: 20 }
+
+   Example 2: Transforming object values with Array methods:
+     let prices = { apple: 10, banana: 20, cherry: 30 };
+     let doubledPrices = Object.fromEntries(
+         Object.entries(prices).map(([item, price]) => [item, price * 2])
+     );
+     // doubledPrices → { apple: 20, banana: 40, cherry: 60 }
+
+
+============================================================
+               2. OBJECT COPYING & MERGING
+============================================================
+
+1. Object.assign(target, ...sources)
+   - Copies all enumerable own properties from one or more source objects
+     to a target object.
+   - Modifies and returns the target object.
+   - Performs a SHALLOW copy (nested objects remain referenced).
+
+   Example 1: Merging objects
+     let obj1 = { a: 1, b: 2 };
+     let obj2 = { b: 99, c: 3 }; // 'b' will be overwritten by obj2
+     let merged = Object.assign({}, obj1, obj2);
+     // merged → { a: 1, b: 99, c: 3 }
+
+   Example 2: Shallow copy using Object.assign vs Spread (...)
+     let original = { name: "John", details: { city: "NY" } };
+     let copy1 = Object.assign({}, original);
+     let copy2 = { ...original };
+     // Both copy1 and copy2 perform shallow copies!
+
+
+============================================================
+          3. OBJECT IMMUTABILITY & PROTECTION METHODS
+============================================================
+
+JavaScript provides three levels of object protection to control modification.
+
+------------------------------------------------------------
+A. Object.freeze(obj)  [STRICTEST PROTECTION]
+------------------------------------------------------------
+- Prevents adding new properties.
+- Prevents deleting existing properties.
+- Prevents modifying values of existing properties.
+- Prevents altering property descriptors (configurable, writable).
+- Object becomes completely IMMUTABLE (shallow freeze).
+
+Checking status: `Object.isFrozen(obj)` → true / false
+
+Example:
+    let user = Object.freeze({ name: "Alice", age: 30 });
+    user.age = 31;        // Ignored silently (or throws TypeError in Strict Mode)
+    user.role = "Admin";  // Ignored (cannot add)
+    delete user.name;     // Ignored (cannot delete)
+    console.log(user);    // { name: "Alice", age: 30 }
+
+
+------------------------------------------------------------
+B. Object.seal(obj)  [MEDIUM PROTECTION]
+------------------------------------------------------------
+- Prevents adding new properties.
+- Prevents deleting existing properties.
+- ALLOWS modifying values of existing existing properties!
+
+Checking status: `Object.isSealed(obj)` → true / false
+
+Example:
+    let user = Object.seal({ name: "Bob", age: 20 });
+    user.age = 21;        // ALLOWED! Value changes to 21.
+    user.country = "USA"; // Ignored (cannot add new property)
+    delete user.name;     // Ignored (cannot delete existing property)
+
+
+------------------------------------------------------------
+C. Object.preventExtensions(obj)  [LIGHTEST PROTECTION]
+------------------------------------------------------------
+- Prevents adding new properties.
+- ALLOWS deleting existing properties!
+- ALLOWS modifying values of existing properties!
+
+Checking status: `Object.isExtensible(obj)` → true / false
+
+Example:
+    let user = Object.preventExtensions({ name: "Charlie" });
+    user.age = 25;        // Ignored (cannot add new property)
+    delete user.name;     // ALLOWED! Property deleted.
+
+
+------------------------------------------------------------
+PROTECTION COMPARISON SUMMARY TABLE
+------------------------------------------------------------
++-----------------------+------------+------------+-------------------+
+| ACTION                | freeze()   | seal()     | preventExtensions()|
++-----------------------+------------+------------+-------------------+
+| Add New Properties    |   NO       |   NO       |   NO              |
+| Delete Properties     |   NO       |   NO       |   YES             |
+| Modify Values         |   NO       |   YES      |   YES             |
+| Reconfigure Specs     |   NO       |   NO       |   YES             |
++-----------------------+------------+------------+-------------------+
+
+
+============================================================
+           4. PROPERTY EXISTENCE & COMPARISON METHODS
+============================================================
+
+1. Object.hasOwn(obj, prop)  [ES2022 - RECOMMENDED]
+   - Checks if object has specified property as its OWN property
+     (not inherited from prototype chain).
+   - Safe alternative to `obj.hasOwnProperty(prop)` (works even on objects created with `Object.create(null)`).
+
+   Example:
+     let user = { name: "Alice" };
+     Object.hasOwn(user, "name")     → true
+     Object.hasOwn(user, "toString") → false (inherited from Object.prototype!)
+
+2. obj.hasOwnProperty(prop)  [LEGACY METHOD]
+   - Older method for own property check.
+   - Risk: Fails if object overrides `hasOwnProperty` or has no prototype (`Object.create(null)`).
+
+   Example:
+     user.hasOwnProperty("name") → true
+
+3. `prop in obj` Operator
+   - Checks if property exists anywhere in object OR its prototype chain!
+
+   Example:
+     "name" in user     → true
+     "toString" in user → true (because toString exists on Object.prototype!)
+
+4. Object.is(val1, val2)
+   - Determines whether two values are identical (SameValue algorithm).
+   - Similar to strict equality `===`, BUT handles two edge cases correctly:
+     a) `NaN` vs `NaN`: Object.is(NaN, NaN) → true (while NaN === NaN → false)
+     b) `+0` vs `-0`:   Object.is(+0, -0)   → false (while +0 === -0 → true)
+
+   Examples:
+     Object.is("hello", "hello") → true
+     Object.is([], [])           → false (different reference)
+     Object.is(NaN, NaN)         → true
+     Object.is(+0, -0)           → false
+
+
+============================================================
+              5. ADVANCED OBJECT CREATION & DESCRIPTORS
+============================================================
+
+1. Object.create(proto, descriptors)
+   - Creates a new object with specified prototype object and optional properties.
+
+   Example:
+     let personProto = {
+         greet() { return `Hello, my name is ${this.name}`; }
+     };
+     let john = Object.create(personProto);
+     john.name = "John";
+     john.greet() → "Hello, my name is John"
+
+     // Creating object without any prototype (pure dictionary):
+     let pureObj = Object.create(null);
+     // pureObj has NO prototype methods like toString, valueOf, etc.
+
+2. Object.defineProperty(obj, prop, descriptor)
+   - Defines a new property or modifies an existing property directly on an object,
+     with explicit control over property attributes (descriptors):
+     - `value`: Property value.
+     - `writable`: `true` if value can be changed.
+     - `enumerable`: `true` if visible in `for...in` or `Object.keys()`.
+     - `configurable`: `true` if property can be deleted or descriptor modified.
+
+   Example:
+     let user = {};
+     Object.defineProperty(user, "id", {
+         value: 101,
+         writable: false,     // Read-only!
+         enumerable: true,    // Visible in keys
+         configurable: false  // Cannot delete
+     });
+     user.id = 999; // Ignored! id remains 101.
+
+3. Object.getOwnPropertyDescriptors(obj)
+   - Returns all own property descriptors of an object.
+   - Useful for performing a TRUE deep/shallow clone including getters/setters:
+     `let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));`
+
+
+
+
+================================================================================
+================================================================================
+                     DESTRUCTURING SYNTAX MASTER NOTES
+================================================================================
+================================================================================
+
+Destructuring is a convenient JavaScript ES6 feature that allows extracting values
+from Arrays or properties from Objects into distinct variables in a clean,
+declarative syntax.
+
+
+============================================================
+                  1. ARRAY DESTRUCTURING
+============================================================
+
+Array destructuring extracts elements based on their INDEX (positional order).
+
+
+------------------------------------------------------------
+A. BASIC ARRAY DESTRUCTURING
+------------------------------------------------------------
+let fruits = ["Apple", "Banana", "Cherry"];
+
+// Traditional way:
+// let f1 = fruits[0];
+// let f2 = fruits[1];
+
+// Destructuring way:
+let [f1, f2, f3] = fruits;
+// f1 → "Apple"
+// f2 → "Banana"
+// f3 → "Cherry"
+
+
+------------------------------------------------------------
+B. DEFAULT VALUES
+------------------------------------------------------------
+If array has fewer elements than variables, variables get `undefined` unless
+a default value is specified.
+
+let numbers = [10];
+let [a, b = 20, c = 30] = numbers;
+// a → 10
+// b → 20 (fallback default)
+// c → 30 (fallback default)
+
+
+------------------------------------------------------------
+C. SKIPPING ELEMENTS
+------------------------------------------------------------
+Use commas `, ,` to skip unwanted elements.
+
+let colors = ["Red", "Green", "Blue", "Yellow"];
+let [primary, , tertiary] = colors;
+// primary  → "Red"
+// tertiary → "Blue" (skipped "Green")
+
+
+------------------------------------------------------------
+D. VARIABLE SWAPPING (WITHOUT TEMP VARIABLE)
+------------------------------------------------------------
+Cleanest way to swap two variables without needing a temporary `temp` variable.
+
+let x = 1;
+let y = 2;
+
+[x, y] = [y, x];
+// x → 2
+// y → 1
+
+
+------------------------------------------------------------
+E. REST OPERATOR (...) IN ARRAY DESTRUCTURING
+------------------------------------------------------------
+Collects remaining unassigned elements into a new array.
+NOTE: Rest element `...rest` MUST be the LAST element!
+
+let scores = [95, 88, 72, 60, 55];
+let [first, second, ...remaining] = scores;
+// first     → 95
+// second    → 88
+// remaining → [72, 60, 55]
+
+
+------------------------------------------------------------
+F. NESTED ARRAY DESTRUCTURING
+------------------------------------------------------------
+let nested = [1, [2, 3], 4];
+let [one, [two, three], four] = nested;
+// one   → 1
+// two   → 2
+// three → 3
+// four  → 4
+
+
+============================================================
+                 2. OBJECT DESTRUCTURING
+============================================================
+
+Object destructuring extracts properties based on property NAMES (key matching).
+
+
+------------------------------------------------------------
+A. BASIC OBJECT DESTRUCTURING
+------------------------------------------------------------
+let person = { name: "Alice", age: 25, city: "Paris" };
+
+// Property names MUST match object key names:
+let { name, age } = person;
+// name → "Alice"
+// age  → 25
+
+
+------------------------------------------------------------
+B. RENAMING VARIABLES (ALIAS SYNTAX)
+------------------------------------------------------------
+Extract property and assign it to a variable with a DIFFERENT name:
+Syntax: `{ keyName: newVariableName }`
+
+let user = { id: 101, username: "coder123" };
+let { id: userId, username: handle } = user;
+// userId → 101
+// handle → "coder123"
+
+
+------------------------------------------------------------
+C. DEFAULT VALUES & COMBINING WITH RENAMING
+------------------------------------------------------------
+Provide default values if property is `undefined` in object.
+
+let config = { host: "localhost" };
+let { host, port = 8080, timeout: ms = 5000 } = config;
+// host → "localhost"
+// port → 8080 (default value)
+// ms   → 5000 (renamed 'timeout' to 'ms' with default 5000)
+
+
+------------------------------------------------------------
+D. REST OPERATOR (...) IN OBJECT DESTRUCTURING
+------------------------------------------------------------
+Collects remaining unassigned properties into a new object.
+
+let student = { name: "David", grade: "A", math: 90, physics: 85 };
+let { name, grade, ...subjectScores } = student;
+// name          → "David"
+// grade         → "A"
+// subjectScores → { math: 90, physics: 85 }
+
+
+------------------------------------------------------------
+E. NESTED OBJECT DESTRUCTURING
+------------------------------------------------------------
+let employee = {
+    id: 1,
+    profile: {
+        firstName: "Sarah",
+        lastName: "Connor"
+    },
+    skills: ["JS", "Python"]
+};
+
+let {
+    profile: { firstName, lastName },
+    skills: [primarySkill]
+} = employee;
+
+// firstName    → "Sarah"
+// lastName     → "Connor"
+// primarySkill → "JS"
+
+
+------------------------------------------------------------
+F. DYNAMIC / COMPUTED PROPERTY DESTRUCTURING
+------------------------------------------------------------
+Extract object property using dynamic variable key inside square brackets `[key]`:
+
+let keyToExtract = "email";
+let user = { name: "John", email: "john@example.com" };
+
+let { [keyToExtract]: userEmail } = user;
+// userEmail → "john@example.com"
+
+
+============================================================
+            3. FUNCTION PARAMETER DESTRUCTURING
+============================================================
+
+Destructuring parameter values directly inside function signatures cleanly eliminates
+boilerplate code.
+
+
+------------------------------------------------------------
+A. DESTRUCTURING OBJECT PARAMETERS
+------------------------------------------------------------
+// Instead of passing 'user' object and typing 'user.name', 'user.age':
+function printUser({ name, age, country = "Unknown" }) {
+    console.log(`${name} is ${age} years old from ${country}.`);
+}
+
+let userObj = { name: "Emma", age: 28 };
+printUser(userObj); // Output: "Emma is 28 years old from Unknown."
+
+
+------------------------------------------------------------
+B. FUNCTION PARAMETER DESTRUCTURING WITH DEFAULT OBJECT ({})
+------------------------------------------------------------
+CRITICAL TIP: Always provide `= {}` default to prevent errors if function is called with no arguments!
+
+function initializeApp({ theme = "light", debug = false } = {}) {
+    console.log(`Theme: ${theme}, Debug: ${debug}`);
+}
+
+initializeApp({ theme: "dark" }); // Output: Theme: dark, Debug: false
+initializeApp();                  // Output: Theme: light, Debug: false (no crash!)
+
+
+------------------------------------------------------------
+C. DESTRUCTURING ARRAY PARAMETERS
+------------------------------------------------------------
+function getCoordinates([x, y, z = 0]) {
+    return `Point X:${x}, Y:${y}, Z:${z}`;
+}
+
+getCoordinates([10, 20]); // "Point X:10, Y:20, Z:0"
+
+
+============================================================
+          4. DESTRUCTURING ITERABLES (MAPS & SETS)
+============================================================
+
+1. Map Entries in Loops:
+   let map = new Map([["id", 101], ["role", "Admin"]]);
+   for (let [key, val] of map) {
+       console.log(`${key} => ${val}`);
+   }
+
+2. Set Elements via Array Destructuring:
+   let set = new Set(["Red", "Green", "Blue"]);
+   let [firstColor, secondColor] = set;
+   // firstColor  → "Red"
+   // secondColor → "Green"
+
+
+
+
+================================================================================
+================================================================================
+                    JSON (STRINGIFY & PARSE) MASTER NOTES
+================================================================================
+================================================================================
+
+JSON (JavaScript Object Notation) is a lightweight, text-based format used for
+transmitting data over networks (e.g., APIs, Client-Server communication) and
+storing configuration files.
+
+
+============================================================
+              1. JSON vs JAVASCRIPT OBJECTS
+============================================================
+
+Though JSON syntax resembles JavaScript object literals, JSON has STRICT rules:
+
++-----------------------+-----------------------+-----------------------+
+| FEATURE               | JAVASCRIPT OBJECT     | JSON FORMAT           |
++-----------------------+-----------------------+-----------------------+
+| Key Quotes            | Optional (if valid ID)| MUST be Double Quotes |
+| String Values         | Single or Double      | MUST be Double Quotes |
+| Trailing Commas       | Allowed `{a:1,}`      | FORBIDDEN `{ "a": 1 }`|
+| Methods/Functions     | Allowed               | FORBIDDEN             |
+| `undefined`, Symbol   | Allowed               | FORBIDDEN             |
+| Date / RegExp         | Native Objects        | Text / String only    |
++-----------------------+-----------------------+-----------------------+
+
+
+============================================================
+             2. JSON.stringify(value, replacer, space)
+============================================================
+
+`JSON.stringify()` converts a JavaScript value/object into a valid JSON String.
+
+Syntax:
+    JSON.stringify(value, replacer, space);
+
+
+------------------------------------------------------------
+A. BASIC USAGE
+------------------------------------------------------------
+let user = {
+    name: "Alice",
+    age: 25,
+    isAdmin: true
+};
+
+let jsonString = JSON.stringify(user);
+// Output: '{"name":"Alice","age":25,"isAdmin":true}' (Notice double quotes around keys!)
+
+
+------------------------------------------------------------
+B. PRETTY PRINTING WITH `space` ARGUMENT
+------------------------------------------------------------
+The 3rd argument `space` controls indentation formatting (number of spaces or string tag).
+
+let user = { name: "Bob", role: "Editor" };
+
+// Indent with 2 spaces:
+console.log(JSON.stringify(user, null, 2));
+/* Output:
+{
+  "name": "Bob",
+  "role": "Editor"
+}
+*/
+
+
+------------------------------------------------------------
+C. FILTERING & TRANSFORMING WITH `replacer` ARGUMENT
+------------------------------------------------------------
+The 2nd argument `replacer` can be an Array (whitelist of keys to include) or a Function.
+
+1. Array Whitelist Replacer:
+   let user = { name: "Charlie", age: 30, password: "123", creditCard: "4567" };
+   let safeJson = JSON.stringify(user, ["name", "age"]);
+   // safeJson → '{"name":"Charlie","age":30}' (password and creditCard excluded!)
+
+2. Function Replacer:
+   let user = { name: "Dave", age: 17, secret: "classified" };
+   let filteredJson = JSON.stringify(user, (key, value) => {
+       if (key === "secret") return undefined; // returning undefined omits key
+       if (typeof value === "number") return value + 1; // transform numbers
+       return value;
+   });
+   // filteredJson → '{"name":"Dave","age":18}'
+
+
+------------------------------------------------------------
+D. JSON.stringify DATA LOSS & GOTCHAS
+------------------------------------------------------------
+When stringifying JS objects, certain types are handled specially:
+
+1. `undefined`, `Functions`, and `Symbols`:
+   - In Objects: Automatically OMITTED / IGNORED!
+   - In Arrays: Converted to `null`!
+
+   Example:
+     let obj = {
+         a: undefined,
+         b: function() {},
+         c: Symbol("id"),
+         d: "Hello"
+     };
+     JSON.stringify(obj) → '{"d":"Hello"}' (a, b, c dropped!)
+
+     let arr = [undefined, function() {}, Symbol("id"), "Hello"];
+     JSON.stringify(arr) → '[null,null,null,"Hello"]'
+
+2. `NaN` and `Infinity`:
+   - Converted to `null`.
+   JSON.stringify({ val: NaN, inf: Infinity }) → '{"val":null,"inf":null}'
+
+3. `Date` Objects:
+   - Converted to ISO String format via `Date.prototype.toISOString()`.
+   JSON.stringify({ now: new Date() }) → '{"now":"2026-08-27T10:52:36.000Z"}'
+
+4. CIRCULAR REFERENCES CAUSE TYPEERROR:
+   - Objects referencing themselves cannot be stringified!
+
+   Example:
+     let a = {};
+     a.self = a;
+     JSON.stringify(a); // THROWS: TypeError: Converting circular structure to JSON
+
+
+------------------------------------------------------------
+E. CUSTOM SERIALIZATION VIA `toJSON()` METHOD
+------------------------------------------------------------
+If an object has a `toJSON()` method, `JSON.stringify()` calls `toJSON()`
+to obtain the value to stringify.
+
+let item = {
+    id: 101,
+    title: "Laptop",
+    price: 1000,
+    toJSON() {
+        return { id: this.id, product: this.title.toUpperCase() };
+    }
+};
+
+JSON.stringify(item); // → '{"id":101,"product":"LAPTOP"}'
+
+
+============================================================
+              3. JSON.parse(text, reviver)
+============================================================
+
+`JSON.parse()` converts a valid JSON string into a JavaScript Object / Value.
+
+Syntax:
+    JSON.parse(text, reviver);
+
+
+------------------------------------------------------------
+A. BASIC USAGE
+------------------------------------------------------------
+let jsonStr = '{"name":"Alice","age":25,"skills":["JS","Python"]}';
+let user = JSON.parse(jsonStr);
+
+console.log(user.name);      // "Alice"
+console.log(user.skills[0]); // "JS"
+
+
+------------------------------------------------------------
+B. ALWAYS WRAP IN `try...catch` (SYNTAX ERROR SAFETY)
+------------------------------------------------------------
+Invalid JSON string causes `JSON.parse()` to throw a `SyntaxError` and crash execution!
+
+let invalidJson = '{ name: "Alice" }'; // Missing quotes around key 'name'!
+
+try {
+    let data = JSON.parse(invalidJson);
+} catch (error) {
+    console.error("Invalid JSON syntax:", error.message);
+}
+
+
+------------------------------------------------------------
+C. TRANSFORMING VALUES WITH `reviver` FUNCTION
+------------------------------------------------------------
+The 2nd argument `reviver` runs for every key-value pair to transform values during parsing.
+Extremely useful for parsing Date strings back into native `Date` objects!
+
+let jsonStr = '{"title":"Meeting","date":"2026-08-27T10:00:00.000Z"}';
+
+let eventData = JSON.parse(jsonStr, (key, value) => {
+    if (key === "date") {
+        return new Date(value); // Convert string to Date object
+    }
+    return value;
+});
+
+console.log(eventData.date.getFullYear()); // 2026 (Native Date method works!)
+
+
+============================================================
+     4. DEEP COPYING OBJECTS USING JSON vs structuredClone
+============================================================
+
+1. JSON Deep Copying Trick:
+   `let deepCopy = JSON.parse(JSON.stringify(originalObj));`
+
+   PROS:
+   - Simple one-liner for plain objects containing primitives/arrays.
+
+   CONS / LIMITATIONS:
+   - Drops functions, `undefined`, and Symbols.
+   - Converts `Date` objects to Strings.
+   - Converts `NaN` / `Infinity` to `null`.
+   - Crashes on circular references.
+
+2. Modern Native Solution: `structuredClone()` (ES2022+):
+   `let deepCopy = structuredClone(originalObj);`
+
+   PROS:
+   - Native modern API.
+   - Handles `Date`, `RegExp`, `Map`, `Set`, `ArrayBuffer`, `TypedArray`.
+   - Correctly supports circular references!
+   - Does not drop `undefined`.
+
+
+============================================================
+              5. QUICK SUMMARY & CHEAT SHEET
+============================================================
+
+OBJECT METHODS SUMMARY:
+------------------------------------------------------------
+Object.keys(obj)          → Array of key names
+Object.values(obj)        → Array of values
+Object.entries(obj)       → Array of [key, value] pairs
+Object.fromEntries(pairs) → [key, value] pairs to Object
+Object.assign(dst, src)   → Shallow merge objects
+Object.freeze(obj)        → Complete immutability (No add/delete/modify)
+Object.seal(obj)          → Prevent add/delete (Modify allowed)
+Object.hasOwn(obj, prop)  → True if own property (ES2022)
+Object.is(a, b)           → Strict equality handling NaN and -0/+0
+
+DESTRUCTURING QUICK CHEAT SHEET:
+------------------------------------------------------------
+let [a, b, ...rest] = arr;                    // Array destructuring
+let [x, y] = [y, x];                          // Variable swap
+let { name: userAlias, age = 18 } = obj;      // Object rename & default
+let { a, ...others } = obj;                   // Object rest property
+function print({ name, role = "User" } = {})  // Param destructuring with default
+
+JSON METHODS QUICK CHEAT SHEET:
+------------------------------------------------------------
+JSON.stringify(obj, replacer, space) → Object to JSON string
+JSON.parse(str, reviver)             → JSON string to Object
+structuredClone(obj)                 → Modern native deep copy
+
+
+================================================================================
                     END OF EXHAUSTIVE MASTER NOTES (.TXT)
 ================================================================================
+
+
 

@@ -1,116 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
-    <script>
-        const products = [
-  // Electronics
-  {
-    pname: "Laptop",
-    price: 55000,
-    category: "Electronics",
-    desc: "High-performance laptop for work and study"
-  },
-  {
-    pname: "Smartphone",
-    price: 25000,
-    category: "Electronics",
-    desc: "Modern smartphone with excellent camera"
-  },
-  {
-    pname: "Headphones",
-    price: 3000,
-    category: "Electronics",
-    desc: "Wireless headphones with clear sound"
-  },
+  <script>
+    const products = [
+      // Electronics
+      {
+        pname: "Laptop",
+        price: 55000,
+        category: "Electronics",
+        desc: "High-performance laptop for work and study"
+      },
+      {
+        pname: "Smartphone",
+        price: 25000,
+        category: "Electronics",
+        desc: "Modern smartphone with excellent camera"
+      },
+      {
+        pname: "Headphones",
+        price: 3000,
+        category: "Electronics",
+        desc: "Wireless headphones with clear sound"
+      },
 
-  // Clothing
-  {
-    pname: "T-Shirt",
-    price: 799,
-    category: "Clothing",
-    desc: "Comfortable cotton T-shirt"
-  },
-  {
-    pname: "Jeans",
-    price: 1499,
-    category: "Clothing",
-    desc: "Stylish denim jeans for daily wear"
-  },
-  {
-    pname: "Jacket",
-    price: 2499,
-    category: "Clothing",
-    desc: "Warm and fashionable jacket"
-  },
+      // Clothing
+      {
+        pname: "T-Shirt",
+        price: 799,
+        category: "Clothing",
+        desc: "Comfortable cotton T-shirt"
+      },
+      {
+        pname: "Jeans",
+        price: 1499,
+        category: "Clothing",
+        desc: "Stylish denim jeans for daily wear"
+      },
+      {
+        pname: "Jacket",
+        price: 2499,
+        category: "Clothing",
+        desc: "Warm and fashionable jacket"
+      },
 
-  // Grocery
-  {
-    pname: "Rice",
-    price: 1200,
-    category: "Grocery",
-    desc: "Premium quality basmati rice"
-  },
-  {
-    pname: "Wheat Flour",
-    price: 450,
-    category: "Grocery",
-    desc: "Fresh whole wheat flour"
-  },
-  {
-    pname: "Cooking Oil",
-    price: 180,
-    category: "Grocery",
-    desc: "Healthy refined cooking oil"
-  },
+      // Grocery
+      {
+        pname: "Rice",
+        price: 1200,
+        category: "Grocery",
+        desc: "Premium quality basmati rice"
+      },
+      {
+        pname: "Wheat Flour",
+        price: 450,
+        category: "Grocery",
+        desc: "Fresh whole wheat flour"
+      },
+      {
+        pname: "Cooking Oil",
+        price: 180,
+        category: "Grocery",
+        desc: "Healthy refined cooking oil"
+      },
 
-  // Furniture
-  {
-    pname: "Sofa",
-    price: 25000,
-    category: "Furniture",
-    desc: "Comfortable 3-seater sofa"
-  },
-  {
-    pname: "Dining Table",
-    price: 18000,
-    category: "Furniture",
-    desc: "Wooden dining table for family"
-  },
-  {
-    pname: "Office Chair",
-    price: 5500,
-    category: "Furniture",
-    desc: "Ergonomic chair for office work"
-  }
-];
+      // Furniture
+      {
+        pname: "Sofa",
+        price: 25000,
+        category: "Furniture",
+        desc: "Comfortable 3-seater sofa"
+      },
+      {
+        pname: "Dining Table",
+        price: 18000,
+        category: "Furniture",
+        desc: "Wooden dining table for family"
+      },
+      {
+        pname: "Office Chair",
+        price: 5500,
+        category: "Furniture",
+        desc: "Ergonomic chair for office work"
+      }
+    ];
 
 
 
-let findProduct = products.find((item,index)=>{
-        if(item.category=="Electronics"){
-             return item;
-        }
-})
-console.log(findProduct);
+    let findProduct = products.find((item, index) => {
+      if (item.category == "Electronics") {
+        return item;
+      }
+    })
+    console.log(findProduct);
 
-let filterProduct = products.filter((item,index)=>{
-        if(item.category=="Electronics"){
-             return item;
-        }
-})
-console.log(filterProduct);
+    let filterProduct = products.filter((item, index) => {
+      if (item.category == "Electronics") {
+        return item;
+      }
+    })
+    console.log(filterProduct);
 
-let totalPrice = products.reduce((sum,item,index)=>{
-       sum=sum+item.price;
-       return sum;
-},0);
-console.log(totalPrice);
+    let totalPrice = products.reduce((sum, item, index) => {
+      sum = sum + item.price;
+      return sum;
+    }, 0);
+    console.log(totalPrice);
 
-    </script>
+  </script>
 </body>
+
 </html>

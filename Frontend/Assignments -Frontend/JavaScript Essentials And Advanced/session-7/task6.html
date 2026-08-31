@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart</title>
+  </head>
+
+  <body>
+    <h2>Product</h2>
+
+    <p id="productName">Pizza</p>
+
+    <button id="addBtn">Add to Cart</button>
+
+    <h2>My Cart</h2>
+    <div id="cart"></div>
+
+    <script>
+      function addToCart() {
+        const productName = document.querySelector("#productName");
+        const cart = document.querySelector("#cart");
+
+        const item = document.createElement("p");
+        item.textContent = productName.textContent;
+
+        cart.appendChild(item);
+      }
+
+      const addButton = document.querySelector("#addBtn");
+
+      addButton.addEventListener("click", addToCart);
+    </script>
+  </body>
+</html>

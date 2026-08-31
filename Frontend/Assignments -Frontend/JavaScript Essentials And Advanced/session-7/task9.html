@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flipkart - Add to Cart</title>
+
+    <style>
+      #addToCart {
+        padding: 12px 25px;
+        background-color: #ff9f00;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="addToCart">Add to Cart</button>
+
+    <script>
+      const button = document.querySelector("#addToCart");
+
+      button.addEventListener("click", function (event) {
+        console.log("Event Type:", event.type);
+        console.log("X:", event.clientX);
+        console.log("Y:", event.clientY);
+      });
+
+      button.addEventListener("mouseover", function (event) {
+        console.log("Event Type:", event.type);
+        console.log("X:", event.clientX);
+        console.log("Y:", event.clientY);
+      });
+    </script>
+  </body>
+</html>

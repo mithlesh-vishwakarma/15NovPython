@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Order</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+      }
+
+      form {
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+
+      select,
+      input {
+        width: 100%;
+        padding: 8px;
+      }
+
+      #message {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>🍔 Food Order</h2>
+
+    <form>
+      <label for="cuisine">Choose Cuisine:</label>
+
+      <select id="cuisine">
+        <option value="">-- Select Cuisine --</option>
+        <option value="Indian">Indian</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Italian">Italian</option>
+        <option value="Mexican">Mexican</option>
+        <option value="Japanese">Japanese</option>
+      </select>
+
+      <label for="quantity">Quantity:</label>
+
+      <input type="number" id="quantity" min="1" placeholder="Enter quantity" />
+
+      <p id="message"></p>
+    </form>
+
+    <script>
+      const cuisine = document.getElementById("cuisine");
+      const message = document.getElementById("message");
+
+      cuisine.addEventListener("change", function () {
+        if (cuisine.value === "") {
+          message.textContent = "";
+        } else {
+          message.textContent = `You selected ${cuisine.value} cuisine!`;
+        }
+      });
+    </script>
+  </body>
+</html>

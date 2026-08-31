@@ -1,22 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playlist</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <style>
+      #playlist {
+        margin: 20px;
+        padding: 20px;
+        min-height: 50px;
+        width: 200px;
+        border: 2px solid black;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
     <button type="button" id="btn">Add to Playlist</button>
 
+    <div id="playlist"></div>
 
     <script>
-        let btn = document.getElementById("btn");
-        btn.onclick = function () {
-            alert("Song added!");
-        }
-    </script>
-</body>
+      const songs = [
+        "Blinding Lights",
+        "Shape of You",
+        "Perfect",
+        "Believer",
+        "Faded",
+        "Daydream",
+      ];
 
+      const btn = document.getElementById("btn");
+      const playlist = document.getElementById("playlist");
+
+      // Create the <ul> once
+      const ul = document.createElement("ul");
+      playlist.appendChild(ul);
+
+      btn.onclick = function () {
+        // Get a random song
+        alert("songs added!!");
+        const randomIndex = Math.floor(Math.random() * songs.length);
+        const randomSong = songs[randomIndex];
+
+        // Create <li>
+        const li = document.createElement("li");
+
+        // Add song name
+        li.textContent = randomSong;
+
+        // Add <li> to <ul>
+        ul.appendChild(li);
+      };
+    </script>
+  </body>
 </html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>
+      10. Briefly explain (in 2-3 sentences) what event flow is in the DOM, and
+      give one example of how event bubbling could affect a shopping cart app
+      like Flipkart.
+    </h2>
+    <h4>
+      Event flow in the DOM describes how an event travels through elements,
+      from the outer elements to the target element and then back outward. Event
+      bubbling means the event moves from the target element up to its parent
+      elements; for example, if a Remove button is inside a shopping cart item,
+      clicking the button could also trigger a click event on the cart item
+      unless the event is stopped with event.stopPropagation().
+    </h4>
+  </body>
+</html>
