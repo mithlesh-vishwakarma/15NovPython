@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 1 - Flipkart Product Object</title>
+  </head>
+  <body>
+    <h1>Task 1: Create a Flipkart-style Product Object</h1>
+    <p>
+      Question: Create a JavaScript object representing a Flipkart-style product
+      with name, price, and rating fields, then convert it to a JSON string
+      using JSON.stringify() and log the result.
+    </p>
+
+    <script>
+      // Create a Flipkart-style product object
+      const product = {
+        name: "Samsung Galaxy S21",
+        price: 49999,
+        rating: 4.5,
+      };
+
+      // Convert to JSON string
+      const jsonString = JSON.stringify(product);
+
+      // Log the result
+      console.log("Product Object:", product);
+      console.log("JSON String:", jsonString);
+
+      // Display in document
+      document.write("<pre>");
+      document.write(
+        "Product Object: " + JSON.stringify(product, null, 2) + "\n\n",
+      );
+      document.write("JSON String: " + jsonString);
+      document.write("</pre>");
+    </script>
+  </body>
+</html>

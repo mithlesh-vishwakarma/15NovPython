@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 3 - YouTube Channels Parser</title>
+  </head>
+  <body>
+    <h1>Task 3: YouTube Channels Function</h1>
+    <p>
+      Question: Write a function that takes a JSON string representing a list of
+      favorite YouTube channels and returns an array of channel names using
+      JSON.parse().
+    </p>
+
+    <script>
+      // Function to parse YouTube channels
+      function parseYouTubeChannels(jsonString) {
+        return JSON.parse(jsonString);
+      }
+
+      // Example usage
+      const channelsJson =
+        '["TechGuruji", "CarryMinati", "SetIndia", "MrBeast"]';
+      const channels = parseYouTubeChannels(channelsJson);
+
+      console.log("JSON String:", channelsJson);
+      console.log("Parsed Channels:", channels);
+
+      // Display in document
+      document.write("<pre>");
+      document.write("JSON String: " + channelsJson + "\n\n");
+      document.write(
+        "Parsed Channels: " + JSON.stringify(channels, null, 2) + "\n\n",
+      );
+      document.write("Channel List:\n");
+      channels.forEach((channel, index) => {
+        document.write(index + 1 + ". " + channel + "\n");
+      });
+      document.write("</pre>");
+    </script>
+  </body>
+</html>

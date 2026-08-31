@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 2 - Food Delivery Apps</title>
+  </head>
+  <body>
+    <h1>Task 2: Food Delivery Apps Array</h1>
+    <p>
+      Question: Create an array of your top 3 favorite food delivery apps (like
+      Zomato, Swiggy, Domino's), convert it to a JSON string using
+      JSON.stringify(), and log the result to the console.
+    </p>
+
+    <script>
+      // Create an array of top 3 food delivery apps
+      const foodApps = ["Zomato", "Swiggy", "Domino's"];
+
+      // Convert to JSON string
+      const jsonString = JSON.stringify(foodApps);
+
+      // Log the result
+      console.log("Food Apps Array:", foodApps);
+      console.log("JSON String:", jsonString);
+
+      // Display in document
+      document.write("<pre>");
+      document.write(
+        "Food Apps Array: " + JSON.stringify(foodApps, null, 2) + "\n\n",
+      );
+      document.write("JSON String: " + jsonString);
+      document.write("</pre>");
+    </script>
+  </body>
+</html>

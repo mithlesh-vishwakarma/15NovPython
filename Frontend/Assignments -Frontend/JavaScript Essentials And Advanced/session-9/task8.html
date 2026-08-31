@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 8 - Flipkart Wishlist</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .product {
+        background-color: #f9f9f9;
+        padding: 15px;
+        margin: 10px 0;
+        border-left: 4px solid #1976d2;
+        border-radius: 3px;
+      }
+      .product-name {
+        font-weight: bold;
+        font-size: 16px;
+        color: #333;
+      }
+      .product-price {
+        color: #d32f2f;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Task 8: Flipkart Wishlist</h1>
+      <p>
+        Question: Simulate a Flipkart-style wishlist: create an array of 3
+        products (each with name and price), save it in localStorage as
+        'wishlist', then reload the page and display the wishlist items by
+        reading and parsing the data from localStorage.
+      </p>
+
+      <h2>My Wishlist</h2>
+      <div id="wishlist"></div>
+      <button
+        onclick="location.reload()"
+        style="
+          padding: 10px 20px;
+          margin-top: 20px;
+          background-color: #1976d2;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        Reload Page to Test localStorage
+      </button>
+    </div>
+
+    <script>
+      const WISHLIST_KEY = "flipkart_wishlist";
+
+      // Create sample products
+      const sampleProducts = [
+        { name: "iPhone 14 Pro", price: 129999 },
+        { name: "Sony WH-1000XM4 Headphones", price: 24999 },
+        { name: 'Samsung 55" 4K TV', price: 49999 },
+      ];
+
+      // Initialize wishlist on first load
+      function initializeWishlist() {
+        const existingWishlist = localStorage.getItem(WISHLIST_KEY);
+
+        if (existingWishlist === null) {
+          // Save products to localStorage
+          localStorage.setItem(WISHLIST_KEY, JSON.stringify(sampleProducts));
+          console.log("Wishlist created and saved to localStorage");
+        }
+      }
+
+      // Function to display wishlist
+      function displayWishlist() {
+        const wishlistDiv = document.getElementById("wishlist");
+        wishlistDiv.innerHTML = "";
+
+        // Read from localStorage
+        const savedWishlist = localStorage.getItem(WISHLIST_KEY);
+
+        if (savedWishlist === null) {
+          wishlistDiv.innerHTML = "<p>No items in wishlist</p>";
+          return;
+        }
+
+        // Parse the JSON data
+        const products = JSON.parse(savedWishlist);
+
+        // Display each product
+        products.forEach((product, index) => {
+          const productDiv = document.createElement("div");
+          productDiv.className = "product";
+          productDiv.innerHTML = `
+            <div class="product-name">${index + 1}. ${product.name}</div>
+            <div class="product-price">₹${product.price.toLocaleString("en-IN")}</div>
+          `;
+          wishlistDiv.appendChild(productDiv);
+        });
+
+        // Show storage info
+        const info = document.createElement("p");
+        info.style.marginTop = "20px";
+        info.style.color = "#666";
+        info.textContent = `Total items in wishlist: ${products.length}`;
+        wishlistDiv.appendChild(info);
+      }
+
+      // Initialize and display
+      window.onload = function () {
+        initializeWishlist();
+        displayWishlist();
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 6 - Get Recent Searches</title>
+  </head>
+  <body>
+    <h1>Task 6: Get Recent Searches Function</h1>
+    <p>
+      Question: Write a function getRecentSearches() that reads the
+      'recentSearches' item from localStorage, parses it from JSON, and returns
+      the array. If nothing is saved yet, return an empty array.
+    </p>
+
+    <script>
+      // Function to get recent searches
+      function getRecentSearches() {
+        // Read from localStorage
+        const savedSearches = localStorage.getItem("recentSearches");
+
+        // Check for null before parsing (as per hint)
+        if (savedSearches === null) {
+          return [];
+        }
+
+        // Parse and return
+        return JSON.parse(savedSearches);
+      }
+
+      // Example usage
+      console.log("Recent Searches:", getRecentSearches());
+
+      // Let's add some test data if it doesn't exist
+      if (getRecentSearches().length === 0) {
+        localStorage.setItem(
+          "recentSearches",
+          JSON.stringify(["Pizza", "Sushi", "Biryani"]),
+        );
+      }
+
+      const searches = getRecentSearches();
+
+      // Display in document
+      document.write("<pre>");
+      document.write("Function: getRecentSearches()\n");
+      document.write(
+        "Returns an array of recent searches from localStorage\n\n",
+      );
+      document.write("Saved Searches:\n");
+      searches.forEach((search, index) => {
+        document.write(index + 1 + ". " + search + "\n");
+      });
+      document.write("\n\nJSON Format: " + JSON.stringify(searches));
+      document.write("</pre>");
+    </script>
+  </body>
+</html>

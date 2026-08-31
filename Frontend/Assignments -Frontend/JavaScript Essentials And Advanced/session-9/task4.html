@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 4 - Save Recent Search</title>
+  </head>
+  <body>
+    <h1>Task 4: Save Recent Search Function</h1>
+    <p>
+      Question: Build a function saveRecentSearch(query) that takes a search
+      term (like 'Biryani' or 'Sneakers'), adds it to an array, converts the
+      array to JSON, and saves it in localStorage under the key
+      'recentSearches'.
+    </p>
+
+    <script>
+      // Function to save recent search
+      function saveRecentSearch(query) {
+        // Get existing searches from localStorage
+        let recentSearches = localStorage.getItem("recentSearches");
+
+        // If no searches exist, create empty array
+        if (recentSearches === null) {
+          recentSearches = [];
+        } else {
+          // Parse existing searches
+          recentSearches = JSON.parse(recentSearches);
+        }
+
+        // Add new search to array
+        recentSearches.push(query);
+
+        // Convert to JSON and save to localStorage
+        localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+
+        console.log("Search saved:", query);
+        console.log("All searches:", recentSearches);
+      }
+
+      // Example usage
+      saveRecentSearch("Biryani");
+      saveRecentSearch("Sneakers");
+      saveRecentSearch("Mobile Phone");
+
+      // Display in document
+      document.write("<pre>");
+      document.write("Function: saveRecentSearch(query)\n");
+      document.write(
+        "Searches saved to localStorage under key: 'recentSearches'\n\n",
+      );
+      document.write("Example searches saved:\n");
+      document.write("1. Biryani\n");
+      document.write("2. Sneakers\n");
+      document.write("3. Mobile Phone\n\n");
+      document.write(
+        "localStorage['recentSearches'] = " +
+          localStorage.getItem("recentSearches"),
+      );
+      document.write("</pre>");
+    </script>
+  </body>
+</html>

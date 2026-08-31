@@ -1,0 +1,31 @@
+Tasks
+
+1.
+Create a JavaScript object representing a Flipkart-style product with name, price, and rating fields, then convert it to a JSON string using JSON.stringify() and log the result.
+
+2.
+Create an array of your top 3 favorite food delivery apps (like Zomato, Swiggy, Domino's), convert it to a JSON string using JSON.stringify(), and log the result to the console.
+
+3.
+Write a function that takes a JSON string representing a list of favorite YouTube channels and returns an array of channel names using JSON.parse().
+
+4.
+Build a function saveRecentSearch(query) that takes a search term (like 'Biryani' or 'Sneakers'), adds it to an array, converts the array to JSON, and saves it in localStorage under the key 'recentSearches'.
+
+5.
+Build a simple web page where users can add their top 3 favorite Zomato restaurants to a list and save it to localStorage using localStorage.setItem(). When the page reloads, the list should automatically load from localStorage and display.
+
+6.
+Write a function getRecentSearches() that reads the 'recentSearches' item from localStorage, parses it from JSON, and returns the array. If nothing is saved yet, return an empty array.<br><br><em><strong>Hint:</strong> Check for null before parsing.</em>
+
+7.
+Implement a 'Clear Favorites' button on your restaurant list page that removes the saved data from localStorage using localStorage.removeItem() and updates the UI accordingly.<br><br><em><strong>Hint:</strong> Use localStorage.removeItem('yourKey') and refresh the displayed list after clearing.</em>
+
+8.
+Simulate a Flipkart-style wishlist: create an array of 3 products (each with name and price), save it in localStorage as 'wishlist', then reload the page and display the wishlist items by reading and parsing the data from localStorage.
+
+9.
+Debug this code: It tries to save an array of movie names to localStorage, but after reloading, the list doesn't display correctly.<br><br>let movies = ['Jawan', 'Pathaan', 'Dunki'];<br>localStorage.setItem('movies', movies);<br>let saved = localStorage.getItem('movies');<br>let arr = JSON.parse(saved);<br>console.log(arr);<br><br><em><strong>Hint:</strong> Check how movies is being stored and what type localStorage expects.</em>
+
+10.
+Add a 'Clear Wishlist' button to your wishlist code that removes the 'wishlist' key from localStorage and updates the display immediately.<br><br><em><strong>Constraint:</strong> Use localStorage.removeItem() for this action.</em>

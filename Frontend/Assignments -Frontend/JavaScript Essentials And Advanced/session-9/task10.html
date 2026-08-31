@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 10 - Clear Wishlist</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 700px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .controls {
+        margin: 20px 0;
+      }
+      button {
+        padding: 10px 20px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .add-btn {
+        background-color: #4caf50;
+        color: white;
+      }
+      .add-btn:hover {
+        background-color: #45a049;
+      }
+      .clear-btn {
+        background-color: #d32f2f;
+        color: white;
+      }
+      .clear-btn:hover {
+        background-color: #b71c1c;
+      }
+      input {
+        padding: 10px;
+        font-size: 14px;
+        width: 250px;
+      }
+      .product {
+        background-color: #f9f9f9;
+        padding: 15px;
+        margin: 10px 0;
+        border-left: 4px solid #1976d2;
+        border-radius: 3px;
+      }
+      .product-name {
+        font-weight: bold;
+        color: #333;
+      }
+      .product-price {
+        color: #d32f2f;
+        font-weight: bold;
+        margin-top: 5px;
+      }
+      .message {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+      }
+      .success {
+        background-color: #c8e6c9;
+        color: #2e7d32;
+      }
+      .info {
+        background-color: #bbdefb;
+        color: #1565c0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Task 10: Clear Wishlist Button</h1>
+      <p>
+        Question: Add a 'Clear Wishlist' button to your wishlist code that
+        removes the 'wishlist' key from localStorage and updates the display
+        immediately.
+      </p>
+
+      <div class="controls">
+        <input type="text" id="productInput" placeholder="Product name" />
+        <input type="number" id="priceInput" placeholder="Price" />
+        <button class="add-btn" onclick="addProduct()">Add to Wishlist</button>
+        <button class="clear-btn" onclick="clearWishlist()">
+          Clear Wishlist
+        </button>
+      </div>
+
+      <h2>My Wishlist</h2>
+      <div id="wishlist"></div>
+      <div id="message"></div>
+    </div>
+
+    <script>
+      const WISHLIST_KEY = "user_wishlist";
+
+      // Function to add product
+      function addProduct() {
+        const nameInput = document.getElementById("productInput");
+        const priceInput = document.getElementById("priceInput");
+
+        const name = nameInput.value.trim();
+        const price = priceInput.value.trim();
+
+        if (name === "" || price === "") {
+          alert("Please enter both product name and price");
+          return;
+        }
+
+        let wishlist = localStorage.getItem(WISHLIST_KEY);
+        if (wishlist === null) {
+          wishlist = [];
+        } else {
+          wishlist = JSON.parse(wishlist);
+        }
+
+        wishlist.push({ name: name, price: parseFloat(price) });
+        localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+
+        nameInput.value = "";
+        priceInput.value = "";
+
+        displayWishlist();
+      }
+
+      // Function to display wishlist
+      function displayWishlist() {
+        const wishlistDiv = document.getElementById("wishlist");
+        const messageDiv = document.getElementById("message");
+        wishlistDiv.innerHTML = "";
+        messageDiv.innerHTML = "";
+
+        const wishlist = localStorage.getItem(WISHLIST_KEY);
+
+        if (wishlist === null || JSON.parse(wishlist).length === 0) {
+          messageDiv.className = "message info";
+          messageDiv.textContent = "Your wishlist is empty";
+          return;
+        }
+
+        const products = JSON.parse(wishlist);
+        let totalPrice = 0;
+
+        products.forEach((product, index) => {
+          const productDiv = document.createElement("div");
+          productDiv.className = "product";
+          productDiv.innerHTML = `
+            <div class="product-name">${index + 1}. ${product.name}</div>
+            <div class="product-price">₹${parseFloat(product.price).toLocaleString("en-IN")}</div>
+          `;
+          wishlistDiv.appendChild(productDiv);
+          totalPrice += parseFloat(product.price);
+        });
+
+        messageDiv.className = "message info";
+        messageDiv.innerHTML = `Total items: ${products.length} | Total value: ₹${totalPrice.toLocaleString("en-IN")}`;
+      }
+
+      // Function to clear wishlist
+      function clearWishlist() {
+        if (
+          confirm(
+            "Are you sure you want to clear your entire wishlist? This cannot be undone.",
+          )
+        ) {
+          // Remove the 'wishlist' key from localStorage
+          localStorage.removeItem(WISHLIST_KEY);
+
+          // Update display immediately
+          displayWishlist();
+
+          const messageDiv = document.getElementById("message");
+          messageDiv.className = "message success";
+          messageDiv.textContent = "✓ Wishlist has been cleared successfully!";
+
+          console.log("Wishlist cleared from localStorage");
+        }
+      }
+
+      // Load on page load
+      window.onload = function () {
+        displayWishlist();
+      };
+    </script>
+  </body>
+</html>

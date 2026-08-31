@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 9 - Debug Movies Code</title>
+  </head>
+  <body>
+    <h1>Task 9: Debug Movie Names Code</h1>
+    <p>
+      Question: Debug this code: It tries to save an array of movie names to
+      localStorage, but after reloading, the list doesn't display correctly.
+    </p>
+
+    <h2>The Problem:</h2>
+    <pre
+      style="
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-left: 4px solid #d32f2f;
+      "
+    >
+let movies = ['Jawan', 'Pathaan', 'Dunki'];
+localStorage.setItem('movies', movies);
+let saved = localStorage.getItem('movies');
+let arr = JSON.parse(saved);
+console.log(arr);
+    </pre>
+
+    <h2>The Solution:</h2>
+    <p>
+      <strong>Issue:</strong> The array is converted to a comma-separated string
+      (not JSON), so JSON.parse() fails.
+    </p>
+    <p>
+      <strong>Fix:</strong> Use JSON.stringify() to convert the array to a
+      proper JSON string before saving.
+    </p>
+
+    <pre
+      style="
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-left: 4px solid #4caf50;
+      "
+    >
+let movies = ['Jawan', 'Pathaan', 'Dunki'];
+localStorage.setItem('movies', JSON.stringify(movies));  // Convert to JSON
+let saved = localStorage.getItem('movies');
+let arr = JSON.parse(saved);  // Now this will work correctly
+console.log(arr);
+    </pre>
+
+    <script>
+      // Demonstrating the fix
+      console.log("=== CORRECT IMPLEMENTATION ===");
+
+      const movies = ["Jawan", "Pathaan", "Dunki"];
+
+      // CORRECT: Use JSON.stringify() before saving
+      localStorage.setItem("movies", JSON.stringify(movies));
+
+      // Retrieve and parse
+      const saved = localStorage.getItem("movies");
+      const arr = JSON.parse(saved);
+
+      console.log("Movies Array:", arr);
+      console.log("Type:", typeof arr);
+      console.log("Length:", arr.length);
+      console.log("Movies:");
+      arr.forEach((movie, index) => {
+        console.log(index + 1 + ". " + movie);
+      });
+
+      // Display result
+      document.write("<h2>Result:</h2>");
+      document.write("<pre>");
+      document.write("Saved to localStorage using JSON.stringify()\n\n");
+      document.write("Retrieved Movies:\n");
+      arr.forEach((movie, index) => {
+        document.write(index + 1 + ". " + movie + "\n");
+      });
+      document.write(
+        "\nJSON in localStorage: " + localStorage.getItem("movies"),
+      );
+      document.write("</pre>");
+
+      document.write("<h2>Key Points:</h2>");
+      document.write("<ul>");
+      document.write(
+        "<li>Always use <strong>JSON.stringify()</strong> before saving arrays/objects to localStorage</li>",
+      );
+      document.write(
+        "<li>Always use <strong>JSON.parse()</strong> to retrieve and convert back to JavaScript objects</li>",
+      );
+      document.write(
+        "<li>Without JSON.stringify(), the array becomes a comma-separated string, which JSON.parse() cannot handle correctly</li>",
+      );
+      document.write("</ul>");
+    </script>
+  </body>
+</html>
