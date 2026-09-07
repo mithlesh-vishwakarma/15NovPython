@@ -5030,12 +5030,560 @@ console.log(eventData.date.getFullYear()); // 2026 (Native Date method works!)
    - Does not drop `undefined`.
 
 
-============================================================
-              5. QUICK SUMMARY & CHEAT SHEET
-============================================================
+================================================================================
+================================================================================
+          REST PARAMETER & SPREAD SYNTAX (...) MASTER NOTES
+================================================================================
+================================================================================
+
+In modern JavaScript (ES6 / ES2015+ and ES2018 for Objects), the three dots `...`
+represent one of the most powerful and expressive features in the language.
+
+Depending on WHERE and HOW the three dots are used, they serve TWO opposing purposes:
+
+  1. REST PARAMETER / REST SYNTAX:
+     - GATHERS / PACKS multiple individual elements into a single ARRAY or OBJECT.
+     - Used in: Function parameter declarations, Destructuring assignments.
+
+  2. SPREAD SYNTAX / SPREAD OPERATOR:
+     - UNPACKS / EXPANDS an iterable (Array, String, Set, Map) or Object into
+       individual items, arguments, or key-value pairs.
+     - Used in: Function calls, Array literals `[...]`, Object literals `{...}`.
+
++-------------------------------------------------------------------------------+
+|                             THE DUALITY OF `...`                              |
++-----------------------------------+-------------------------------------------+
+| REST SYNTAX (Packing / Collecting)| SPREAD SYNTAX (Unpacking / Expanding)     |
++-----------------------------------+-------------------------------------------+
+| Gathers multiple items into one.  | Expands one item into multiple elements.  |
+| 1, 2, 3, 4, 5  ───>  [1, 2, 3, 4, 5] | [1, 2, 3, 4, 5]  ───>  1, 2, 3, 4, 5   |
+| Used on RECEIVING side (params)   | Used on SUPPLYING side (calls / literals) |
++-----------------------------------+-------------------------------------------+
+
+
+================================================================================
+                        PART 1: THE REST PARAMETER
+================================================================================
+
+The Rest Parameter syntax allows a function to accept an indefinite number of
+arguments represented as a real, native JavaScript Array.
+
+
+--------------------------------------------------------------------------------
+1.1 BASIC SYNTAX & USAGE
+--------------------------------------------------------------------------------
+
+Syntax:
+    function fn(a, b, ...theArgs) {
+        // 'theArgs' is an Array containing all remaining arguments
+    }
+
+Example: Sum of Any Number of Numbers
+------------------------------------------------------------
+function calculateSum(...numbers) {
+    // 'numbers' is a real Array! We can immediately use Array methods (.reduce, .map, etc.)
+    return numbers.reduce((total, num) => total + num, 0);
+}
+
+console.log(calculateSum(10, 20));          // Output: 30
+console.log(calculateSum(5, 10, 15, 20));   // Output: 50
+console.log(calculateSum());                // Output: 0 (empty array [])
+
+
+--------------------------------------------------------------------------------
+1.2 COMBINING FIXED PARAMETERS WITH REST PARAMETERS
+--------------------------------------------------------------------------------
+
+You can define standard named parameters first, and collect all subsequent
+arguments with a rest parameter.
+
+Example: Formatted Logger / Multiplier
+------------------------------------------------------------
+function multiply(multiplier, ...values) {
+    return values.map(val => val * multiplier);
+}
+
+let result = multiply(2, 10, 20, 30);
+console.log(result); // Output: [20, 40, 60]
+// multiplier = 2
+// values     = [10, 20, 30]
+
+
+Example: Tagged Message Formatter
+------------------------------------------------------------
+function logMessages(prefix, separator, ...messages) {
+    console.log(prefix + ": " + messages.join(separator));
+}
+
+logMessages("[ERROR]", " | ", "Db Connection Failed", "Timeout after 5000ms", "Retrying...");
+// Output: [ERROR]: Db Connection Failed | Timeout after 5000ms | Retrying...
+
+
+--------------------------------------------------------------------------------
+1.3 STRICT RULES OF REST PARAMETERS
+--------------------------------------------------------------------------------
+
+RULE 1: The Rest parameter MUST be the LAST parameter in the function signature!
+--------------------------------------------------------------------------------
+// ❌ SYNTAX ERROR: Rest parameter must be last formal parameter
+// function invalid(a, ...rest, b) {}
+
+// ✅ CORRECT:
+function valid(a, b, ...rest) {}
+
+
+RULE 2: A function can have ONLY ONE Rest parameter!
+--------------------------------------------------------------------------------
+// ❌ SYNTAX ERROR:
+// function invalid(...first, ...second) {}
+
+// ✅ CORRECT:
+function valid(...allArgs) {}
+
+
+RULE 3: Trailing commas are NOT permitted after Rest parameters in formal signatures!
+--------------------------------------------------------------------------------
+// ❌ SYNTAX ERROR:
+// function test(...args, ) {}
+
+
+--------------------------------------------------------------------------------
+1.4 REST PARAMETER vs THE LEGACY `arguments` OBJECT
+--------------------------------------------------------------------------------
+
+Prior to ES6, developers had to use the special `arguments` object available
+inside regular functions. Rest parameters are strictly superior in every way:
+
++----------------------------+-----------------------+--------------------------+
+| FEATURE                    | REST PARAMETER (...args)| `arguments` OBJECT     |
++----------------------------+-----------------------+--------------------------+
+| Data Type                  | True JavaScript Array | Array-like Object        |
+| Array Methods Support      | YES (map, filter, etc)| NO (must convert first)  |
+| Arrow Functions Support    | YES (fully supported) | NO (`arguments` is not   |
+|                            |                       |     bound in arrows!)    |
+| Captures Which Arguments?  | Only REMAINING args   | ALWAYS ALL arguments     |
+| Custom Name                | YES (e.g. ...scores)  | Fixed name `arguments`   |
+| ES Version                 | ES6 (Modern standard) | ES1 (Legacy)             |
++----------------------------+-----------------------+--------------------------+
+
+Code Comparison:
+------------------------------------------------------------
+// 1. LEGACY WAY (Using arguments object):
+function oldSum() {
+    // 'arguments' is NOT an array, cannot call arguments.reduce() directly!
+    // Must convert to array first:
+    var argsArray = Array.prototype.slice.call(arguments);
+    return argsArray.reduce(function(acc, val) {
+        return acc + val;
+    }, 0);
+}
+
+// 2. MODERN ES6+ WAY (Using Rest parameter):
+const modernSum = (...numbers) => numbers.reduce((acc, val) => acc + val, 0);
+
+console.log(modernSum(1, 2, 3, 4)); // 10
+
+
+--------------------------------------------------------------------------------
+1.5 REST SYNTAX IN DESTRUCTURING ASSIGNMENTS
+--------------------------------------------------------------------------------
+
+Rest syntax `...` is heavily used in Destructuring to capture all unassigned
+elements or properties.
+
+A. Array Destructuring with Rest:
+------------------------------------------------------------
+const colors = ["Red", "Green", "Blue", "Yellow", "Purple"];
+const [primary, secondary, ...otherColors] = colors;
+
+console.log(primary);     // "Red"
+console.log(secondary);   // "Green"
+console.log(otherColors); // ["Blue", "Yellow", "Purple"] (New array)
+
+
+B. Object Destructuring with Rest (ES2018+):
+------------------------------------------------------------
+const user = {
+    id: 101,
+    username: "coder123",
+    role: "Admin",
+    email: "admin@example.com",
+    city: "New York"
+};
+
+// Extract 'id' and 'username', and bundle all other properties into 'metadata':
+const { id, username, ...metadata } = user;
+
+console.log(id);       // 101
+console.log(username); // "coder123"
+console.log(metadata); // { role: "Admin", email: "admin@example.com", city: "New York" }
+
+
+
+================================================================================
+                        PART 2: THE SPREAD SYNTAX
+================================================================================
+
+Spread syntax `...` UNPACKS elements of an iterable (Array, String, Map, Set,
+NodeList) or key-value pairs of an Object into individual values.
+
+
+--------------------------------------------------------------------------------
+2.1 SPREAD IN FUNCTION CALLS (PASSING ARGUMENTS)
+--------------------------------------------------------------------------------
+
+Spread allows you to pass an array or iterable directly to a function that
+expects individual separate arguments.
+
+Example 1: Math Functions (Math.max, Math.min)
+------------------------------------------------------------
+const scores = [85, 92, 78, 99, 64];
+
+// ❌ Cannot pass array directly: Math.max(scores) returns NaN
+// 👴 Legacy way: Math.max.apply(null, scores);
+
+// ✅ Modern ES6 Spread:
+const highestScore = Math.max(...scores);
+const lowestScore  = Math.min(...scores);
+
+console.log(highestScore); // 99
+console.log(lowestScore);  // 64
+
+
+Example 2: Combining with Standard Arguments in Calls
+------------------------------------------------------------
+const numbers = [20, 30, 40];
+const max = Math.max(10, ...numbers, 50, 100);
+console.log(max); // 100
+
+
+Example 3: Instantiating Date / Constructors with Spread
+------------------------------------------------------------
+const dateFields = [2026, 7, 27, 10, 30, 0]; // Note: month 7 is August (0-indexed)
+const date = new Date(...dateFields);
+console.log(date.getFullYear()); // 2026
+
+
+--------------------------------------------------------------------------------
+2.2 SPREAD IN ARRAY LITERALS
+--------------------------------------------------------------------------------
+
+Spread provides clean, intuitive syntax for copying, merging, and transforming arrays.
+
+A. Shallow Copying an Array:
+------------------------------------------------------------
+const original = [1, 2, 3];
+const copy = [...original];
+
+copy.push(4);
+console.log(original); // [1, 2, 3] (Original unchanged!)
+console.log(copy);     // [1, 2, 3, 4]
+
+
+B. Concatenating / Merging Arrays:
+------------------------------------------------------------
+const frontend = ["HTML", "CSS", "JavaScript"];
+const backend  = ["Node.js", "Python", "Database"];
+
+// Modern merging with spread:
+const fullStack = [...frontend, ...backend, "DevOps"];
+console.log(fullStack);
+// ["HTML", "CSS", "JavaScript", "Node.js", "Python", "Database", "DevOps"]
+
+
+C. Inserting Elements at Any Arbitrary Position:
+------------------------------------------------------------
+const start = [1, 2];
+const end   = [5, 6];
+const merged = [0, ...start, 3, 4, ...end, 7];
+console.log(merged); // [0, 1, 2, 3, 4, 5, 6, 7]
+
+
+D. Converting Any Iterable into a True Array:
+------------------------------------------------------------
+1. Converting Strings to Character Arrays:
+   const word = "JavaScript";
+   const chars = [...word];
+   // chars = ['J', 'a', 'v', 'a', 'S', 'c', 'r', 'i', 'p', 't']
+
+2. Deduplicating Arrays via Set + Spread:
+   const duplicates = [1, 2, 2, 3, 4, 4, 4, 5];
+   const unique = [...new Set(duplicates)];
+   console.log(unique); // [1, 2, 3, 4, 5]
+
+3. Converting DOM NodeList / HTMLCollection to Array:
+   const buttons = document.querySelectorAll("button"); // NodeList
+   const buttonArray = [...buttons]; // Real Array!
+   buttonArray.map(btn => btn.style.color = "blue");
+
+
+--------------------------------------------------------------------------------
+2.3 SPREAD IN OBJECT LITERALS (ES2018+)
+--------------------------------------------------------------------------------
+
+Spread can be used within object literals `{...obj}` to copy own enumerable
+properties from one object into another.
+
+A. Shallow Copying an Object:
+------------------------------------------------------------
+const user = { name: "Alice", age: 25 };
+const clonedUser = { ...user };
+
+clonedUser.age = 26;
+console.log(user.age);       // 25 (Original preserved!)
+console.log(clonedUser.age); // 26
+
+
+B. Merging Objects:
+------------------------------------------------------------
+const basicInfo = { id: 101, name: "Bob" };
+const contactInfo = { email: "bob@test.com", phone: "123-456" };
+
+const fullProfile = { ...basicInfo, ...contactInfo, role: "User" };
+console.log(fullProfile);
+// { id: 101, name: "Bob", email: "bob@test.com", phone: "123-456", role: "User" }
+
+
+C. PROPERTY OVERRIDING & PRECEDENCE (ORDER MATTERS!):
+------------------------------------------------------------
+When multiple properties share the same key name, THE LAST ONE DEFINED WINS!
+
+Example 1: Setting Defaults and Overriding with User Config
+------------------------------------------------------------
+const defaultSettings = {
+    theme: "light",
+    fontSize: 14,
+    showSidebar: true
+};
+
+const userSettings = {
+    fontSize: 18 // User custom preference
+};
+
+// userSettings properties will overwrite defaultSettings:
+const activeConfig = {
+    ...defaultSettings,
+    ...userSettings,
+    theme: "dark" // Explicit override at end
+};
+
+console.log(activeConfig);
+// Output: { theme: "dark", fontSize: 18, showSidebar: true }
+
+
+Example 2: Updating an Object Immutably
+------------------------------------------------------------
+const employee = { id: 1, name: "John", department: "HR", salary: 50000 };
+
+// Create updated employee without mutating original:
+const promotedEmployee = {
+    ...employee,
+    department: "Management",
+    salary: 75000
+};
+
+
+D. Conditional Properties with Spread:
+------------------------------------------------------------
+const hasAdminAccess = true;
+
+const userSession = {
+    username: "superdev",
+    isLoggedIn: true,
+    ...(hasAdminAccess && { role: "Administrator", accessLevel: 10 })
+};
+
+console.log(userSession);
+// Output: { username: "superdev", isLoggedIn: true, role: "Administrator", accessLevel: 10 }
+
+
+
+================================================================================
+           PART 3: REST vs SPREAD COMPARISON & MENTAL MODEL
+================================================================================
+
++-----------------------+----------------------------------+------------------------------------+
+| CRITERIA              | REST PARAMETER (...)             | SPREAD SYNTAX (...)                |
++-----------------------+----------------------------------+------------------------------------+
+| Mental Model          | GATHER / PACK                    | EXPAND / UNPACK                    |
+| Direction of Data     | Multiple values  ──>  Single Array| Single collection ──> Multiple values|
+| Where it appears?     | Left side of assignment /        | Right side of assignment /         |
+|                       | Function declaration signatures  | Function calls & array/object lits |
+| Purpose               | Accept variable argument counts, | Flatten, combine, copy collections,|
+|                       | capture remaining properties     | pass arrays as argument lists      |
+| Typical Location      | `function fn(...args)`           | `Math.max(...arr)`                 |
+|                       | `const [a, ...rest] = arr`       | `[...arr1, ...arr2]`               |
+|                       | `const {x, ...others} = obj`     | `{ ...obj1, ...obj2 }`             |
++-----------------------+----------------------------------+------------------------------------+
+
+
+
+================================================================================
+        PART 4: THE SHALLOW COPY CAVEAT & IMMUTABILITY PATTERNS
+================================================================================
+
+--------------------------------------------------------------------------------
+4.1 CRITICAL CAVEAT: SPREAD COPIES SHALLOWLY (BY REFERENCE FOR NESTED DATA)!
+--------------------------------------------------------------------------------
+
+Spread creates a SHALLOW copy. For primitive values (numbers, strings, booleans),
+values are copied by value. However, nested objects and nested arrays are copied
+BY REFERENCE!
+
+Visualizing the Shallow Copy Trap:
+------------------------------------------------------------
+const originalUser = {
+    name: "Emma",
+    preferences: {
+        theme: "dark",
+        notifications: true
+    }
+};
+
+// Shallow clone with spread:
+const clonedUser = { ...originalUser };
+
+// Modifying primitive on clone does NOT affect original:
+clonedUser.name = "Sophia";
+console.log(originalUser.name); // "Emma" (Safe!)
+
+// ⚠️ BUT modifying nested object on clone MUTATES THE ORIGINAL!
+clonedUser.preferences.theme = "light";
+console.log(originalUser.preferences.theme); // "light" (MUTATED ORIGINAL!)
+
+Why?
+`clonedUser.preferences` and `originalUser.preferences` point to the EXACT SAME
+memory address in the Heap!
+
+Solution for True Deep Clones:
+------------------------------------------------------------
+// 1. Native Modern API (ES2022+):
+const deepClone = structuredClone(originalUser);
+
+// 2. Or Deep Clone manually via nested spread:
+const manualDeepClone = {
+    ...originalUser,
+    preferences: {
+        ...originalUser.preferences
+    }
+};
+
+
+--------------------------------------------------------------------------------
+4.2 IMMUTABILITY IN MODERN FRAMEWORKS (REACT / REDUX / STATE MANAGEMENT)
+--------------------------------------------------------------------------------
+
+Modern JavaScript application development relies heavily on immutability.
+Spread syntax is the core standard tool for managing immutable state.
+
+1. Adding an Item to an Array:
+   // ❌ Bad (Mutates state): state.push(newItem)
+   // ✅ Good (Immutable):
+   const updatedList = [...todoList, newTodoItem];
+
+2. Prepending an Item to an Array:
+   const prependedList = [newUrgentItem, ...todoList];
+
+3. Removing an Item from an Array by ID:
+   const filteredList = todoList.filter(item => item.id !== targetId);
+
+4. Updating an Item in an Array Immutably:
+   const updatedTodos = todoList.map(item =>
+       item.id === targetId ? { ...item, completed: true } : item
+   );
+
+5. Updating Deeply Nested State Immutably:
+   const [state, setState] = {
+       profile: {
+           personal: {
+               name: "Alex",
+               age: 30
+           },
+           city: "Chicago"
+       }
+   };
+
+   // Updating only 'age' without mutating any parent references:
+   const nextState = {
+       ...state,
+       profile: {
+           ...state.profile,
+           personal: {
+               ...state.profile.personal,
+               age: 31
+           }
+       }
+   };
+
+
+
+================================================================================
+                 PART 5: COMMON PITFALLS & GOTCHAS
+================================================================================
+
+1. Spreading Non-Iterables into Arrays vs Objects:
+------------------------------------------------------------
+// Numbers, booleans, and plain objects are NOT iterable!
+// ❌ TypeError: 123 is not iterable:
+// const arr = [...123];
+
+// ❌ TypeError: plain object is not iterable:
+// const arr = [...{ a: 1 }];
+
+// ✅ But spreading primitives into OBJECTS is safe (ignored silently):
+const obj = { ...123, ...true, ...null, ...undefined };
+console.log(obj); // {} (Empty object, no error!)
+
+
+2. Spreading `null` or `undefined`:
+------------------------------------------------------------
+// In Array literals / Function calls:
+// ❌ TypeError: null / undefined is not iterable
+// const arr = [...null];
+
+// In Object literals:
+// ✅ Allowed! JavaScript silently ignores null/undefined without throwing:
+const config = { ...null, ...undefined, active: true };
+console.log(config); // { active: true }
+
+
+3. Maximum Call Stack Size with Function Call Spread:
+------------------------------------------------------------
+When spreading massive arrays (e.g., 500,000+ items) into function arguments
+like `Math.max(...hugeArray)`, JavaScript engine call stack limits may be exceeded!
+
+// ⚠️ RangeError: Maximum call stack size exceeded
+// Math.max(...arrayWithMillionElements);
+
+// ✅ SAFE ALTERNATIVE for massive arrays:
+const maxVal = hugeArray.reduce((max, val) => val > max ? val : max, -Infinity);
+
+
+
+================================================================================
+                 PART 6: MASTER SUMMARY & QUICK CHEAT SHEETS
+================================================================================
+
+REST PARAMETER CHEAT SHEET:
+--------------------------------------------------------------------------------
+function sum(...args) {}            → Collects all arguments into real Array `args`
+function fn(first, ...rest) {}      → `first` gets arg 1, `rest` gets remaining args
+const [a, b, ...others] = [1,2,3,4] → `a=1`, `b=2`, `others=[3, 4]`
+const { id, ...details } = userObj  → `id` extracted, `details` gets rest of object
+
+SPREAD SYNTAX CHEAT SHEET:
+--------------------------------------------------------------------------------
+Math.max(...numbersArray)           → Unpacks array into individual function args
+const copyArr = [...originalArr]    → Shallow clone of array
+const mergedArr = [...a, ...b]      → Concatenates arrays `a` and `b`
+const uniqueArr = [...new Set(arr)] → Remove duplicate items from array
+const charList = [..."HELLO"]       → Character array: `['H','E','L','L','O']`
+const copyObj = { ...user }         → Shallow clone of object
+const mergedObj = { ...a, ...b }    → Merges objects (properties in `b` override `a`)
+const override = { ...def, size: 20}→ Sets default values and overrides specific keys
 
 OBJECT METHODS SUMMARY:
-------------------------------------------------------------
+--------------------------------------------------------------------------------
 Object.keys(obj)          → Array of key names
 Object.values(obj)        → Array of values
 Object.entries(obj)       → Array of [key, value] pairs
@@ -5047,7 +5595,7 @@ Object.hasOwn(obj, prop)  → True if own property (ES2022)
 Object.is(a, b)           → Strict equality handling NaN and -0/+0
 
 DESTRUCTURING QUICK CHEAT SHEET:
-------------------------------------------------------------
+--------------------------------------------------------------------------------
 let [a, b, ...rest] = arr;                    // Array destructuring
 let [x, y] = [y, x];                          // Variable swap
 let { name: userAlias, age = 18 } = obj;      // Object rename & default
@@ -5055,15 +5603,858 @@ let { a, ...others } = obj;                   // Object rest property
 function print({ name, role = "User" } = {})  // Param destructuring with default
 
 JSON METHODS QUICK CHEAT SHEET:
-------------------------------------------------------------
+--------------------------------------------------------------------------------
 JSON.stringify(obj, replacer, space) → Object to JSON string
 JSON.parse(str, reviver)             → JSON string to Object
 structuredClone(obj)                 → Modern native deep copy
+
+================================================================================
+================================================================================
+    ADVANCED JAVASCRIPT: VARIABLE SCOPES (var, let, const) & CLOSURES
+================================================================================
+================================================================================
+
+Understanding Scope and Closures is the fundamental cornerstone of advanced
+JavaScript mastery. These concepts govern how the JavaScript engine resolves
+identifiers, manages memory, executes code, and protects state.
+
+
+================================================================================
+                        PART 1: SCOPE IN JAVASCRIPT
+================================================================================
+
+--------------------------------------------------------------------------------
+1.1 WHAT IS SCOPE?
+--------------------------------------------------------------------------------
+
+Scope defines the VISIBILITY and ACCESSIBILITY of variables, functions, and objects
+in some particular part of your code during runtime.
+
+In JavaScript, Scope determines:
+  1. Where a variable can be accessed or modified.
+  2. The lifespan of a variable (when it is allocated and garbage-collected).
+  3. Collision prevention (allowing identical variable names in distinct scopes).
+
+JavaScript has 4 PRIMARY TYPES OF SCOPE:
+  1. GLOBAL SCOPE   - Accessible everywhere throughout the application.
+  2. FUNCTION SCOPE - Accessible only inside the declaring function (`var`, `let`, `const`).
+  3. BLOCK SCOPE    - Accessible only inside `{ ... }` curly braces (`let`, `const`).
+  4. MODULE SCOPE   - Accessible only within the specific ES module file unless exported.
+
+
+--------------------------------------------------------------------------------
+1.2 THE 4 TYPES OF SCOPES DETAILED
+--------------------------------------------------------------------------------
+
+A. GLOBAL SCOPE:
+------------------------------------------------------------
+Variables declared outside any function or block live in the Global Scope.
+They can be accessed from any function, block, or nested script.
+
+var globalVar = "I am Global (var)";
+let globalLet = "I am Global (let)";
+const globalConst = "I am Global (const)";
+
+function testGlobal() {
+    console.log(globalVar);   // Accessible
+    console.log(globalLet);   // Accessible
+    console.log(globalConst); // Accessible
+}
+
+⚠️ BROWSER GLOBAL OBJECT ATTACHMENT:
+- In browsers, top-level `var` declarations are attached as properties of the `window` object:
+  `window.globalVar === "I am Global (var)"`  -> TRUE
+- Top-level `let` and `const` are NOT attached to the `window` object (stored in declarative Script scope):
+  `window.globalLet`   -> undefined
+  `window.globalConst` -> undefined
+
+
+B. FUNCTION SCOPE (LOCAL SCOPE):
+------------------------------------------------------------
+Variables declared inside a function are local to that function. They cannot be
+accessed from outside the function body.
+
+function greet() {
+    var secretVar = "hidden var";
+    let secretLet = "hidden let";
+    const secretConst = "hidden const";
+    console.log(secretVar); // Accessible inside
+}
+
+greet();
+// console.log(secretVar);   // ❌ ReferenceError: secretVar is not defined
+// console.log(secretLet);   // ❌ ReferenceError: secretLet is not defined
+// console.log(secretConst); // ❌ ReferenceError: secretConst is not defined
+
+
+C. BLOCK SCOPE (ES6+):
+------------------------------------------------------------
+A block is any code section delimited by a pair of curly braces `{ ... }`
+(e.g., `if`, `else`, `for`, `while`, `switch`, or standalone `{}`).
+
+`let` and `const` are BLOCK-SCOPED:
+They exist only within the enclosing `{}` block.
+
+`var` is NOT block-scoped:
+`var` ignores `{}` blocks (except function boundaries) and LEAKS into the outer scope!
+
+Example Demonstrating Block Leakage with `var`:
+------------------------------------------------------------
+{
+    var leakedVar = "I leaked out!";
+    let trappedLet = "I am trapped inside";
+    const trappedConst = "I am also trapped";
+}
+
+console.log(leakedVar);    // ✅ "I leaked out!" (var leaked!)
+// console.log(trappedLet);   // ❌ ReferenceError: trappedLet is not defined
+// console.log(trappedConst); // ❌ ReferenceError: trappedConst is not defined
+
+
+D. MODULE SCOPE (ES Modules):
+------------------------------------------------------------
+When working with ES Modules (`<script type="module">` or Node.js ESM), variables
+declared at the top level of a file are scoped to that file only and do not pollute
+the global namespace unless explicitly `export`ed and `import`ed.
+
+
+--------------------------------------------------------------------------------
+1.3 DEEP DIVE: `var` vs `let` vs `const`
+--------------------------------------------------------------------------------
+
++-----------------------+-----------------------+-----------------------+-----------------------+
+| FEATURE               | `var`                 | `let`                 | `const`               |
++-----------------------+-----------------------+-----------------------+-----------------------+
+| Introduced In         | ES1 (1997)            | ES6 (2015)            | ES6 (2015)            |
+| Scope                 | Function Scope        | Block Scope `{}`      | Block Scope `{}`      |
+| Hoisting              | Hoisted (initialized  | Hoisted in TDZ        | Hoisted in TDZ        |
+|                       | as `undefined`)       | (uninitialized)       | (uninitialized)       |
+| Temporal Dead Zone?   | NO                    | YES                   | YES                   |
+| Re-declaration        | ALLOWED in same scope | FORBIDDEN (SyntaxErr) | FORBIDDEN (SyntaxErr) |
+| Re-assignment         | ALLOWED               | ALLOWED               | FORBIDDEN (TypeErr)   |
+| Initializer Required? | NO (defaults undef)   | NO (defaults undef)   | YES (Must initialize) |
+| Window Property?      | YES (in browser)      | NO                    | NO                    |
++-----------------------+-----------------------+-----------------------+-----------------------+
+
+1. Re-declaration vs Re-assignment:
+------------------------------------------------------------
+// var allows re-declaration in the same scope (Major source of accidental bugs!):
+var x = 10;
+var x = 20; // ✅ Allowed silently
+
+// let and const prohibit re-declaration in the same scope:
+let y = 10;
+// let y = 20; // ❌ SyntaxError: Identifier 'y' has already been declared
+
+// const prohibits re-assignment:
+const PI = 3.14159;
+// PI = 3.14; // ❌ TypeError: Assignment to constant variable
+// const EMPTY; // ❌ SyntaxError: Missing initializer in const declaration
+
+
+2. `const` WITH OBJECTS AND ARRAYS (MUTABILITY CAVEAT):
+------------------------------------------------------------
+`const` creates an IMMUTABLE BINDING (the variable identifier cannot be reassigned to
+a new memory address). However, the CONTENTS / PROPERTIES of objects and arrays
+assigned to `const` ARE STILL MUTABLE!
+
+const person = { name: "Alice", age: 25 };
+
+// ✅ Modifying object properties is allowed:
+person.age = 26;
+person.city = "Boston";
+console.log(person); // { name: "Alice", age: 26, city: "Boston" }
+
+// ❌ Reassigning the variable itself throws an error:
+// person = { name: "Bob" }; // TypeError: Assignment to constant variable!
+
+// To make object properties truly immutable, use Object.freeze():
+const frozenPerson = Object.freeze({ name: "Alice", age: 25 });
+// frozenPerson.age = 30; // Fails silently (or throws TypeError in "use strict")
+
+
+--------------------------------------------------------------------------------
+1.4 HOISTING & THE TEMPORAL DEAD ZONE (TDZ)
+--------------------------------------------------------------------------------
+
+During the Memory Creation Phase of execution context:
+1. `var` is hoisted and initialized immediately with `undefined`.
+2. `let` and `const` are hoisted, but NOT INITIALIZED. They are placed in the
+   TEMPORAL DEAD ZONE (TDZ).
+
+What is the Temporal Dead Zone (TDZ)?
+------------------------------------------------------------
+The TDZ is the period of time between entering a scope and the line where the
+variable is formally declared and initialized.
+Accessing a `let` or `const` variable while it is in the TDZ throws a `ReferenceError`!
+
+Visualizing TDZ:
+------------------------------------------------------------
+{
+    // ==========================================
+    // 💀 START OF TDZ for 'myScore'
+    // console.log(myScore); // ❌ ReferenceError: Cannot access 'myScore' before initialization
+    // console.log(typeof myScore); // ❌ ReferenceError even with typeof!
+    // ==========================================
+    
+    let myScore = 100; // 🌟 END OF TDZ! Variable is initialized.
+    console.log(myScore); // ✅ Output: 100 (Safe to access!)
+}
+
+
+Hoisting Comparison Example:
+------------------------------------------------------------
+console.log(a); // Output: undefined (var is hoisted and initialized)
+var a = 50;
+
+// console.log(b); // ❌ ReferenceError: Cannot access 'b' before initialization (in TDZ)
+let b = 100;
+
+
+--------------------------------------------------------------------------------
+1.5 THE LEXICAL ENVIRONMENT & THE SCOPE CHAIN (SIMPLE & DETAILED)
+--------------------------------------------------------------------------------
+
+What does the word "LEXICAL" mean?
+------------------------------------------------------------
+"Lexical" simply means "in relation to text hierarchy / physical location".
+Where a piece of code is physically written in your JavaScript file determines
+its lexical position.
+
+Example:
+If function `c()` is written INSIDE function `p()`, then `c()` is "lexically inside" `p()`.
+
+
+WHAT IS A "LEXICAL ENVIRONMENT"?
+------------------------------------------------------------
+Whenever an Execution Context is created, JavaScript automatically creates a
+"Lexical Environment" for it.
+
+THE SIMPLE FORMULA:
++-------------------------------------------------------------------------------+
+|   LEXICAL ENVIRONMENT = Local Memory (Environment Record)                     |
+|                       + Reference to Outer (Parent) Lexical Environment       |
++-------------------------------------------------------------------------------+
+
+In simple words:
+A Lexical Environment gives a function access to:
+  1. Its own local variables (Local Memory).
+  2. The variables of its parent / outer environment (Outer Reference).
+
+
+VISUALIZING THE LEXICAL ENVIRONMENT HIERARCHY:
+------------------------------------------------------------
+
++-------------------------------------------------------------------------------+
+|  GLOBAL LEXICAL ENVIRONMENT                                                   |
+|  - Local Memory: globalVar = "Earth"                                          |
+|  - Outer Reference: null (Top of the universe!)                               |
+|                                                                               |
+|      ▲                                                                        |
+|      │ (points up)                                                            |
+|  +───┴──────────────────────────────────────────────────────────────────+    |
+|  |  FUNCTION 'parent()' LEXICAL ENVIRONMENT                             |    |
+|  |  - Local Memory: parentVar = "Country"                               |    |
+|  |  - Outer Reference: points to GLOBAL Lexical Environment             |    |
+|  |                                                                      |    |
+|  |      ▲                                                               |    |
+|  |      │ (points up)                                                   |    |
+|  |  +───┴────────────────────────────────────────────────────────────+  |    |
+|  |  |  FUNCTION 'child()' LEXICAL ENVIRONMENT                        |  |    |
+|  |  |  - Local Memory: childVar = "City"                             |  |    |
+|  |  |  - Outer Reference: points to 'parent()' Lexical Environment   |  |    |
+|  |  +────────────────────────────────────────────────────────────────+  |    |
+|  +──────────────────────────────────────────────────────────────────────+    |
++-------------------------------------------------------------------------------+
+
+
+HOW VARIABLE RESOLUTION WORKS (STEP-BY-STEP):
+------------------------------------------------------------
+function parent() {
+    let parentVar = "Country";
+
+    function child() {
+        let childVar = "City";
+        console.log(childVar);  // 1. Found in child's own local memory! -> "City"
+        console.log(parentVar); // 2. Not in child -> looks up outer reference -> found in parent! -> "Country"
+        console.log(globalVar); // 3. Not in parent -> looks up outer reference -> found in global! -> "Earth"
+        // console.log(unknown);// 4. Not in global -> outer is null -> ❌ ReferenceError!
+    }
+
+    child();
+}
+
+let globalVar = "Earth";
+parent();
+
+Step-by-Step Breakdown:
+------------------------------------------------------------
+Step 1: When `child()` needs `parentVar`, it checks its own local memory first.
+Step 2: Since `parentVar` is not in `child()`, it follows its `Outer Reference` to `parent()`'s Lexical Environment.
+Step 3: It finds `parentVar = "Country"` in `parent()` and uses it!
+Step 4: This chain of Lexical Environments linked via Outer References is called THE SCOPE CHAIN!
+Step 5: If it reaches the Global Scope (where Outer Reference is `null`) and still doesn't find the variable, it throws `ReferenceError`.
+
+
+--------------------------------------------------------------------------------
+1.5.1 FUNCTION LEXICAL ENVIRONMENT (DEEP DIVE)
+--------------------------------------------------------------------------------
+
+Every time a function is CALLED, JavaScript creates a brand-new **Function Lexical Environment**.
+
+ANATOMY OF A FUNCTION'S LEXICAL ENVIRONMENT:
++-------------------------------------------------------------------------------+
+|  FUNCTION LEXICAL ENVIRONMENT                                                 |
+|                                                                               |
+|  1. ENVIRONMENT RECORD (Local Memory):                                        |
+|     - Parameters passed (e.g. `a`, `b`)                                       |
+|     - `arguments` object (for regular functions)                              |
+|     - Local variables (`var`, `let`, `const`)                                 |
+|     - Local inner function declarations                                       |
+|     - Value of `this` binding                                                 |
+|                                                                               |
+|  2. REFERENCE TO OUTER ENVIRONMENT (`[[Environment]]`):                      |
+|     - Pointer to the Lexical Environment where the function was DEFINED       |
+|       (NOT where it was called!).                                             |
++-------------------------------------------------------------------------------+
+
+
+CRITICAL INTERVIEW CONCEPT: DEFINITION SITE vs CALL SITE
+------------------------------------------------------------
+A function's outer lexical environment is determined by **WHERE THE FUNCTION IS BORN
+(DEFINED IN CODE)**, completely ignoring WHERE it is called!
+
+Consider this famous tricky interview question:
+------------------------------------------------------------
+let num = 10; // In Global Lexical Environment
+
+function printNum() {
+    // printNum was DEFINED in Global Scope!
+    // Its outer lexical reference points directly to GLOBAL Lexical Environment!
+    console.log(num);
+}
+
+function wrapper() {
+    let num = 20; // In wrapper's local memory
+    printNum();   // Called inside wrapper()
+}
+
+wrapper(); // ❓ Output: 10 (NOT 20!)
+
+WHY DOES `printNum()` PRINT 10 INSTEAD OF 20?
+- `printNum()` was physically written in the Global Scope.
+- Therefore, its outer lexical reference points to `Global`, NOT `wrapper()`.
+- When `printNum()` runs, it looks for `num` in its own local memory -> not found.
+- It then looks up its outer lexical environment -> Global Scope -> finds `num = 10`!
+- It NEVER looks into `wrapper()` because `wrapper()` is NOT its lexical parent!
+
+
+LIFECYCLE OF A FUNCTION LEXICAL ENVIRONMENT:
+------------------------------------------------------------
+1. CREATION PHASE:
+   When `fn()` is invoked, its Execution Context & Lexical Environment are pushed onto the Call Stack.
+   Memory is allocated for parameters and variables.
+
+2. EXECUTION PHASE:
+   Code runs line-by-line, assigning values and executing logic.
+
+3. TEARDOWN vs RETENTION:
+   - Normal Case: When the function finishes and returns, its Lexical Environment
+     is popped from the Call Stack and garbage collected.
+   - Closure Case: If an inner function is returned and still references variables
+     inside this Lexical Environment, JavaScript moves it to Heap memory so it stays alive!
+
+
+MULTIPLE INVOCATIONS = INDEPENDENT LEXICAL ENVIRONMENTS:
+------------------------------------------------------------
+Every single function call gets its OWN separate, isolated Lexical Environment in memory.
+
+function counter() {
+    let count = 0;
+    count++;
+    console.log(count);
+}
+
+counter(); // Call 1: Creates Lexical Env #1 -> prints 1 -> Env destroyed
+counter(); // Call 2: Creates brand-new Lexical Env #2 -> prints 1 -> Env destroyed
+
+
+
+
+--------------------------------------------------------------------------------
+1.6 VARIABLE SHADOWING & ILLEGAL SHADOWING
+--------------------------------------------------------------------------------
+
+Shadowing occurs when a variable declared in an inner scope has the same name
+as a variable in an outer scope. The inner variable "shadows" (masks) the outer one.
+
+A. Legal Variable Shadowing:
+------------------------------------------------------------
+let user = "Alice"; // Outer
+
+{
+    let user = "Bob"; // Inner shadows outer 'user'
+    console.log(user); // "Bob"
+}
+
+console.log(user); // "Alice" (Outer remains unaffected)
+
+
+B. Illegal Shadowing:
+------------------------------------------------------------
+You CANNOT shadow a `let` or `const` variable with a `var` inside the same or nested block!
+Why? Because `var` is function-scoped and tries to hoist past the block boundary,
+conflicting with the block-scoped `let`.
+
+let score = 50;
+
+{
+    // ❌ SYNTAX ERROR: Identifier 'score' has already been declared
+    // var score = 100;
+}
+
+// But shadowing 'var' with 'let' is LEGAL:
+var total = 500;
+{
+    let total = 999; // ✅ LEGAL!
+    console.log(total); // 999
+}
+console.log(total); // 500
+
+
+
+================================================================================
+                        PART 2: CLOSURES IN JAVASCRIPT
+================================================================================
+
+--------------------------------------------------------------------------------
+2.1 WHAT IS A CLOSURE?
+--------------------------------------------------------------------------------
+
+FORMAL DEFINITION:
+A Closure is a combination of a function bundled together (enclosed) with
+references to its surrounding state (the Lexical Environment).
+
+INTUITIVE DEFINITION:
+A Closure gives an inner function access to its outer function's scope,
+EVEN AFTER THE OUTER FUNCTION HAS FINISHED EXECUTING AND RETURNED!
+
+In other programming languages, local variables inside a function are destroyed
+as soon as the function returns.
+In JavaScript, if an inner function retains a reference to those outer variables,
+JavaScript KEEPS THOSE VARIABLES ALIVE in Heap memory via a Closure!
+
+"Functions remember their birthplace!"
+
+The Simplest Closure Example:
+------------------------------------------------------------
+function outerFunction() {
+    let outerVariable = "I am preserved by closure!";
+
+    function innerFunction() {
+        console.log(outerVariable);
+    }
+
+    return innerFunction; // Returning function without executing it yet
+}
+
+const myClosure = outerFunction(); // outerFunction finishes and pops off call stack!
+
+// Even though outerFunction is DONE, myClosure STILL remembers outerVariable:
+myClosure(); // Output: "I am preserved by closure!"
+
+
+--------------------------------------------------------------------------------
+2.2 UNDER THE HOOD: HOW CLOSURES WORK IN MEMORY
+--------------------------------------------------------------------------------
+
+When a function executes:
+1. An Execution Context is pushed onto the CALL STACK.
+2. A Lexical Environment is created in memory (containing an Environment Record).
+3. Normally, when the function returns, its execution context is popped off the
+   Call Stack, and its local variables are marked for Garbage Collection.
+4. HOWEVER, if an inner function references any of those local variables,
+   the JavaScript Garbage Collector recognizes the active reference and MOVES
+   the closed-over variables to HEAP MEMORY instead of destroying them!
+
+ASCII Diagram of Execution Context vs Closure in Heap:
+------------------------------------------------------------
+CALL STACK:                           HEAP MEMORY:
++------------------------+            +------------------------------------+
+|                        |            | Closure Scope (outerFunction):     |
+|                        |            |   outerVariable = "preserved..."   |
+| myClosure() executes   | -------->  |                                    |
+| [Calls innerFunction]  |            +------------------------------------+
++------------------------+                              ^
+                                                        |
+outerFunction() has ALREADY                             |
+returned & left the Call Stack!                          |
+(Closure keeps data referenced in Heap alive!) ─────────+
+
+
+--------------------------------------------------------------------------------
+2.3 REAL-WORLD PRACTICAL USE CASES OF CLOSURES
+--------------------------------------------------------------------------------
+
+USE CASE 1: DATA PRIVACY & ENCAPSULATION (PRIVATE VARIABLES)
+------------------------------------------------------------
+JavaScript functions do not have built-in `private` access modifiers for variables,
+but closures allow you to create completely private state that cannot be modified
+directly from the outside.
+
+Example: Secure Counter Factory
+------------------------------------------------------------
+function createCounter(initialValue = 0) {
+    let count = initialValue; // PRIVATE variable (Hidden from global scope!)
+
+    return {
+        increment() {
+            count++;
+            return count;
+        },
+        decrement() {
+            count--;
+            return count;
+        },
+        getCount() {
+            return count;
+        }
+    };
+}
+
+const counter1 = createCounter(10);
+console.log(counter1.increment()); // 11
+console.log(counter1.increment()); // 12
+console.log(counter1.decrement()); // 11
+console.log(counter1.getCount());  // 11
+
+// 🔒 Cannot access or corrupt 'count' directly:
+console.log(counter1.count); // undefined! (Completely encapsulated & safe)
+
+// Independent instance with its own isolated closure:
+const counter2 = createCounter(100);
+console.log(counter2.increment()); // 101 (Does not affect counter1!)
+
+
+USE CASE 2: FUNCTION FACTORIES
+------------------------------------------------------------
+A function factory is a function that returns new functions customized with
+preset configurations or initial parameters.
+
+Example 1: Multiplier Generator
+------------------------------------------------------------
+function createMultiplier(multiplier) {
+    return function(num) {
+        return num * multiplier;
+    };
+}
+
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+const tenX   = createMultiplier(10);
+
+console.log(double(5)); // 10
+console.log(triple(5)); // 15
+console.log(tenX(5));   // 50
+
+
+Example 2: Custom Tagged Loggers
+------------------------------------------------------------
+function createLogger(serviceName) {
+    return function(level, message) {
+        const timestamp = new Date().toISOString();
+        console.log(`[${timestamp}] [${serviceName}] [${level.toUpperCase()}]: ${message}`);
+    };
+}
+
+const authLogger = createLogger("AuthService");
+const paymentLogger = createLogger("PaymentService");
+
+authLogger("info", "User 'john_doe' logged in successfully.");
+paymentLogger("error", "Payment gateway transaction timed out.");
+
+
+USE CASE 3: MEMOIZATION (COMPUTATIONAL CACHING)
+------------------------------------------------------------
+Closures allow you to store a cache object that persists between function calls,
+preventing expensive repeated calculations.
+
+Example: Generic Memoization Helper
+------------------------------------------------------------
+function memoize(fn) {
+    const cache = {}; // Preserved inside closure
+
+    return function(...args) {
+        const key = JSON.stringify(args);
+        if (key in cache) {
+            console.log(`[Cache Hit] Returning cached result for ${key}`);
+            return cache[key];
+        }
+
+        console.log(`[Cache Miss] Computing result for ${key}...`);
+        const result = fn(...args);
+        cache[key] = result;
+        return result;
+    };
+}
+
+// Expensive factorial function:
+const slowFactorial = (n) => (n <= 1 ? 1 : n * slowFactorial(n - 1));
+
+const fastFactorial = memoize(slowFactorial);
+
+console.log(fastFactorial(5)); // Computed: 120 (Cache Miss)
+console.log(fastFactorial(5)); // Fast: 120 (Cache Hit - Instant!)
+
+
+USE CASE 4: FUNCTION CURRYING & PARTIAL APPLICATION
+------------------------------------------------------------
+Currying transforms a function with multiple arguments into a sequence of nesting
+functions, each taking a single argument, enabled by closures remembering prior args.
+
+function volume(length) {
+    return function(width) {
+        return function(height) {
+            return length * width * height;
+        };
+    };
+}
+
+// Arrow syntax for currying:
+const curryVolume = l => w => h => l * w * h;
+
+const boxVolumeWithLength10 = curryVolume(10);
+const boxVolumeWithLength10AndWidth5 = boxVolumeWithLength10(5);
+
+console.log(boxVolumeWithLength10AndWidth5(2)); // Output: 100 (10 * 5 * 2)
+console.log(boxVolumeWithLength10AndWidth5(4)); // Output: 200 (10 * 5 * 4)
+
+
+USE CASE 5: THE MODULE PATTERN (IIFE)
+------------------------------------------------------------
+Prior to native ES modules, closures combined with Immediately Invoked Function
+Expressions (IIFEs) were used to create modular code with public and private APIs.
+
+const ShoppingCartModule = (function() {
+    // Private state inside closure:
+    let cart = [];
+
+    function calculateTotal() {
+        return cart.reduce((sum, item) => sum + item.price, 0);
+    }
+
+    // Public API returned to outside world:
+    return {
+        addItem(item) {
+            cart.push(item);
+            console.log(`Added "${item.name}" ($${item.price}) to cart.`);
+        },
+        getItems() {
+            return [...cart]; // Return copy to prevent direct mutation
+        },
+        checkout() {
+            const total = calculateTotal();
+            console.log(`Total amount to pay: $${total}`);
+            cart = []; // Reset
+        }
+    };
+})();
+
+ShoppingCartModule.addItem({ name: "Mechanical Keyboard", price: 120 });
+ShoppingCartModule.addItem({ name: "Wireless Mouse", price: 60 });
+ShoppingCartModule.checkout(); // Total amount to pay: $180
+
+
+USE CASE 6: DEBOUNCE & THROTTLE (FRONTEND PERFORMANCE)
+------------------------------------------------------------
+Both Debouncing (delaying execution until user stops typing) and Throttling
+(ensuring execution at most once per interval) rely on closures to store timer IDs.
+
+Implementation of Debounce using Closure:
+------------------------------------------------------------
+function debounce(fn, delayMs) {
+    let timerId = null; // Stored in closure!
+
+    return function(...args) {
+        const context = this;
+        clearTimeout(timerId); // Reset prior timer if triggered again quickly
+
+        timerId = setTimeout(() => {
+            fn.apply(context, args);
+        }, delayMs);
+    };
+}
+
+// Practical usage on Search Input:
+const handleSearch = (query) => console.log(`Searching API for: ${query}`);
+const debouncedSearch = debounce(handleSearch, 300);
+
+// If user types rapidly:
+// debouncedSearch("r");
+// debouncedSearch("re");
+// debouncedSearch("rea");
+// debouncedSearch("react"); // Only this final call executes after 300ms!
+
+
+--------------------------------------------------------------------------------
+2.4 THE CLASSIC INTERVIEW GOTCHA: `var` IN `for` LOOPS vs CLOSURE
+--------------------------------------------------------------------------------
+
+THE PROBLEM:
+What does the following code print?
+------------------------------------------------------------
+for (var i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log(i);
+    }, 1000);
+}
+
+EXPECTED BY BEGINNERS: 0, 1, 2
+ACTUAL OUTPUT:         3, 3, 3 (Printed 3 times after 1 second!)
+
+WHY DOES THIS HAPPEN?
+1. `var i` is NOT block-scoped; there is only ONE single global/function variable `i`.
+2. The `for` loop finishes running synchronously in less than 1 millisecond.
+   At loop completion, `i` has reached `3`.
+3. When the 3 `setTimeout` callbacks finally run after 1000ms, all three closures
+   point to the EXACT SAME reference `i`, which is now `3`!
+
+SOLUTIONS TO FIX THIS:
+
+SOLUTION 1 (Modern ES6 Best Practice - Use `let`):
+------------------------------------------------------------
+`let` is BLOCK-SCOPED. In each iteration of the loop, JavaScript creates a BRAND NEW
+binding for `i` in its own lexical block scope!
+
+for (let i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log(i); // Each callback captures its own iteration's 'i'!
+    }, 1000);
+}
+// Output: 0, 1, 2 (Correct!)
+
+
+SOLUTION 2 (Using an IIFE / Extra Closure):
+------------------------------------------------------------
+Passing `i` into an immediately invoked function creates a new local scope for each iteration:
+
+for (var i = 0; i < 3; i++) {
+    (function(capturedIndex) {
+        setTimeout(function() {
+            console.log(capturedIndex);
+        }, 1000);
+    })(i);
+}
+// Output: 0, 1, 2 (Correct!)
+
+
+SOLUTION 3 (Using setTimeout's 3rd Argument / Bind):
+------------------------------------------------------------
+for (var i = 0; i < 3; i++) {
+    setTimeout(console.log, 1000, i);
+}
+// Output: 0, 1, 2
+
+
+--------------------------------------------------------------------------------
+2.5 CLOSURE PITFALLS: MEMORY LEAKS & STALE CLOSURES
+--------------------------------------------------------------------------------
+
+1. MEMORY LEAKS THROUGH ACCIDENTAL RETENTION:
+------------------------------------------------------------
+Because closures hold references to variables in parent scopes, large data
+structures or DOM elements referenced in closures cannot be garbage collected.
+
+function setupHandler() {
+    const hugeData = new Array(1000000).fill("Data chunk"); // Consumes RAM!
+
+    return function() {
+        // Even if this function only needs hugeData.length, holding 'hugeData'
+        // prevents the entire 1,000,000 element array from being garbage collected!
+        console.log("Handler called");
+    };
+}
+
+Tip: Nullify or isolate variables when they are no longer required.
+
+
+2. STALE CLOSURES (COMMON IN REACT HOOKS / ASYNC CALLBACKS):
+------------------------------------------------------------
+A Stale Closure occurs when a closure captures an old, outdated value of a variable
+and continues referencing it even after the state has changed elsewhere.
+
+Example of a Stale Closure:
+------------------------------------------------------------
+function createTimer() {
+    let state = 0;
+
+    function increment() {
+        state++;
+        console.log("State is now:", state);
+    }
+
+    // Stale closure: function captures 'state' value at creation time (0)
+    function logStateLater() {
+        setTimeout(() => {
+            console.log("Logged state:", state);
+        }, 2000);
+    }
+
+    return { increment, logStateLater };
+}
+
+---------------------------------------------------------------------------
+function outer(){
+    let name ="mithlesh";
+    function inner(){
+        console.log("name",name);
+    }
+    return inner;
+}
+let val = outer();
+val();
+----------------------------------------------------------------------------
+steps:
+1. outer() is called
+2. name is created inside outer()
+3. inner() is defined inside outer()
+4. outer() returns inner()
+5. normally, we might expect name to disappear after outer() finishes
+6. But because inner() still references name, it remembers name
+7. when val() is called, it prints the remembered name
+8. this is closure!
+
+
+
+
+
+================================================================================
+                        PART 3: MASTER CHEAT SHEET
+================================================================================
+
+SCOPE & VARIABLE CHEAT SHEET:
+--------------------------------------------------------------------------------
+var   → Function-scoped, hoisted with `undefined`, can re-declare, attaches to `window`
+let   → Block-scoped `{}`, hoisted in TDZ (no access before declaration), re-assignable
+const → Block-scoped `{}`, hoisted in TDZ, cannot re-assign identifier, must initialize
+
+CLOSURE CHEAT SHEET:
+--------------------------------------------------------------------------------
+Definition   → Function + references to its lexical environment (outer scope)
+Preservation → Outer variables live in Heap memory after outer function finishes
+Private Data → Functions returning objects with methods accessing enclosed variables
+Factory      → Higher-order function producing specialized customized functions
+Gotcha Fix   → Use `let` instead of `var` in asynchronous loops (`setTimeout`/events)
 
 
 ================================================================================
                     END OF EXHAUSTIVE MASTER NOTES (.TXT)
 ================================================================================
+
+
+
+
+
 
 
 
