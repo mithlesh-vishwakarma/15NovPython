@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>restaurant</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .main{
+            height: 700px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        img{
+            height: 100%;
+            width: 100%;
+           
+        }
+        #btn1{
+            background-color: black;
+            border: 1px solid black;
+            color: white;
+            padding: 10px 20px;
+            position: absolute;
+            right: 10px;
+            top:50%
+        }
+          #btn2{
+            background-color: black;
+            border: 1px solid black;
+            color: white;
+            padding: 10px 20px;
+            position: absolute;
+            left: 10px;
+            top:50%
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <img src="bar.jpg" alt="bar.jpg" id="img-1">
+        <img src="food.jpg" alt="food.jpg" id="img-2">
+        <img src="party.jpg" alt="party.jpg" id="img-3">
+        <button id="btn1">></button>
+        <button id="btn2"><</button>
+    </div>
+
+
+    <script>
+        let counter = 1;
+        document.getElementById('img-2').style.display="none";
+        document.getElementById('img-3').style.display="none"
+
+        document.getElementById("btn1").addEventListener('click',function(){
+             
+             
+             let hideImg = document.getElementById('img-'+counter);
+            
+             hideImg.style.display="none"
+             if(counter == 3){
+                counter=0;
+             }
+             counter++;
+           
+             let showImg = document.getElementById('img-'+counter);
+            
+             showImg.style.display="block"
+             
+             
+        })
+
+        document.getElementById("btn2").addEventListener('click',function(){
+                
+
+                let hideImg = document.getElementById('img-'+counter);
+                hideImg.style.display="none"
+
+                if(counter==1){
+                    counter=4   ;
+                }
+
+                counter--;
+
+                 
+                let showImg = document.getElementById('img-'+counter);
+               
+                
+                showImg.style.display="block"
+
+        })
+
+
+        let i=1;
+
+        setInterval(()=>{
+           
+             let hideImg = document.getElementById('img-'+i);
+                hideImg.style.display="none"
+            if(i==3){
+                i=0;
+            }
+           
+            i++; 
+            console.log("after",i);
+            let showImg = document.getElementById('img-'+i);
+            showImg.style.display="block"
+            
+        },5000);
+    </script>
+</body>
+</html>

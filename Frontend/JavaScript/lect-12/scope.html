@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        function test(){
+            let num=10;
+            if(num%2==0){
+                var msg="num is even";
+            }
+
+            console.log(msg);
+            
+        }
+
+        test();
+
+        function Outer(){
+            let counter=1;
+            return function Inner(){ 
+                console.log(counter++);
+            }
+            
+        }
+
+       let OutExe= Outer();
+       // console.log(OutExe);
+       OutExe();
+
+
+       testFun();
+
+       function testFun(){
+          console.log("lexical example");
+          
+       }
+
+       testfun2();
+
+       let testFun2  =  function (){
+          console.log("lexical expression example");
+          
+       }
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+       class Product{
+        #catname="clothing"
+            constructor(pid,pname,price){
+                this.pid=pid;
+                this.pname=pname;
+                this.price= price;
+            }
+
+            printData(){
+                console.log(`
+                   pid=${ this.pid}
+                   pname=${ this.pname}
+                   price=${ this.price}
+                `);
+                
+            }
+       }
+
+       let p1 = new Product(101,'cloths',1220)
+       p1.printData();
+       // p1.#catname
+
+
+       class Person{
+          constructor(uname,accno,bal){
+              this.uname=uname;
+              this.accno=accno;
+              this.bal=bal;
+          }
+          printUserInfo(){
+             console.log(`
+                uname:${this.uname}
+                accno:${this.accno}
+                bal:${this.bal}
+             `);
+             
+          }
+       }
+
+       class Saving extends Person{
+            constructor(iamt,uname,accno,bal){
+                super(uname,accno,bal)
+                this.iamt=iamt
+            }
+
+            calCIntrest(){
+                let amt = +this.bal +  +((this.bal*this.iamt)/100);
+                console.log(amt);
+                
+            }
+       }
+
+       let s1= new Saving(12,"sonali",29898928,"120000");
+       s1.calCIntrest();
+       
+    </script>
+</body>
+</html>

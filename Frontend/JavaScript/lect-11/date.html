@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .timer{
+            padding: 100px 200px;
+            font-size: 2em;
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+     <div class="timer">
+        <p id="ctime"></p>
+     </div>
+    <script>
+       function printDate(){
+           let todate= new Date();
+
+        
+
+        //Y-m-d h:i:s
+
+        let myDate = `${todate.getFullYear()}-${todate.getMonth()+1}-${todate.getDate()} ${todate.getHours()}:${todate.getMinutes()}:${todate. getSeconds()} `
+        document.getElementById('ctime').innerText=myDate;
+      
+       }
+
+       setInterval(printDate,1000);
+     
+        
+        
+    </script>
+</body>
+</html>
