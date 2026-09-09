@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project List</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Project List</h2>
+
+            <button class="btn btn-primary">
+                Add Project
+            </button>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="text-center my-4">
+            <div class="spinner-border text-primary"></div>
+            <p class="mt-2">Loading projects...</p>
+        </div>
+
+        <!-- Error -->
+        <div id="error" class="alert alert-danger d-none">
+            Failed to load projects.
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Project</th>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Tech Stack</th>
+                        <th>Type</th>
+                        <th>Duration</th>
+                        <th>Links</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="prodata">
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+
+        // API URL
+        const API_URL =
+            "https://upgraded-portfolio-y5nw.onrender.com/api/projects";
+
+
+        // Get Projects
+        async function getProjects() {
+
+            try {
+
+                const res = await fetch(API_URL);
+
+                if (!res.ok) {
+                    throw new Error("Failed to fetch projects");
+                }
+
+                const data = await res.json();
+
+                console.log(data);
+
+                printProjects(data);
+
+            } catch (error) {
+
+                console.log(error);
+
+                document
+                    .getElementById("loading")
+                    .classList.add("d-none");
+
+                document
+                    .getElementById("error")
+                    .classList.remove("d-none");
+
+            }
+        }
+
+
+        // Display Projects
+        function printProjects(data) {
+
+            let str = "";
+
+            data.forEach((project, index) => {
+
+                // Tech stack
+                let techStack = "";
+
+                if (project.tech_stack && project.tech_stack.length > 0) {
+
+                    project.tech_stack.forEach(tech => {
+
+                        techStack += `
+                            <span class="badge bg-secondary me-1 mb-1">
+                                ${tech}
+                            </span>
+                        `;
+
+                    });
+
+                } else {
+
+                    techStack = "N/A";
+
+                }
+
+
+                // Description
+                let description =
+                    project.short_description || "No description available";
+
+
+                // Duration
+                let duration = "";
+
+                if (project.start_date && project.end_date) {
+
+                    duration = `
+                        ${project.start_date}
+                        -
+                        ${project.end_date}
+                    `;
+
+                } else {
+
+                    duration = "N/A";
+
+                }
+
+
+                // Live URL
+                let liveUrl = "";
+
+                if (project.live_url) {
+
+                    liveUrl = `
+                        <a href="${project.live_url}"
+                           target="_blank"
+                           class="btn btn-sm btn-success mb-1">
+                            Live
+                        </a>
+                    `;
+
+                }
+
+
+                // GitHub URL
+                let githubUrl = "";
+
+                if (project.github_url) {
+
+                    githubUrl = `
+                        <a href="${project.github_url}"
+                           target="_blank"
+                           class="btn btn-sm btn-dark mb-1">
+                            GitHub
+                        </a>
+                    `;
+
+                }
+
+
+                // Create table row
+                str += `
+
+                    <tr>
+
+                        <!-- Number -->
+                        <td>
+                            ${index + 1}
+                        </td>
+
+
+                        <!-- Project Name -->
+                        <td>
+                            <strong>
+                                ${project.name || "N/A"}
+                            </strong>
+                        </td>
+
+
+                        <!-- Image -->
+                        <td>
+
+                            ${project.image_url
+                        ?
+                        `
+                                <img
+                                    src="${project.image_url}"
+                                    alt="${project.name || "Project"}"
+                                    width="120"
+                                    height="80"
+                                    class="rounded"
+                                    style="object-fit: cover;"
+                                >
+                                `
+                        :
+                        "No Image"
+                    }
+
+                        </td>
+
+
+                        <!-- Description -->
+                        <td style="min-width: 300px;">
+
+                            ${description}
+
+                        </td>
+
+
+                        <!-- Tech Stack -->
+                        <td style="min-width: 180px;">
+
+                            ${techStack}
+
+                        </td>
+
+
+                        <!-- Project Type -->
+                        <td>
+
+                            <span class="badge ${project.project_type === "Personal"
+                        ? "bg-primary"
+                        : "bg-info text-dark"
+                    }">
+
+                                ${project.project_type || "N/A"}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Duration -->
+                        <td style="min-width: 130px;">
+
+                            ${duration}
+
+                        </td>
+
+
+                        <!-- Links -->
+                        <td style="min-width: 100px;">
+
+                            ${liveUrl}
+
+                            ${githubUrl}
+
+                        </td>
+
+
+                        <!-- Action -->
+                        <td style="min-width: 140px;">
+
+                            <button
+                                class="btn btn-sm btn-warning mb-1"
+                                onclick="editProject('${project.id}')">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                                class="btn btn-sm btn-danger mb-1"
+                                onclick="deleteProject('${project.id}')">
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+
+            // Put data into table
+            document.getElementById("prodata").innerHTML = str;
+
+
+            // Hide loading
+            document
+                .getElementById("loading")
+                .classList.add("d-none");
+
+        }
+
+
+        // Edit Project
+        function editProject(id) {
+
+            console.log("Edit project:", id);
+
+            alert("Edit project ID: " + id);
+
+        }
+
+
+        // Delete Project
+        function deleteProject(id) {
+
+            console.log("Delete project:", id);
+
+            alert("Delete project ID: " + id);
+
+        }
+
+
+        // Load projects when page opens
+        getProjects();
+
+    </script>
+
+</body>
+
+</html>
