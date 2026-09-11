@@ -37,9 +37,19 @@ TABLE OF CONTENTS
     4.1 What is a Promise? (Definition & Token Analogy)
     4.2 The Three States of a Promise (Pending, Fulfilled, Rejected)
     4.3 How to Create a Promise (`new Promise(resolve, reject)`)
-    4.4 How to Consume a Promise (`.then()`, `.catch()`, `.finally()`)
+    4.4 Instance Methods: Consuming Promises (`.then()`, `.catch()`, `.finally()`)
     4.5 Promise Chaining: Eliminating Callback Hell
-    4.6 Bonus: Helpful Promise Combinators (`Promise.all`, `Promise.race`, etc.)
+    4.6 Comprehensive Guide to All Promise Methods
+        4.6.1 The Two Categories: Instance Methods vs Static Methods
+        4.6.2 Deep Dive into Instance Methods (`.then()`, `.catch()`, `.finally()`)
+        4.6.3 Quick Comparison Matrix of Static Combinators
+        4.6.4 `Promise.all()` — "All or Nothing" (Parallel Execution)
+        4.6.5 `Promise.allSettled()` — "Wait for Everybody" (Safe & Resilient)
+        4.6.6 `Promise.race()` — "First to Settle" (Speed / Timeouts)
+        4.6.7 `Promise.any()` — "First to Succeed" (Redundancy / Fallback)
+        4.6.8 `Promise.resolve()` & `Promise.reject()` — Instant Settled Promises
+        4.6.9 Modern Addition: `Promise.withResolvers()` (ES2024 Standard)
+    4.7 Decision Guide: Which Promise Method Should You Use?
 
  5. Topic 4: The Ultimate Modern Syntax — Async / Await
     5.1 What is `async` and `await`? (Syntactic Sugar over Promises)
@@ -596,38 +606,441 @@ Look how clean and readable that is compared to Callback Hell!
 
 
 --------------------------------------------------------------------------------
-4.6 Helpful Promise Methods (Combinators)
+4.6 Comprehensive Guide to All Promise Methods
 --------------------------------------------------------------------------------
-When dealing with multiple promises simultaneously:
 
-1. `Promise.all([p1, p2, p3])`:
-   - Runs all promises in parallel.
-   - Resolves when ALL succeed (returns an array of results).
-   - FAILS FAST: If even ONE promise rejects, the entire `Promise.all` rejects.
+--------------------------------------------------------------------------------
+4.6.1 The Two Categories: Instance Methods vs Static Methods
+--------------------------------------------------------------------------------
+In JavaScript, Promise methods are divided into TWO distinct families:
+
+1. INSTANCE METHODS (Called on an existing Promise object):
+   - `.then(onFulfilled, onRejected)`
+   - `.catch(onRejected)`
+   - `.finally(onFinally)`
+   These methods are attached to a specific promise instance to handle its
+   outcome or perform cleanup.
+
+2. STATIC METHODS (Called directly on the `Promise` constructor class):
+   A. The 4 Combinators (Running multiple promises together):
+      - `Promise.all([p1, p2, ...])`
+      - `Promise.allSettled([p1, p2, ...])`
+      - `Promise.race([p1, p2, ...])`
+      - `Promise.any([p1, p2, ...])`
+
+   B. The 2 Instant Creation Utilities:
+      - `Promise.resolve(value)`
+      - `Promise.reject(reason)`
+
+   C. The Modern ES2024 Addition:
+      - `Promise.withResolvers()`
+
+
+--------------------------------------------------------------------------------
+4.6.2 Deep Dive into Instance Methods (`.then`, `.catch`, `.finally`)
+--------------------------------------------------------------------------------
+Every Promise object inherits three core methods from `Promise.prototype`:
+
+1. `.then(onFulfilled, onRejected)`:
+   - Takes up to TWO callback arguments:
+     * `onFulfilled`: Runs if the promise resolves successfully. Receives value.
+     * `onRejected`: (Optional) Runs if the promise rejects. Receives error.
+   - ALWAYS returns a NEW Promise, allowing chaining.
+   - Whatever you return from `.then()` gets wrapped into the next Promise!
 
    ```javascript
-   const fetchUsers = Promise.resolve(["Amit", "Priya"]);
-   const fetchPosts = Promise.resolve(["Post 1", "Post 2"]);
+   fetchUser()
+     .then(
+       (user) => { console.log("User:", user); },
+       (err)  => { console.error("Optional direct error handler:", err); }
+     );
+   ```
 
-   Promise.all([fetchUsers, fetchPosts])
-     .then(([users, posts]) => {
-       console.log("Users:", users);
-       console.log("Posts:", posts);
+2. `.catch(onRejected)`:
+   - Syntactic sugar for `.then(null, onRejected)`.
+   - Catches ANY error or rejection that occurred anywhere up the chain!
+   - You can also "recover" from an error by returning a fallback value:
+
+   ```javascript
+   fetchCachedData()
+     .catch((err) => {
+       console.warn("Cache missed, using default fallback data.");
+       return { role: "guest", permissions: [] }; // Recovery value!
+     })
+     .then((data) => {
+       console.log("Current user data:", data); // Runs with the fallback!
      });
    ```
 
-2. `Promise.race([p1, p2, p3])`:
-   - Returns the result of whichever promise finishes FIRST (fastest), whether
-     it resolves or rejects.
+3. `.finally(onFinally)`:
+   - Takes ONE callback with NO arguments (`() => { ... }`).
+   - Runs GUARANTEED when the promise settles (whether resolved OR rejected).
+   - Ideal for teardown: hiding loading spinners, closing database connections,
+     resetting forms, or clearing timeouts.
+   - Unlike `.then()`, `.finally()` does not modify the resolved value or error;
+     it quietly passes the original outcome down to the next step.
 
-3. `Promise.allSettled([p1, p2, p3])`:
-   - Waits for all promises to finish, regardless of whether they succeeded or
-     failed. Never rejects early. Returns array of objects with status: "fulfilled"
-     or "rejected".
+   ```javascript
+   showSpinner(true);
 
-4. `Promise.any([p1, p2, p3])`:
-   - Returns the first promise that resolves successfully. Ignores rejections
-     unless all reject.
+   fetchData()
+     .then(data => renderUI(data))
+     .catch(err => showErrorAlert(err.message))
+     .finally(() => {
+       showSpinner(false); // ALWAYS runs, win or lose!
+       console.log("Operation finished.");
+     });
+   ```
+
+
+--------------------------------------------------------------------------------
+4.6.3 Quick Comparison Matrix of Static Combinators
+--------------------------------------------------------------------------------
+When you have an array/iterable of promises, which static method should you use?
+
++--------------------+-----------------------------+-----------------------------+-------------------------------------+
+| Method             | Resolves When...            | Rejects When...             | Best Real-World Use Case            |
++--------------------+-----------------------------+-----------------------------+-------------------------------------+
+| Promise.all()      | ALL promises resolve        | ANY single promise rejects  | Dependent operations (Dashboard:    |
+|                    | (returns array of values)   | (fails fast on first error) | User + Orders + Settings together)  |
++--------------------+-----------------------------+-----------------------------+-------------------------------------+
+| Promise.allSettled()| ALL promises settle        | NEVER rejects!              | Bulk operations where partial       |
+|                    | (success or fail)           | (always fulfills with       | success is acceptable               |
+|                    |                             | status array)               | (e.g. sending 1,000 push emails)    |
++--------------------+-----------------------------+-----------------------------+-------------------------------------+
+| Promise.race()     | ANY promise settles FIRST   | ANY promise settles FIRST   | Request timeouts (race API call     |
+|                    | (resolves if winner resolves)| (rejects if winner rejects)| against a 5-second cancel timer)    |
++--------------------+-----------------------------+-----------------------------+-------------------------------------+
+| Promise.any()      | ANY promise resolves FIRST  | ALL promises reject         | Fastest mirror / CDN download       |
+|                    | (first success wins)        | (throws AggregateError)     | (try Server A, B, C; pick 1st ok)   |
++--------------------+-----------------------------+-----------------------------+-------------------------------------+
+
+
+--------------------------------------------------------------------------------
+4.6.4 `Promise.all()` — "All or Nothing" (Fail-Fast Parallelism)
+--------------------------------------------------------------------------------
+Analogy: Four friends booking plane tickets together.
+- If all 4 seats are confirmed -> The trip is ON!
+- If even 1 friend gets rejected -> The ENTIRE group trip is CANCELLED immediately!
+
+Characteristics:
+- Takes an array of promises.
+- Runs them in PARALLEL (simultaneously).
+- Resolves when ALL promises resolve, returning an array of results in the
+  EXACT same order as the input array.
+- FAILS FAST: As soon as ANY single promise rejects, `Promise.all` immediately
+  rejects with that error, ignoring all other pending promises.
+
+Working Example (Success Scenario):
+```javascript
+const fetchProfile = new Promise((resolve) => {
+  setTimeout(() => resolve({ name: "Aarav", role: "Admin" }), 1000);
+});
+
+const fetchNotifications = new Promise((resolve) => {
+  setTimeout(() => resolve(["Welcome back!", "System update at 10 PM"]), 1500);
+});
+
+const fetchSettings = new Promise((resolve) => {
+  setTimeout(() => resolve({ theme: "dark", lang: "en" }), 500);
+});
+
+console.time("Promise.all Timer");
+
+Promise.all([fetchProfile, fetchNotifications, fetchSettings])
+  .then(([profile, notifications, settings]) => {
+    console.timeEnd("Promise.all Timer"); // ~1500ms (not 1000 + 1500 + 500 = 3000ms!)
+    console.log("Profile:", profile.name);
+    console.log("Notifications count:", notifications.length);
+    console.log("Theme:", settings.theme);
+  })
+  .catch((err) => {
+    console.error("Failed to load dashboard:", err);
+  });
+```
+
+Working Example (Fail-Fast Scenario):
+```javascript
+const task1 = Promise.resolve("Task 1 finished");
+const task2 = new Promise((_, reject) => setTimeout(() => reject("Network Failed!"), 800));
+const task3 = new Promise((resolve) => setTimeout(() => resolve("Task 3 finished"), 2000));
+
+Promise.all([task1, task2, task3])
+  .then(results => console.log("All success:", results))
+  .catch(err => console.error("Promise.all rejected early with:", err));
+
+// Output after ~800ms:
+// Promise.all rejected early with: Network Failed!
+// (Task 3 was still running, but the entire batch was already aborted!)
+```
+
+
+--------------------------------------------------------------------------------
+4.6.5 `Promise.allSettled()` — "Wait for Everybody" (Safe & Resilient)
+--------------------------------------------------------------------------------
+Introduced in ES2020 (ES11).
+
+Analogy: A teacher collecting exam sheets from 30 students.
+The teacher waits until EVERY student submits their paper. Some passed, some
+failed, but the teacher records every single student's status without throwing
+away the whole class!
+
+Characteristics:
+- Takes an array of promises.
+- WAITS FOR ALL PROMISES TO SETTLE (either fulfilled or rejected).
+- NEVER rejects! The outer promise will ALWAYS fulfill successfully.
+- Returns an array of objects, where each object has:
+  * For fulfilled: `{ status: "fulfilled", value: <result> }`
+  * For rejected:  `{ status: "rejected",  reason: <error> }`
+
+Working Example (Bulk Operations):
+```javascript
+const serviceA = Promise.resolve("Service A: Healthy");
+const serviceB = Promise.reject(new Error("Service B: Database Down"));
+const serviceC = Promise.resolve("Service C: Healthy");
+
+Promise.allSettled([serviceA, serviceB, serviceC])
+  .then((results) => {
+    console.log("Health Check Summary:");
+    results.forEach((res, index) => {
+      if (res.status === "fulfilled") {
+        console.log(`- Service ${index + 1}: SUCCESS -> ${res.value}`);
+      } else {
+        console.log(`- Service ${index + 1}: FAILED  -> ${res.reason.message}`);
+      }
+    });
+
+    // Easily filter only successful ones:
+    const successful = results
+      .filter(r => r.status === "fulfilled")
+      .map(r => r.value);
+    console.log("Ready services:", successful);
+  });
+
+/*
+Output:
+Health Check Summary:
+- Service 1: SUCCESS -> Service A: Healthy
+- Service 2: FAILED  -> Service B: Database Down
+- Service 3: SUCCESS -> Service C: Healthy
+Ready services: [ 'Service A: Healthy', 'Service C: Healthy' ]
+*/
+```
+
+
+--------------------------------------------------------------------------------
+4.6.6 `Promise.race()` — "First to Settle" (Speed / Timeouts)
+--------------------------------------------------------------------------------
+Analogy: An Olympic 100m sprint race.
+Whoever crosses the finish line FIRST wins the gold medal. It doesn't matter
+if the first person successfully crosses or trips and falls over the finish line;
+as soon as someone crosses, the race is over!
+
+Characteristics:
+- Takes an array of promises.
+- Returns the outcome of the FIRST promise that settles (whether it RESOLVES
+  or REJECTS).
+- If the fastest promise resolves -> `Promise.race` resolves.
+- If the fastest promise rejects  -> `Promise.race` rejects.
+
+Working Example (Creating a Network Request Timeout):
+```javascript
+// Simulate a slow network request (takes 5 seconds)
+function slowFetchData() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Downloaded 100MB of Data!"), 5000);
+  });
+}
+
+// Timeout promise that rejects after 2 seconds
+function timeoutGuard(ms) {
+  return new Promise((_, reject) => {
+    setTimeout(() => reject(new Error(`Request timed out after ${ms}ms!`)), ms);
+  });
+}
+
+// Race the data fetch against our 2-second timeout:
+Promise.race([slowFetchData(), timeoutGuard(2000)])
+  .then(data => console.log("Success:", data))
+  .catch(err => console.error("Race Error:", err.message));
+
+// Output after 2000ms:
+// Race Error: Request timed out after 2000ms!
+```
+
+
+--------------------------------------------------------------------------------
+4.6.7 `Promise.any()` — "First to Succeed" (Redundancy / Fallback)
+--------------------------------------------------------------------------------
+Introduced in ES2021 (ES12).
+
+Analogy: Calling 3 emergency taxi drivers.
+You only need ONE taxi to take you to the airport.
+- Driver 1 says "No, car broken" (rejected). You don't give up!
+- Driver 2 says "Yes, I'm outside!" (resolved). YOU TAKE THIS ONE AND LEAVE!
+- Only if ALL 3 drivers say "No" do you have a total failure.
+
+Characteristics:
+- Takes an array of promises.
+- Returns the value of the FIRST promise that FULFILLS (resolves successfully).
+- IGNORES REJECTIONS as long as at least one promise can still succeed!
+- Only rejects if ALL promises reject. In that case, it throws an `AggregateError`
+  (a special error containing an `.errors` array with all reasons).
+
+Difference between `Promise.race()` and `Promise.any()`:
+- `Promise.race()`: First to FINISH (success OR failure).
+- `Promise.any()`:  First to SUCCEED (ignores failures until all fail).
+
+Working Example (Redundant CDN Mirrors):
+```javascript
+const cdnMirrorUS = new Promise((_, reject) => {
+  setTimeout(() => reject("US CDN 503 Server Error"), 400); // Fails fast
+});
+
+const cdnMirrorEU = new Promise((resolve) => {
+  setTimeout(() => resolve("Asset loaded from EU Server!"), 900); // Slower, but works!
+});
+
+const cdnMirrorAsia = new Promise((resolve) => {
+  setTimeout(() => resolve("Asset loaded from Asia Server!"), 1200);
+});
+
+Promise.any([cdnMirrorUS, cdnMirrorEU, cdnMirrorAsia])
+  .then((winner) => {
+    console.log("Success:", winner);
+  })
+  .catch((err) => {
+    console.error("All CDNs failed:", err.errors);
+  });
+
+// Output after 900ms:
+// Success: Asset loaded from EU Server!
+// (Notice: US failed at 400ms, but Promise.any ignored it and waited for EU!)
+```
+
+Working Example (When All Reject):
+```javascript
+const p1 = Promise.reject("Fail 1");
+const p2 = Promise.reject("Fail 2");
+
+Promise.any([p1, p2])
+  .catch((err) => {
+    console.log(err.name);    // "AggregateError"
+    console.log(err.message); // "All promises were rejected"
+    console.log(err.errors);  // ["Fail 1", "Fail 2"]
+  });
+```
+
+
+--------------------------------------------------------------------------------
+4.6.8 `Promise.resolve()` & `Promise.reject()` — Instant Settled Promises
+--------------------------------------------------------------------------------
+Sometimes you already have data or a known error immediately and want to return
+a Promise without writing verbose `new Promise((resolve) => resolve(...))` syntax.
+
+1. `Promise.resolve(value)`:
+   Returns a Promise object that is already resolved with the given value.
+
+   ```javascript
+   // Cache lookup utility
+   const cache = { user_42: { name: "Neha Sharma", role: "Manager" } };
+
+   function getUser(id) {
+     if (cache[id]) {
+       // Return cached data immediately as a Promise:
+       return Promise.resolve(cache[id]);
+     }
+     // Otherwise fetch from database (async):
+     return fetch(`/api/users/${id}`).then(res => res.json());
+   }
+
+   // Consumed identically either way!
+   getUser("user_42").then(user => console.log("Cached User:", user.name));
+   ```
+
+2. `Promise.reject(reason)`:
+   Returns a Promise object that is already rejected with the given reason.
+
+   ```javascript
+   function validateAge(age) {
+     if (age < 18) {
+       // Immediate rejection without running any timers or async work:
+       return Promise.reject(new Error("Access Denied: Must be 18 or older."));
+     }
+     return Promise.resolve("Access Granted!");
+   }
+
+   validateAge(15)
+     .then(msg => console.log(msg))
+     .catch(err => console.error("Validation Error:", err.message));
+   ```
+
+
+--------------------------------------------------------------------------------
+4.6.9 Modern Addition: `Promise.withResolvers()` (ES2024 Standard)
+--------------------------------------------------------------------------------
+Added to JavaScript in ES2024 (Node.js 22+, modern Chrome, Firefox, Safari).
+
+THE PROBLEM IT SOLVES:
+Historically, if you needed to resolve or reject a promise from OUTSIDE its
+constructor callback (for example, inside an event listener or a socket callback),
+you had to do this ugly "deferred" trick:
+
+```javascript
+// THE OLD, CLUNKY WAY:
+let resolveFn, rejectFn;
+const myOldPromise = new Promise((resolve, reject) => {
+  resolveFn = resolve;
+  rejectFn = reject;
+});
+// Now you could call resolveFn() from outside. Awkward!
+```
+
+THE MODERN ES2024 WAY:
+`Promise.withResolvers()` returns a plain object containing:
+- `promise`: The Promise instance.
+- `resolve`: The resolve function.
+- `reject`: The reject function.
+
+```javascript
+const { promise, resolve, reject } = Promise.withResolvers();
+
+// Example: Trigger promise resolution when user clicks a button
+document.getElementById("submitBtn")?.addEventListener("click", () => {
+  resolve("User clicked submit!");
+});
+
+// Elsewhere in your code:
+promise.then(msg => console.log(msg));
+```
+
+
+--------------------------------------------------------------------------------
+4.7 Decision Guide: Which Promise Method Should You Use?
+--------------------------------------------------------------------------------
+Ask yourself these simple questions:
+
+  Do you have MULTIPLE promises running concurrently?
+  │
+  ├── Do you need ALL of them to succeed?
+  │   └── YES, and if any fails, abort immediately:
+  │       👉 Use `Promise.all()`
+  │
+  ├── Do you want to wait for ALL of them, even if some fail?
+  │   └── YES, I need a complete status report for every single one:
+  │       👉 Use `Promise.allSettled()`
+  │
+  ├── Do you need only the FASTEST response, win or lose?
+  │   └── YES, first settled promise wins (e.g. timeout watchdog):
+  │       👉 Use `Promise.race()`
+  │
+  └── Do you need only the FASTEST SUCCESSFUL response?
+      └── YES, ignore individual errors until at least one succeeds:
+          👉 Use `Promise.any()`
+
+  Do you need to create a Promise INSTANTLY with an existing value/error?
+  ├── Already have a successful value? 👉 Use `Promise.resolve(value)`
+  └── Already have an error condition? 👉 Use `Promise.reject(reason)`
 
 ================================================================================
 
@@ -944,6 +1357,22 @@ Q6: What happens if you don't catch an error in a Promise?
 A6: The browser or Node.js environment will trigger an
     `UnhandledPromiseRejection` warning or error, which can cause apps to crash.
     Always use `.catch()` or a `try...catch` block.
+
+Q7: What are the main differences between `Promise.all`, `Promise.allSettled`, `Promise.race`, and `Promise.any`?
+A7: - `Promise.all`: Waits for all to fulfill. Fails fast if any rejects.
+    - `Promise.allSettled`: Waits for all to settle (fulfilled or rejected). Never rejects.
+    - `Promise.race`: Returns the first promise to settle (whether fulfilled OR rejected).
+    - `Promise.any`: Returns the first promise to fulfill. Rejects only if ALL reject (AggregateError).
+
+Q8: What is the benefit of `Promise.resolve(value)` over `new Promise(res => res(value))`?
+A8: `Promise.resolve()` is much cleaner, more concise, and faster to write. It also
+    safely unwraps any existing Promise or "thenable" passed into it, returning
+    the underlying promise directly.
+
+Q9: What is `Promise.withResolvers()` introduced in ES2024?
+A9: It is a static method that returns `{ promise, resolve, reject }`, allowing you
+    to resolve or reject a promise from outside its executor function without
+    having to define external closure variables.
 
 ================================================================================
                          END OF ADVANCED JAVASCRIPT NOTES

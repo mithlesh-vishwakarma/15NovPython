@@ -13,6 +13,31 @@
         {{form.as_p}}
         <input type="submit" value="Submit">
     </form>
+
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for s in students %}
+        <tr>
+            <td>{{s.id}}</td>
+            <td>{{s.name}}</td>
+            <td>{{s.age}}</td>
+
+            <td><a href="{% url 'update' %}?id={{s.id}}">Edit</a></td>
+            <td><a href="{% url 'delete' %}?id={{s.id}}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+
 </body>
 
 </html>
