@@ -1,31 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task1</title>
-</head>
+  </head>
 
-<body>
-
-
-
-
+  <body>
     <script>
-        const product = {
-            name: "Wireless Headphones",
-            price: 1999,
-            rating: 4.5
-        };
+      let userName = "Mithlesh";
+      let followers = 500;
 
-        const json = JSON.stringify(product)
-        // const parsed = JSON.parse(json)
-        console.log(json);
-        // console.log(parsed);
-
-
+      function formateWelcomeMessage(userName, followers) {
+        console.log(`Hello ${userName}, You have ${followers} followers!!`);
+      }
+      formateWelcomeMessage(userName, followers);
     </script>
-</body>
-
+  </body>
 </html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 10</title>
+  </head>
+  <body>
+    <script>
+      const getFollowersSummary = (...followerCounts) => {
+        let TotalFollowers = 0;
+
+        for (i = 0; i < followerCounts.length; i++) {
+          TotalFollowers = TotalFollowers + followerCounts[i];
+        }
+        console.log(`TotalFollowers:${TotalFollowers}`);
+      };
+
+      console.log(getFollowersSummary(999, 888, 777));
+    </script>
+  </body>
+</html>

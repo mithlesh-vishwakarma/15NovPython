@@ -1,30 +1,110 @@
-1. Create a JavaScript object representing a Flipkart-style product with name, price, and rating fields, then convert it to a JSON string using JSON.stringify() and log the result.
+1. Template Literals and Functions
 
-2. Create an array of your top 3 favorite food delivery apps (like Zomato, Swiggy, Domino's), convert it to a JSON string using JSON.stringify(), and log the result to the console.
+Create a function formatWelcomeMessage(userName, followers) that returns a string like 'Hello Rahul, you have 1200 followers!' using template literals. Call this function with your own name and any follower count, then log the result.
 
-3. Write a function that takes a json string representing a list of favorite YouTube channels and returns an array of channel names using JSON.parse().
 
-4. Build a function saveRecentSearch(query) that takes a search term (like "Biryani" or "Sneakers"), adds it to an array, converts the array to JSON, and saves it in localStorage under the key "recentSearches".
+2. Spotify Welcome Message
 
-5. Build a simple web page where users can add their top 3 favorite Zomato restaurants to a list and save it to localStorage using localStorage.setItem(). When the page reloads, the list should automatically load from localStorage and display.
+Create a template literal that displays a welcome message like Spotify:
 
-6. Write a function getRecentSearches() that reads the "recentSearches" item from localStorage, parses it from JSON, and returns the array. If nothing is saved yet, return an empty array.
-Hint: Check for null before parsing.
+'Hello, ${userName}! You have ${playlistCount} playlists.'
 
-7. Implement a "Clear Favorites" button on your restaurant list page that removes the saved data from localStorage using localStorage.removeItem() and updates the UI accordingly.
-Hint: Use localStorage.removeItem('yourKey') and refresh the displayed list after clearing.
+Assign userName and playlistCount variables and log the message to the console.
 
-8. Simulate a Flipkart-style wishlist: create an array of 3 products (each with name and price), save it in localStorage as "wishlist", then reload the page and display the wishlist items by reading and parsing the data from localStorage.
 
-9. Debug this code: It tries to save an array of movie names to localStorage, but after reloading, the list doesn't display correctly.
-let movies = ['Jawan', 'Pathaan', 'Dunki'];
-localStorage.setItem('movies', movies);
-let saved = localStorage.getItem('movies');
-let arr = JSON.parse(saved);
-console.log(arr);
+3. Default Parameters
 
-Hint: Check how movies is being stored and what type localStorage expects.
+Write a function getDeliveryDetails that takes two parameters: address (string) and paymentMethod (string), both with default values ('Ahmedabad' and 'UPI').
 
-10. Add a "Clear Wishlist" button to your wishlist code that removes the "wishlist" key from localStorage and updates the display immediately.
+Log a message using template literals showing both values.
 
-Constraint: Use localStorage.removeItem() for this action.
+Call the function:
+- Once with no arguments
+- Once with custom values
+
+
+4. Default Parameter with Quantity
+
+Write a function orderFood(item, quantity = 1) that returns a string like 'You ordered 2 Burgers.'
+
+Use default parameters so that if quantity is not passed, it defaults to 1.
+
+Hint:
+Try calling orderFood('Pizza') and orderFood('Burger', 2) to test both cases.
+
+
+5. Object Destructuring
+
+Given this object:
+
+const order = {
+    item: 'Pizza',
+    price: 350,
+    user: 'Amit'
+};
+
+Use object destructuring to extract item and price into variables, then log a message like:
+
+'Amit ordered Pizza for ₹350'
+
+
+6. Object Destructuring with Movie
+
+Given this object:
+
+const movie = {
+    title: 'Jawan',
+    rating: 4.5,
+    genre: 'Action'
+};
+
+Use object destructuring to extract title and rating into separate variables and log them as:
+
+'Movie: Jawan, Rating: 4.5'
+
+
+7. Spread Operator with Arrays
+
+You have two arrays:
+
+const cricketFans = ['Virat', 'Rohit'];
+const footballFans = ['Messi', 'Ronaldo'];
+
+Use the spread operator to combine both arrays into a single array called allFans and log the result.
+
+Hint:
+Use [...cricketFans, ...footballFans]
+
+
+8. Spread Operator with Your Favorite Dishes
+
+Use the spread operator to combine two arrays containing your favorite Zomato dishes and your favorite Swiggy dishes into a single array called allDishes, then log allDishes.
+
+Hint:
+Use [...array1, ...array2] syntax.
+
+
+9. Arrow Function and Rest Parameters
+
+Refactor this function to use an arrow function and rest parameters:
+
+function addToCart() {
+    let total = 0;
+
+    for(let i = 0; i < arguments.length; i++) {
+        total += arguments[i];
+    }
+
+    return total;
+}
+
+The new function should be called addToCartArrow and accept any number of prices as arguments, returning their sum.
+
+
+10. Rest Operator with Arrow Function
+
+Write an arrow function called getFollowersSummary that takes any number of follower counts using the rest operator, sums them, and returns a string like:
+
+'Total followers: 1200'
+
+Call it with 3 sample numbers to test.

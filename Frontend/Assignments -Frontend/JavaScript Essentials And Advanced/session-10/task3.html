@@ -1,27 +1,18 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task3</title>
+  </head>
+  <body>
+    <script>
+      function getDeliveryDetails(address = "Surat", paymentMethod = "UPI") {
+        console.log(`Address= ${address} & Payemnt Method= ${paymentMethod}`);
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Task3</title>
-</head>
-
-<body>
-  <script>
-    const data = `[
-        {"name": "CodeWithHarry"},
-        {"name": "Apna College"},
-        {"name": "freeCodeCamp"}
-      ]`;
-    function favYtChannel(jsonstring) {
-      const channels = JSON.parse(jsonstring);
-      const channelNames = channels.map((channels) => channels.name);
-      return channelNames;
-    }
-
-    console.log(favYtChannel(data));
-  </script>
-</body>
-
+      getDeliveryDetails();
+      getDeliveryDetails("Ahmedabad", "Cash");
+    </script>
+  </body>
 </html>

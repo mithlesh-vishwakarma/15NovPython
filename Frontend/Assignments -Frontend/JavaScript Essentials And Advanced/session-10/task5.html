@@ -5,67 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task 5</title>
   </head>
-
   <body>
-    <h3>My Top 3 Favorite Zomato Restaurants</h3>
-
-    Enter the restaurant name:
-    <input type="text" id="data" />
-
-    <input type="submit" value="Save" id="btn" />
-
-    <div id="display"></div>
-
     <script>
-      const btn = document.getElementById("btn");
-      const inputtxt = document.getElementById("data");
-      const display = document.getElementById("display");
+      const order = {
+        item: "Pizza",
+        price: 350,
+        user: "Amit",
+      };
 
-      // Function to display restaurants
-      function displayRestaurants() {
-        let storedList = JSON.parse(localStorage.getItem("storedList")) || [];
+      const { item, price, user } = order;
 
-        display.innerHTML = "";
-
-        let table = "<table border='1'>";
-        table += "<tr><th>Favorite Restaurants</th></tr>";
-
-        storedList.forEach((restaurant) => {
-          table += `<tr><td>${restaurant}</td></tr>`;
-        });
-
-        table += "</table>";
-
-        display.innerHTML = table;
-      }
-
-      // Save restaurant
-      btn.addEventListener("click", () => {
-        let data = inputtxt.value;
-
-        if (data === "") {
-          return;
-        }
-
-        let storedList = JSON.parse(localStorage.getItem("storedList")) || [];
-
-        // Allow only 3 restaurants
-        if (storedList.length >= 3) {
-          alert("You can only add 3 favorite restaurants.");
-          return;
-        }
-
-        storedList.push(data);
-
-        localStorage.setItem("storedList", JSON.stringify(storedList));
-
-        inputtxt.value = "";
-
-        displayRestaurants();
-      });
-
-      // Load and display when page opens/reloads
-      displayRestaurants();
+      console.log(`${user} ordered ${item} in just ${price}`);
     </script>
   </body>
 </html>

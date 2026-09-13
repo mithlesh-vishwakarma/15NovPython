@@ -3,27 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task 4</title>
+    <title>Task4</title>
   </head>
-
   <body>
     <script>
-      function saveRecentSearch(query) {
-        // 1. Get existing searches from localStorage
-        let recentSearches =
-          JSON.parse(localStorage.getItem("recentSearches")) || [];
-
-        // 2. Add the new search
-        recentSearches.push(query);
-
-        // 3. Convert array to JSON and save it
-        localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-
-        // 4. Check the result
-        console.log(recentSearches);
+      function orderFood(item, quantity = 1) {
+        console.log(`you ordered ${quantity} ${item}`);
       }
 
-      saveRecentSearch("hello");
+      orderFood("pizza");
+      orderFood("sandwich", 4);
     </script>
   </body>
 </html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 9</title>
+  </head>
+  <body>
+    <script>
+      const addToCartArrow = (...prices) => {
+        let total = 0;
+        for (let i = 0; i < prices.length; i++) {
+          total += prices[i];
+        }
+        return total;
+      };
+      console.log(addToCartArrow(12, 34, 32, 33, 2222, 1111, 1000000));
+    </script>
+  </body>
+</html>
