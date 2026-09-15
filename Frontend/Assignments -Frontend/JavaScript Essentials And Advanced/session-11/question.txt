@@ -1,0 +1,32 @@
+1. Create an HTML file with a <script> tag and use setTimeout to display a 'Loading your feed...' message after 2 seconds, then replace it with 'Feed loaded!' after another 2 seconds.
+
+
+2. Create an HTML file with a <script> tag that logs 'Loading...' to the console, then after 2 seconds logs 'Content loaded!' using setTimeout.
+
+
+3. Simulate a Zomato order status updater using callbacks: write a function placeOrder that takes a food item and a callback, waits 1 second using setTimeout, then calls the callback with the message 'Your [item] is being prepared'.
+
+
+4. Write a function fetchSongLyrics(song, callback) that simulates fetching lyrics from a server using setTimeout, then calls the callback with the lyrics string. Test it by logging the lyrics for any song title.
+
+
+5. Build a Promise called getFollowersCount that resolves after 1 second with a random number between 1000 and 5000, then use .then() to display 'You have X new followers' (like Instagram) in the console.
+
+
+6. Build a function getOrderStatus(orderId) that returns a Promise. Simulate a 1.5 second delay using setTimeout, then resolve with 'Order delivered' if orderId is even, or reject with 'Order not found' if odd. Use .then() and .catch() to handle both cases and log the result.
+
+
+7. Rewrite a Flipkart-style product search using both a callback version and a Promise version: given an array of products, simulate a 1 second delay before returning all products whose name includes the search term.
+
+Hint: Use setTimeout to simulate the delay in both approaches.
+
+
+8. Refactor the following callback-based code to use Promises instead:
+
+setTimeout(function() {
+    console.log('Payment successful!');
+}, 1000);
+
+Ensure the new function returns a Promise and logs the message after 1 second.
+
+Hint: Use new Promise((resolve, reject) => { ... }) and resolve inside setTimeout.

@@ -5,9 +5,9 @@
  ██╔══██║██║  ██║╚██╗ ██╔╝██╔══██║██║╚██╗██║██║     ██╔══╝ ██   ██║╚════██║
  ██║  ██║██████╔╝ ╚████╔╝ ██║  ██║██║ ╚████║╚██████╗███████╗╚█████╔╝███████║
  ╚═╝  ╚═╝╚═════╝   ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝ ╚════╝ ╚══════╝
-       ADVANCED JAVASCRIPT MASTER NOTES: ASYNC PROGRAMMING SIMPLIFIED
+       ADVANCED JAVASCRIPT MASTER NOTES: ASYNC & MODERN ES MODULES
 ================================================================================
- Topics: Sync vs Async | Callbacks | Callback Hell | Promises | Async / Await
+ Topics: Sync vs Async | Callbacks | Callback Hell | Promises | Async / Await | ES Modules (Export & Import)
  Goal: The simplest, friendliest, and most practical explanation with real-life
        analogies, visual flows, clear code examples, and interview Q&As!
 ================================================================================
@@ -63,8 +63,27 @@ TABLE OF CONTENTS
     6.2 Way 2: With Promises (The Cleaner Way)
     6.3 Way 3: With Async / Await (The Cleanest, Modern Way)
 
- 7. Common Mistakes, Tips & Best Practices
- 8. Rapid-Fire Interview Questions & Answers
+ 7. Topic 5: JavaScript Modules (ES Modules — Export & Import)
+    7.1 What is a Module? (The LEGO Block & Toolbox Analogy)
+    7.2 Before ES Modules: Script Tags, Global Pollution & Name Collisions
+    7.3 How to Enable ES Modules (`type="module"` in Browser & `"type": "module"` in Node.js)
+    7.4 Named Exports & Named Imports
+        - In-line Named Exports
+        - Grouped Named Exports
+        - Renaming Exports and Imports with `as` (Aliases)
+    7.5 Default Exports & Default Imports
+        - What is a Default Export? (One Main Export per File)
+        - Importing Default Exports (Custom Naming, No Curly Braces)
+        - Combining Default and Named Imports in a Single Line
+    7.6 Namespace Import (`import * as ...`)
+    7.7 Re-Exporting / Aggregating (The "Barrel File" Pattern)
+    7.8 Dynamic Imports: `import()` (Lazy Loading & Code Splitting on Demand)
+    7.9 Top-Level `await` in ES Modules
+    7.10 CommonJS (`require` / `module.exports`) vs ES Modules (`import` / `export`) Comparison Table
+    7.11 Best Practices & Architectural Tips for Modular Code
+
+ 8. Common Mistakes, Tips & Best Practices
+ 9. Rapid-Fire Interview Questions & Answers
 ================================================================================
 
 
@@ -1268,7 +1287,518 @@ try/catch, matches how human brains think.
 
 
 ================================================================================
-7. COMMON MISTAKES, TIPS & BEST PRACTICES
+7. TOPIC 5: JAVASCRIPT MODULES (ES MODULES — EXPORT & IMPORT)
+================================================================================
+
+--------------------------------------------------------------------------------
+7.1 What is a Module? (The LEGO Block & Master Chef Analogy)
+--------------------------------------------------------------------------------
+* DEFINITION:
+  A JavaScript Module is simply an isolated, self-contained file containing code
+  (functions, objects, classes, or constants).
+  Instead of dumping everything into one gigantic 5,000-line file, modules allow
+  you to break your application down into small, clean, dedicated building blocks.
+
+* THE MASTER CHEF KITCHEN ANALOGY:
+  - Without Modules (The Chaos Kitchen):
+    Imagine a huge commercial kitchen where 10 chefs work on the same counter.
+    All salt, sugar, spices, and knives are piled in one big heap in the middle
+    with no labels.
+    If Chef A accidentally swaps sugar for salt, Chef B's dessert is ruined!
+    This is called "GLOBAL SCOPE POLLUTION" and "NAME CLASHING".
+
+  - With Modules (Private Stations & Order Windows):
+    Each chef has their own private kitchen station with closed doors and drawers.
+    Chef A makes sauces. Chef B bakes bread.
+    Chef B cannot touch Chef A's private spices.
+    If Chef B needs Chef A's special garlic sauce, Chef A places it on the
+    "EXPORT COUNTER" (`export`).
+    Chef B then requests it at the "RECEIVING WINDOW" (`import`).
+    Everything is explicit, safe, and private!
+
+* 4 BIG ADVANTAGES OF USING MODULES:
+  1. Maintainability: Small files (100–300 lines) with a single responsibility are
+     10x easier to read, test, and debug.
+  2. Scope Isolation (No Global Leaks): Variables declared in a module remain
+     private to that file by default. They NEVER leak onto `window`.
+  3. Reusability: Write a `formatCurrency()` or `validateEmail()` function once in a
+     utility module and import it into 20 different pages.
+  4. Explicit Dependency Graph: At the very top of every file, you see exactly
+     which external dependencies that file relies on.
+
+
+--------------------------------------------------------------------------------
+7.2 The Dark Ages Before ES Modules (Why We Needed ESM)
+--------------------------------------------------------------------------------
+In early JavaScript, the only way to share code across multiple files was by
+stacking `<script>` tags in HTML:
+
+```html
+<!-- Legacy Approach (Pre-ES6) -->
+<script src="config.js"></script>
+<script src="mathUtils.js"></script>
+<script src="cart.js"></script>
+<script src="app.js"></script>
+```
+
+WHY THIS OLD WAY WAS DANGEROUS:
+1. Global Scope Pollution: Every variable declared with `var` or `function`
+   was attached directly to the global `window` object.
+2. Name Collisions: If `config.js` and `cart.js` both defined `let tax = 0.18;`,
+   one would silently overwrite the other, causing unpredictable production bugs!
+3. Order Dependency Hell: If someone accidentally placed `cart.js` before
+   `mathUtils.js`, the app crashed with `Uncaught ReferenceError: add is not defined`.
+4. Workarounds Were Clunky: Developers had to invent patterns like:
+   - IIFEs (Immediately Invoked Function Expressions) for fake privacy.
+   - CommonJS (`require` / `module.exports`) — designed for Node.js servers,
+     not native to browsers.
+   - AMD (Asynchronous Module Definition) & RequireJS — complicated boilerplate.
+
+In 2015, ECMAScript 6 (ES6) introduced native, standardized **ES Modules (ESM)**
+directly into the JavaScript language!
+
+
+--------------------------------------------------------------------------------
+7.3 How to Enable ES Modules (Browser & Node.js)
+--------------------------------------------------------------------------------
+By default, browsers and Node.js treat JavaScript files as traditional scripts.
+To use `import` and `export`, you must explicitly tell the environment that
+your file is a MODULE.
+
+1. IN THE BROWSER (HTML):
+   Add the attribute `type="module"` to your `<script>` tag:
+
+   ```html
+   <!-- index.html -->
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+     <meta charset="UTF-8">
+     <title>ES Modules Demo</title>
+   </head>
+   <body>
+     <h1>Welcome to Modern JavaScript Modules</h1>
+
+     <!-- Notice type="module" here! -->
+     <script type="module" src="./main.js"></script>
+   </body>
+   </html>
+   ```
+
+   WHAT CHANGES WHEN YOU USE `type="module"`?
+   - Strict Mode: Code runs in `"use strict"` automatically.
+   - Module Scope: Top-level variables do NOT become properties of `window`.
+   - Deferred by Default: The script downloads in the background and only
+     executes AFTER HTML parsing is complete (like `defer`).
+   - CORS Protected: Browsers BLOCK module files loaded via the `file:///` protocol.
+     You MUST run your code using a local web server (e.g. VS Code Live Server,
+     `npx serve`, Vite, or Python's `python -m http.server`).
+
+2. IN NODE.JS:
+   Modern Node.js (v14+) supports ES Modules in two simple ways:
+   - Option A (Recommended): In your `package.json`, add:
+     ```json
+     {
+       "name": "my-app",
+       "type": "module"
+     }
+     ```
+   - Option B: Use the `.mjs` file extension (e.g. `server.mjs`, `utils.mjs`).
+
+
+--------------------------------------------------------------------------------
+7.4 Named Exports & Named Imports
+--------------------------------------------------------------------------------
+Use Named Exports when a module has MULTIPLE items (functions, variables, classes)
+that you want to share with other files.
+
+RULE:
+- A file can have UNLIMITED named exports.
+- When importing, you MUST use the exact same name inside curly braces `{ }`.
+
+1. IN-LINE NAMED EXPORT:
+   Put the `export` keyword directly before `const`, `let`, `function`, or `class`:
+
+   ```javascript
+   // mathUtils.js
+   export const PI = 3.14159;
+   export const APP_NAME = "MathMagic";
+
+   export function add(a, b) {
+     return a + b;
+   }
+
+   export function subtract(a, b) {
+     return a - b;
+   }
+   ```
+
+2. GROUPED NAMED EXPORT (At bottom of file):
+   Write your functions and variables normally, and export them together at the
+   end in an export block:
+
+   ```javascript
+   // geometry.js
+   const calculateArea = (radius) => Math.PI * radius * radius;
+   const calculatePerimeter = (radius) => 2 * Math.PI * radius;
+
+   // Exporting as a clean list at the bottom:
+   export { calculateArea, calculatePerimeter };
+   ```
+
+3. NAMED IMPORT:
+   Import only what you need using curly braces `{ }`:
+
+   ```javascript
+   // main.js
+   import { PI, add, subtract } from "./mathUtils.js";
+   import { calculateArea } from "./geometry.js";
+
+   console.log("PI constant:", PI);              // 3.14159
+   console.log("5 + 3 =", add(5, 3));           // 8
+   console.log("10 - 4 =", subtract(10, 4));    // 6
+   console.log("Circle Area:", calculateArea(5)); // ~78.539
+   ```
+   *CRITICAL NOTE: In native browser ES Modules and Node.js ESM, always include
+   the `.js` file extension in the relative path (e.g., `./mathUtils.js`).
+
+4. RENAMING WITH `as` (Aliasing):
+   If two different modules export functions with the same name, or if you want
+   a shorter/more descriptive name, use the `as` keyword.
+
+   - Renaming during Import:
+     ```javascript
+     // main.js
+     import { add as sum, subtract as diff } from "./mathUtils.js";
+
+     console.log(sum(10, 20));  // 30
+     console.log(diff(20, 10)); // 10
+     ```
+
+   - Renaming during Export:
+     ```javascript
+     // payment.js
+     function processStripeCreditCardPayment(amount) {
+       console.log(`Processing $${amount}`);
+     }
+
+     export { processStripeCreditCardPayment as pay };
+     ```
+     Now other files can simply import `pay`:
+     ```javascript
+     import { pay } from "./payment.js";
+     pay(100);
+     ```
+
+
+--------------------------------------------------------------------------------
+7.5 Default Exports & Default Imports
+--------------------------------------------------------------------------------
+Use a Default Export when a module is dedicated to ONE primary thing — such as a
+single Class, a main React Component, a core Service, or a main function.
+
+RULES:
+- A file can have ONLY ONE `export default`!
+- When importing a default export, DO NOT use curly braces `{ }`.
+- You can give the imported item ANY name you choose in the importing file!
+
+1. DEFINING A DEFAULT EXPORT:
+
+   ```javascript
+   // User.js
+   export default class User {
+     constructor(name, role) {
+       this.name = name;
+       this.role = role;
+     }
+
+     introduce() {
+       return `Hello, I am ${this.name}, role: ${this.role}`;
+     }
+   }
+   ```
+
+   Or exporting a default function:
+   ```javascript
+   // logger.js
+   export default function logMessage(message) {
+     const timestamp = new Date().toLocaleTimeString();
+     console.log(`[${timestamp}] ${message}`);
+   }
+   ```
+
+2. IMPORTING A DEFAULT EXPORT:
+   Notice: No `{ }` braces! And you can name it whatever you like!
+
+   ```javascript
+   // app.js
+   import User from "./User.js";             // standard naming
+   import customLogger from "./logger.js";   // named customLogger instead of logMessage
+
+   const admin = new User("Vikram", "Administrator");
+   customLogger(admin.introduce());
+   // Prints: [10:30:15 AM] Hello, I am Vikram, role: Administrator
+   ```
+
+3. COMBINING DEFAULT + NAMED EXPORTS IN THE SAME FILE:
+   A single module file can have ONE default export AND MULTIPLE named exports.
+
+   ```javascript
+   // authService.js
+   // Named exports for constants / helper checks:
+   export const API_AUTH_URL = "https://api.example.com/auth";
+   export const SESSION_DURATION = 3600;
+
+   export function validateEmail(email) {
+     return email.includes("@");
+   }
+
+   // Default export for the primary login action:
+   export default function login(email, password) {
+     if (!validateEmail(email)) {
+       throw new Error("Invalid email format!");
+     }
+     return { user: email, token: "jwt_token_secret_123" };
+   }
+   ```
+
+   HOW TO IMPORT BOTH TOGETHER IN ONE LINE:
+   Put the default export OUTSIDE `{ }` and named exports INSIDE `{ }`:
+
+   ```javascript
+   // app.js
+   import login, { API_AUTH_URL, SESSION_DURATION, validateEmail } from "./authService.js";
+
+   console.log("Endpoint:", API_AUTH_URL);
+   const session = login("student@example.com", "pass123");
+   console.log("Logged in user:", session.user);
+   ```
+
+
+--------------------------------------------------------------------------------
+7.6 Namespace Import (`import * as ...`)
+--------------------------------------------------------------------------------
+If a module has dozens of named exports and you want to import ALL of them without
+listing each one individually, use the wildcard `*` with an alias:
+
+```javascript
+// stringUtils.js
+export const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+export const reverse = (str) => str.split("").reverse().join("");
+export const truncate = (str, len) => str.length > len ? str.slice(0, len) + "..." : str;
+export const wordCount = (str) => str.trim().split(/\s+/).length;
+```
+
+IMPORT ALL UNDER A SINGLE NAMESPACE OBJECT:
+```javascript
+// app.js
+import * as StringTools from "./stringUtils.js";
+
+// All exports become properties of the StringTools object:
+console.log(StringTools.capitalize("javascript")); // "Javascript"
+console.log(StringTools.reverse("hello"));          // "olleh"
+console.log(StringTools.truncate("Learn Modules", 8)); // "Learn Mo..."
+console.log(StringTools.wordCount("Modern JS is fast")); // 4
+```
+* ANALOGY: Instead of borrowing individual tools from the workshop one by one,
+  you brought the ENTIRE toolbox inside your room and named it `StringTools`.
+
+
+--------------------------------------------------------------------------------
+7.7 Re-Exporting / Aggregating (The "Barrel File" Pattern)
+--------------------------------------------------------------------------------
+In large production apps, you might have folders with 15-20 different components
+or service modules.
+
+Without re-exporting, your main file has messy imports from everywhere:
+```javascript
+// MESSY: Importing from 4 different sub-paths
+import Button from "./components/Button.js";
+import Card from "./components/Card.js";
+import Modal from "./components/Modal.js";
+import Navbar from "./components/Navbar.js";
+```
+
+THE SOLUTION: A BARREL FILE (`index.js`)
+Create an `index.js` file inside the `components/` folder that aggregates
+and re-exports all components:
+
+```
+src/
+├── components/
+│   ├── Button.js
+│   ├── Card.js
+│   ├── Modal.js
+│   ├── Navbar.js
+│   └── index.js   <--- The "Barrel" Aggregator
+└── app.js
+```
+
+Inside `components/index.js`:
+```javascript
+// Re-exporting default exports as named exports:
+export { default as Button } from "./Button.js";
+export { default as Card } from "./Card.js";
+export { default as Modal } from "./Modal.js";
+export { default as Navbar } from "./Navbar.js";
+
+// You can also re-export all named exports from a utility:
+// export * from "./componentUtils.js";
+```
+
+Now in `app.js`, your imports are clean, elegant, and concise:
+```javascript
+// CLEAN & BEAUTIFUL: Everything from one central entry point!
+import { Button, Card, Modal, Navbar } from "./components/index.js";
+```
+
+
+--------------------------------------------------------------------------------
+7.8 Dynamic Imports: `import()` (Lazy Loading on Demand)
+--------------------------------------------------------------------------------
+* STATIC IMPORTS (`import ... from '...'`):
+  - Must be placed at the top level of the file (cannot be inside `if`, `for`, or functions).
+  - Loaded immediately before the rest of the code runs.
+  - Increases initial page load time if modules are large.
+
+* DYNAMIC IMPORTS (`import("./module.js")`):
+  - Is an asynchronous FUNCTION call that can be placed ANYWHERE in your code
+    (inside button click handlers, `if` conditions, timer functions, etc.).
+  - Returns a PROMISE that resolves to the module namespace!
+  - Enables "LAZY LOADING" and "CODE SPLITTING" — you load code ONLY when the user
+    actually needs it!
+
+REAL-WORLD SCENARIO: Heavy PDF Export
+Why force every user on mobile to download a 2MB PDF rendering library if only
+5% of users ever click "Export as PDF"?
+
+```javascript
+// dashboard.js
+const exportBtn = document.querySelector("#export-pdf-btn");
+
+exportBtn.addEventListener("click", async () => {
+  console.log("Export button clicked. Loading PDF module in background...");
+
+  try {
+    // Dynamically loaded on the fly ONLY when clicked!
+    const { generatePdfReport } = await import("./heavyPdfGenerator.js");
+
+    generatePdfReport({ user: "Ananya", sales: 45000 });
+    console.log("PDF generated successfully!");
+  } catch (err) {
+    console.error("Failed to load PDF module:", err);
+  }
+});
+```
+
+Using Promise `.then()` syntax:
+```javascript
+if (userIsAdmin) {
+  import("./adminPanel.js")
+    .then((adminModule) => {
+      adminModule.renderAdminDashboard();
+    })
+    .catch((err) => console.error("Admin module failed to load:", err));
+}
+```
+
+
+--------------------------------------------------------------------------------
+7.9 Top-Level `await` in ES Modules
+--------------------------------------------------------------------------------
+In traditional JavaScript files, you could NEVER use `await` outside of an `async`
+function without getting a syntax error:
+`SyntaxError: await is only valid in async functions`
+
+In ES Modules, JavaScript natively supports **Top-Level `await`**!
+You can use `await` directly at the root of the file to load data, fetch configurations,
+or connect to resources before any other module imports it.
+
+```javascript
+// config.js
+console.log("1. Fetching remote configuration...");
+
+// Direct top-level await (No wrapper function required!)
+const response = await fetch("https://api.example.com/settings");
+export const settings = await response.json();
+
+console.log("2. Settings fetched and exported successfully!");
+```
+
+```javascript
+// app.js
+import { settings } from "./config.js";
+
+// app.js will automatically wait for config.js top-level await to settle!
+console.log("3. Application running with theme:", settings.theme);
+```
+
+
+--------------------------------------------------------------------------------
+7.10 CommonJS (CJS) vs ES Modules (ESM) — Complete Comparison Table
+--------------------------------------------------------------------------------
+
++------------------------+---------------------------------+---------------------------------+
+| Feature                | CommonJS (CJS)                  | ES Modules (ESM)                |
++------------------------+---------------------------------+---------------------------------+
+| Created For            | Node.js server (2009)           | Modern Web & Node (ES6 2015+)   |
++------------------------+---------------------------------+---------------------------------+
+| Export Syntax          | `module.exports = ...`          | `export const x = ...`          |
+|                        | `exports.x = ...`               | `export default ...`            |
++------------------------+---------------------------------+---------------------------------+
+| Import Syntax          | `const x = require('./x')`      | `import { x } from './x.js'`    |
+|                        |                                 | `import x from './x.js'`        |
++------------------------+---------------------------------+---------------------------------+
+| Loading Mechanism      | Synchronous (Blocks execution   | Asynchronous (Parses statically |
+|                        | during require)                 | before code runs)               |
++------------------------+---------------------------------+---------------------------------+
+| Placement              | Anywhere in code (inside `if`,  | Static `import` only at top;   |
+|                        | loops, functions)               | Dynamic `import()` anywhere     |
++------------------------+---------------------------------+---------------------------------+
+| Native Browser Support | NO (Needs bundler like Webpack) | YES (Supported in all browsers  |
+|                        |                                 | via `<script type="module">`)   |
++------------------------+---------------------------------+---------------------------------+
+| Tree Shaking           | Poor / Difficult                | Excellent (Static syntax allows |
+| (Dead Code Removal)    |                                 | bundlers to strip unused code)  |
++------------------------+---------------------------------+---------------------------------+
+| Mode                   | Non-strict by default           | Automatic `"use strict"`        |
++------------------------+---------------------------------+---------------------------------+
+| Value Binding          | Copies by VALUE (snapshot of    | LIVE BINDINGS (If exported var  |
+|                        | variable when required)         | changes, import reflects it!)   |
++------------------------+---------------------------------+---------------------------------+
+| Top-Level Await        | NO                              | YES                             |
++------------------------+---------------------------------+---------------------------------+
+
+
+--------------------------------------------------------------------------------
+7.11 Best Practices & Architectural Tips for Modular Code
+--------------------------------------------------------------------------------
+1. Single Responsibility Principle (SRP):
+   Each module should have one clear purpose (e.g. `auth.js` manages authentication,
+   `cart.js` manages shopping cart items, `formatters.js` formats dates and numbers).
+
+2. Prefer Named Exports for Utility Libraries:
+   Named exports make refactoring easy and provide immediate autocomplete
+   in modern IDEs like VS Code.
+
+3. Use Default Exports for Classes and Main Components:
+   If a file defines a single `User` class, `ProductCard` component, or `DatabaseService`,
+   export it as default.
+
+4. Always Include File Extensions in Relative Paths:
+   Always write `import { add } from "./math.js";` instead of `from "./math"`.
+   Native browsers will fail with 404 if the `.js` extension is omitted!
+
+5. Avoid Circular Dependencies:
+   Module A importing Module B while Module B imports Module A can lead to
+   `undefined` values and hard-to-trace bugs. Keep your dependency arrows
+   flowing in ONE direction (unidirectional).
+
+================================================================================
+
+
+================================================================================
+8. COMMON MISTAKES, TIPS & BEST PRACTICES
 ================================================================================
 
 1. MISTAKE: Forgetting `return` in a Promise Chain
@@ -1320,11 +1850,61 @@ try/catch, matches how human brains think.
    ```
    Fix: Add `async` to the function: `async function doSomething() { ... }`
 
+5. MISTAKE: Forgetting `type="module"` in HTML
+   ```html
+   <!-- WRONG -->
+   <script src="./main.js"></script>
+   <!-- Uncaught SyntaxError: Cannot use import statement outside a module -->
+   ```
+   Fix: Always specify `type="module"` when using `import` or `export`:
+   ```html
+   <!-- CORRECT -->
+   <script type="module" src="./main.js"></script>
+   ```
+
+6. MISTAKE: Opening ES Module files directly via `file:///` in Browser
+   Double-clicking `index.html` in your file explorer opens it with `file:///`.
+   Browsers will block ES Module imports due to CORS security policies:
+   `Access to script from origin 'null' has been blocked by CORS policy`
+   Fix: Serve your files through a local web server (e.g. VS Code "Live Server",
+   `npx serve`, or `python -m http.server`).
+
+7. MISTAKE: Adding curly braces `{ }` around Default Imports
+   WRONG:
+   ```javascript
+   import { User } from "./User.js"; // Fails if User was exported as `export default class User`!
+   ```
+   CORRECT:
+   ```javascript
+   import User from "./User.js"; // No curly braces for default exports!
+   ```
+
+8. MISTAKE: Omitting the `.js` extension in native browser imports
+   WRONG:
+   ```javascript
+   import { add } from "./mathUtils"; // Fails in browser with 404 Not Found!
+   ```
+   CORRECT:
+   ```javascript
+   import { add } from "./mathUtils.js"; // Explicit extension required
+   ```
+
+9. MISTAKE: Trying to interpolate variables in static `import`
+   Static `import` statements are analyzed before code runs, so variables cannot be used:
+   ```javascript
+   const moduleName = "math";
+   import { add } from `./${moduleName}.js`; // SyntaxError!
+   ```
+   Fix: Use dynamic `import()` for variable/runtime paths:
+   ```javascript
+   const { add } = await import(`./${moduleName}.js`); // Works perfectly!
+   ```
+
 ================================================================================
 
 
 ================================================================================
-8. RAPID-FIRE INTERVIEW QUESTIONS & QUICK ANSWERS
+9. RAPID-FIRE INTERVIEW QUESTIONS & QUICK ANSWERS
 ================================================================================
 
 Q1: Is JavaScript single-threaded or multi-threaded?
@@ -1373,6 +1953,45 @@ Q9: What is `Promise.withResolvers()` introduced in ES2024?
 A9: It is a static method that returns `{ promise, resolve, reject }`, allowing you
     to resolve or reject a promise from outside its executor function without
     having to define external closure variables.
+
+Q10: What is the difference between Named Export and Default Export in ES Modules?
+A10: - Named Export: A file can have multiple named exports. When importing, you must
+      use the exact same name inside `{ }` curly braces.
+     - Default Export: A file can only have ONE default export. When importing, no
+      `{ }` curly braces are used, and the importing file can rename it freely.
+
+Q11: What is the difference between CommonJS and ES Modules?
+A11: - CommonJS uses `require()` and `module.exports`, loads synchronously at runtime,
+      and was built for Node.js.
+     - ES Modules uses `import` and `export`, is statically analyzed and asynchronously
+      loaded, runs in strict mode by default, and is the official standard for both
+      modern browsers and Node.js.
+
+Q12: What is "Tree Shaking" and why do ES Modules make it possible?
+A12: Tree shaking is dead-code elimination where modern bundlers (like Vite, Webpack,
+     Rollup) remove unused exported code from the production build bundle.
+     It is possible with ES Modules because `import` and `export` are static and
+     declarative, allowing bundlers to analyze the dependency graph at build time
+     without having to execute the code.
+
+Q13: What are "Live Bindings" in ES Modules?
+A13: In ES Modules, exported variables are live references, NOT static value copies.
+     If the exporting module updates the value of an exported variable, the importing
+     module immediately sees the updated value. In contrast, CommonJS copies values
+     at the time `require()` is called.
+
+Q14: What is Dynamic Import (`import()`) and when should you use it?
+A14: Dynamic import is a function `import('./module.js')` that returns a Promise resolving
+     to the module. Unlike static `import` which must be top-level, dynamic imports
+     can be called conditionally or inside event handlers for lazy loading, route
+     splitting, and on-demand resource optimization.
+
+Q15: Why do ES Modules require a local HTTP server instead of opening as `file:///`?
+A15: Browsers enforce the Same-Origin Policy (CORS) on ES Modules to prevent local
+     scripts from reading arbitrary local files from your hard drive. Loading via
+     `file:///` has a null origin, so the browser security model blocks module
+     requests. Running via a local server (e.g. `http://localhost:5500`) provides a
+     valid origin.
 
 ================================================================================
                          END OF ADVANCED JAVASCRIPT NOTES

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 5</title>
+  </head>
+  <body>
+    <script>
+      const getFollowersCount = new Promise((resolve) => {
+        setTimeout(() => {
+          const followersCount = Math.floor(Math.random() * 4001) + 1000;
+          resolve(followersCount);
+        }, 1000);
+      });
+
+      getFollowersCount.then((followersCount) => {
+        console.log(`You get new ${followersCount} followers`);
+      });
+    </script>
+  </body>
+</html>
