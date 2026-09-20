@@ -1,122 +1,117 @@
-JAVASCRIPT FETCH API PRACTICE QUESTIONS
+JAVASCRIPT ERROR HANDLING TASKS
 
-1. FETCH AND DISPLAY POSTS
+1. VALIDATE SPOTIFY URL
 
-Use fetch() to GET posts from:
-https://jsonplaceholder.typicode.com/posts
-
-Parse the JSON response and display the first 5 post titles in the browser console.
-
-Constraint: Use .then() for handling the Promise.
+Create a function validateSpotifyURL(url) that takes a string and checks if it starts with "https://open.spotify.com/". If not, throw a custom Error with the message "Invalid Spotify URL".
 
 
-2. FETCH TRENDING MOVIES
+2. VALIDATE USERNAME
 
-Create a function fetchTopMovies() that uses fetch() to get data from:
-https://jsonplaceholder.typicode.com/albums
+Create a function validateUsername(username) that checks if the username contains only letters and numbers. If not, use throw to raise a custom Error with the message "Invalid Username".
 
-Parse the JSON response and log the first 3 album titles to the console as if they were trending movies on BookMyShow.
-
-
-3. CREATE A NEW POST
-
-Send a POST request using fetch() to:
-https://jsonplaceholder.typicode.com/posts
-
-Send a JSON object containing your own title and body.
-
-Log the response JSON and check whether the returned object contains an id property.
-
-Hint:
-Use the following header:
-
-headers: {
-    "Content-Type": "application/json"
-}
-
-Also use JSON.stringify() for the request body.
+Wrap the function call in try...catch and display the error message in the console.
 
 
-4. CREATE A NEW PLAYLIST
+3. PARSE FLIPKART PRODUCT JSON
 
-Create a function called addNewPlaylist() that sends a POST request to:
-https://jsonplaceholder.typicode.com/posts
+Write a try...catch...finally block that tries to parse a JSON string representing a Flipkart product:
 
-Send a playlist object containing a name and description.
+'{"name":"Shoes","price":999}'
+
+If parsing fails, catch the error and log "Invalid product data".
+
+In the finally block, log "Parsing attempt finished".
+
+
+4. VALIDATE PLAYLIST URL
+
+Build a function checkPlaylistURL(url) for a Spotify-style app that validates whether the URL starts with "https://open.spotify.com/".
+
+If not, throw a custom Error("Invalid Spotify URL").
+
+Use try...catch...finally to handle the error, log the error message, and in the finally block log "Validation complete".
+
+
+5. VALIDATE PAYMENT AMOUNT
+
+Build a function checkPaymentAmount(amount) for a Paytm-style app.
+
+If the amount is less than or equal to zero, throw a custom Error with the message "Amount must be positive".
+
+Otherwise, return "Payment accepted".
+
+Hint: Use the throw statement to raise your custom error inside the function.
+
+
+6. CALCULATE ZOMATO ORDER TOTAL
+
+Write a function getOrderTotal(items) for a Zomato-style food order, where items is an array of objects containing name and price.
 
 Example:
 
-{
-    name: "Workout Playlist",
-    description: "Songs for my daily workout"
+const items = [
+    { name: "Pizza", price: 299 },
+    { name: "Burger", price: 149 },
+    { name: "Coke", price: 50 }
+];
+
+If any item's price is negative, throw a custom Error("Invalid item price").
+
+Use try...catch to handle the error and display a friendly message.
+
+
+7. HANDLE UNDEFINED USER DATA
+
+Given this buggy code:
+
+let user;
+
+try {
+    console.log(user.name);
+} catch (e) {
+    // handle error
 }
 
-Parse the response and log the returned JSON object to the console.
+Modify it so that accessing the undefined user's name is handled properly.
+
+The user-friendly error message should be "User data not found".
 
 
-5. FETCH ALL USER EMAILS
+8. FIX ERROR OBJECT HANDLING
 
-Use chained fetch() Promises to GET users from:
-https://jsonplaceholder.typicode.com/users
+Given this buggy function:
 
-Parse the JSON response and display all user email addresses inside a single alert(), separated by commas.
+function formatFollowers(count) {
+    try {
+        if (count < 0) throw "Negative count";
 
-Example format:
+        return count + " followers";
+    } catch (e) {
+        return e.message;
+    }
+}
 
-Sincere@april.biz, Shanna@melissa.tv, Nathan@yesenia.net, ...
+The function currently returns undefined when count is negative.
 
-Constraint: Do not use async/await.
+Fix the code so that it properly throws and catches an Error object.
 
-
-6. FETCH A USER'S POSTS
-
-Chain two fetch() calls:
-
-1. Fetch the user from:
-https://jsonplaceholder.typicode.com/users/2
-
-2. Get the user's id from the response and use it to fetch their posts from:
-https://jsonplaceholder.typicode.com/posts?userId=2
-
-Finally, log:
-
-- The user's name
-- The titles of all their posts
-
-Constraint: Use Promise chaining with .then().
+Hint: Use an Error object instead of throwing a string.
 
 
-7. INVESTIGATE FETCH IN DEVTOOLS
+9. UNDERSTAND A JAVASCRIPT STACK TRACE
 
-Open your browser's Developer Tools and go to the Network tab.
+Create a JavaScript example that throws a custom error:
 
-Run the following code:
+throw new Error("Something went wrong");
 
-fetch("https://jsonplaceholder.typicode.com/users")
-    .then(response => response.json())
-    .then(data => console.log(data));
+Run it in your browser console and copy the resulting stack trace.
 
-Take a screenshot showing the Network request and response details.
+Then explain:
 
-Write 2 to 3 lines explaining:
+- What the error message means
+- What a stack trace is
+- Which function caused the error
+- Which line caused the error
+- Why the error occurred
 
-- What HTTP method was used?
-- What status code was returned?
-- What type of data was received in the response?
-
-
-8. FILTER ALBUMS BY USER
-
-Fetch albums from:
-https://jsonplaceholder.typicode.com/albums
-
-Then filter the results and display only albums where:
-
-userId === 2
-
-Print the filtered album titles in the console.
-
-Constraints:
-
-- Use only fetch(), .then(), and array methods such as filter() and map().
-- Do not use async/await.
+Finally, write a short summary in your own words as a comment above the code.
