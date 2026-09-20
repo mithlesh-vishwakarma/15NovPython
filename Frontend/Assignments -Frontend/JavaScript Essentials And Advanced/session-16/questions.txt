@@ -1,0 +1,122 @@
+JAVASCRIPT FETCH API PRACTICE QUESTIONS
+
+1. FETCH AND DISPLAY POSTS
+
+Use fetch() to GET posts from:
+https://jsonplaceholder.typicode.com/posts
+
+Parse the JSON response and display the first 5 post titles in the browser console.
+
+Constraint: Use .then() for handling the Promise.
+
+
+2. FETCH TRENDING MOVIES
+
+Create a function fetchTopMovies() that uses fetch() to get data from:
+https://jsonplaceholder.typicode.com/albums
+
+Parse the JSON response and log the first 3 album titles to the console as if they were trending movies on BookMyShow.
+
+
+3. CREATE A NEW POST
+
+Send a POST request using fetch() to:
+https://jsonplaceholder.typicode.com/posts
+
+Send a JSON object containing your own title and body.
+
+Log the response JSON and check whether the returned object contains an id property.
+
+Hint:
+Use the following header:
+
+headers: {
+    "Content-Type": "application/json"
+}
+
+Also use JSON.stringify() for the request body.
+
+
+4. CREATE A NEW PLAYLIST
+
+Create a function called addNewPlaylist() that sends a POST request to:
+https://jsonplaceholder.typicode.com/posts
+
+Send a playlist object containing a name and description.
+
+Example:
+
+{
+    name: "Workout Playlist",
+    description: "Songs for my daily workout"
+}
+
+Parse the response and log the returned JSON object to the console.
+
+
+5. FETCH ALL USER EMAILS
+
+Use chained fetch() Promises to GET users from:
+https://jsonplaceholder.typicode.com/users
+
+Parse the JSON response and display all user email addresses inside a single alert(), separated by commas.
+
+Example format:
+
+Sincere@april.biz, Shanna@melissa.tv, Nathan@yesenia.net, ...
+
+Constraint: Do not use async/await.
+
+
+6. FETCH A USER'S POSTS
+
+Chain two fetch() calls:
+
+1. Fetch the user from:
+https://jsonplaceholder.typicode.com/users/2
+
+2. Get the user's id from the response and use it to fetch their posts from:
+https://jsonplaceholder.typicode.com/posts?userId=2
+
+Finally, log:
+
+- The user's name
+- The titles of all their posts
+
+Constraint: Use Promise chaining with .then().
+
+
+7. INVESTIGATE FETCH IN DEVTOOLS
+
+Open your browser's Developer Tools and go to the Network tab.
+
+Run the following code:
+
+fetch("https://jsonplaceholder.typicode.com/users")
+    .then(response => response.json())
+    .then(data => console.log(data));
+
+Take a screenshot showing the Network request and response details.
+
+Write 2 to 3 lines explaining:
+
+- What HTTP method was used?
+- What status code was returned?
+- What type of data was received in the response?
+
+
+8. FILTER ALBUMS BY USER
+
+Fetch albums from:
+https://jsonplaceholder.typicode.com/albums
+
+Then filter the results and display only albums where:
+
+userId === 2
+
+Print the filtered album titles in the console.
+
+Constraints:
+
+- Use only fetch(), .then(), and array methods such as filter() and map().
+- Do not use async/await.

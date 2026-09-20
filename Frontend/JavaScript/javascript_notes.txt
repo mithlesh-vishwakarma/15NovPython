@@ -70,6 +70,11 @@ JavaScript executes code in two distinct phases within an Execution Context:
 
 Hoisting is JS's behavior of hoisting declarations to top during Memory Phase.
 
+Definition:
+Hoisting is JavaScript's behavior of processing declarations before executing the code, which makes some variables and functions accessible before their declaration appears in the code.
+
+But an important point: JavaScript does not literally move your code to the top. The JavaScript engine creates bindings during the creation phase before execution.
+
   +--------------------------------------------------------------------------+
   | CODE EXAMPLE: Hoisting Behavior                                          |
   +--------------------------------------------------------------------------+
@@ -140,6 +145,10 @@ JavaScript provides three keywords to declare variables: var, let, and const.
   • Multi-line Comment   : /* ... */
   • Template Literals    : Backticks `` ` `` allow string interpolation 
                            `${expression}` and multi-line formatting.
+
+A template literal is a way to create strings in JavaScript using **backticks ()** instead of single (') or double ("`) quotes.
+
+The main advantage is that you can insert variables and expressions directly inside a string using ${}.
 
   +--------------------------------------------------------------------------+
   | CODE EXAMPLE: Template Literals                                          |
