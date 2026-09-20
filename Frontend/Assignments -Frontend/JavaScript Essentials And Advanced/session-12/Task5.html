@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 5</title>
+  </head>
+  <body>
+    <script>
+      function fetchUserEmail() {
+        fetch("https://jsonplaceholder.typicode.com/users")
+          .then((Response) => Response.json())
+          .then((users) => {
+            const emails = users.map((user) => user.email);
+            alert(emails.join(", "));
+            // console.log(emails);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+
+      fetchUserEmail();
+    </script>
+  </body>
+</html>

@@ -68,22 +68,6 @@ Sincere@april.biz, Shanna@melissa.tv, Nathan@yesenia.net, ...
 Constraint: Do not use async/await.
 
 
-6. FETCH A USER'S POSTS
-
-Chain two fetch() calls:
-
-1. Fetch the user from:
-https://jsonplaceholder.typicode.com/users/2
-
-2. Get the user's id from the response and use it to fetch their posts from:
-https://jsonplaceholder.typicode.com/posts?userId=2
-
-Finally, log:
-
-- The user's name
-- The titles of all their posts
-
-Constraint: Use Promise chaining with .then().
 
 
 7. INVESTIGATE FETCH IN DEVTOOLS
