@@ -1,110 +1,434 @@
 ================================================================================
-                           INTRODUCTION TO REACT JS
+                    REACT JS - QUICK REVISION NOTES (CONCISE)
 ================================================================================
 
 1. WHAT IS REACT?
 --------------------------------------------------------------------------------
-- React (also known as React.js or ReactJS) is an open-source, front-end 
-  JavaScript library used for building user interfaces (UIs), particularly 
-  Single-Page Applications (SPAs).
-- It was created by Jordan Walke, a software engineer at Meta (Facebook), 
-  in 2011 and released as an open-source project in May 2013.
-- Today, it is maintained by Meta and a huge community of individual developers 
-  and companies.
-- Focus: React is not a complete framework (like Angular); it is a UI library 
-  focused strictly on the "View" layer of the MVC (Model-View-Controller) pattern.
+- Definition: An open-source, front-end JavaScript library used to build fast, 
+  interactive User Interfaces (UIs), especially Single-Page Applications (SPAs).
+- Creator: Jordan Walke (Meta / Facebook) in 2013.
+- Core Identity: It is a library, NOT a full framework. It handles only the "View" 
+  layer in MVC architecture.
 
 
-2. WHY WAS REACT INTRODUCED?
+2. KEY FEATURES
 --------------------------------------------------------------------------------
-- Traditional Web Development:
-  * Modifying the Real DOM (Document Object Model) directly using vanilla JavaScript 
-    is computationally expensive and slow when dealing with dynamic, complex apps.
-  * Maintaining UI state across multiple pages/views leads to messy, hard-to-maintain code.
-- React Solution:
-  * React introduced the concept of the "Virtual DOM", which dramatically optimizes 
-    DOM manipulation.
-  * It encourages writing small, independent, and reusable components.
+1. Virtual DOM (VDOM):
+   - An in-memory lightweight copy of the real DOM.
+   - Compares changes using a "Diffing" algorithm and updates ONLY the modified 
+     elements in the real DOM (Reconciliation) for high performance.
+2. Component-Based Architecture:
+   - UI is split into small, reusable, independent pieces called Components.
+3. One-Way Data Binding:
+   - Data flows unidirectionally from Parent to Child via `props`.
+4. Declarative UI:
+   - You describe WHAT the UI should look like for a given state; React handles 
+     DOM updates automatically.
 
 
-3. KEY FEATURES OF REACT
+3. NODE_MODULES & PACKAGE MANAGEMENT
+--------------------------------------------------------------------------------
+- node_modules/:
+  * Contains all installed third-party libraries and dependencies.
+  * Very large folder; NEVER edit it manually; ALWAYS add to `.gitignore`.
+  * Can be re-created anytime by running: `npm install`.
+- package.json:
+  * Project manifest holding project metadata, scripts (`dev`, `build`), and 
+    package dependencies (`react`, `vite`, etc.).
+- package-lock.json:
+  * Records the exact versions of every installed package to ensure identical 
+    setups across different computers.
+
+
+4. REACT PROJECT STRUCTURE (Vite Setup)
+--------------------------------------------------------------------------------
+my-app/
+├── node_modules/             # Installed dependencies
+├── public/                   # Static assets (favicon, etc.)
+├── src/                      # Application source code
+│   ├── assets/               # Images and media files
+│   ├── App.jsx               # Root parent component
+│   ├── App.css               # Styling for App component
+│   ├── index.css             # Global styles
+│   └── main.jsx              # Entry file: mounts React app to the HTML DOM
+├── index.html                # Single HTML page holding `<div id="root"></div>`
+├── package.json              # Project dependencies and run scripts
+└── vite.config.js            # Vite build configuration
+
+* How It Connects:
+  `index.html` (<div id="root">) <== `main.jsx` (createRoot) <== `<App />` (src/App.jsx)
+
+
+5. BABEL COMPILER
+--------------------------------------------------------------------------------
+- Definition: A JavaScript compiler / transpiler.
+- Purpose:
+  1. Compiles JSX into standard browser-readable JavaScript (`React.createElement`).
+  2. Transpiles modern ES6+ JavaScript into backward-compatible ES5 for older browsers.
+- Example:
+  // Written in JSX:
+  const el = <h1>Hello</h1>;
+
+  // Babel compiles to:
+  const el = React.createElement('h1', null, 'Hello');
+
+
+6. JSX & CORE JSX RULES
+--------------------------------------------------------------------------------
+- Definition: JSX (JavaScript XML) is a syntax extension that lets you write 
+  HTML-like code inside JavaScript.
+
+- 5 Essential Rules:
+  1. Single Parent Element: Must return one wrapper tag or Fragment (`<>...</>`).
+     * Correct:   return <div><h1>Hi</h1><p>Text</p></div>;
+     * Incorrect: return <h1>Hi</h1><p>Text</p>; // Error!
+
+  2. Close All Tags: Self-closing tags MUST have a slash:
+     * `<img src="pic.jpg" alt="" />`, `<input type="text" />`, `<br />`
+
+  3. camelCase Attributes:
+     * `class`    ==> `className`
+     * `for`      ==> `htmlFor`
+     * `onclick`  ==> `onClick`
+     * `onchange` ==> `onChange`
+
+  4. JavaScript in JSX uses `{}`:
+     * `const name = "Alex"; return <h1>Hello, {name}</h1>;`
+
+  5. Inline Styles as Objects:
+     * `<div style={{ color: "red", fontSize: "18px" }}>Styled</div>`
+
+
+7. REACT FRAGMENT
+--------------------------------------------------------------------------------
+- Definition: A built-in wrapper component used to group multiple elements 
+  without adding an extra node/`<div>` to the real DOM.
+- Why Use: Prevents unnecessary `<div>` nesting ("div soup") and preserves 
+  CSS Flexbox/Grid layouts.
+- Syntax:
+  * Shorthand (Preferred):
+      <>
+        <h1>Title</h1>
+        <p>Description</p>
+      </>
+  * Explicit (Required only when passing a `key` prop):
+      <React.Fragment key={item.id}>
+        <h1>{item.title}</h1>
+      </React.Fragment>
+
+
+8. REACT STRICT MODE (<React.StrictMode>)
+--------------------------------------------------------------------------------
+- Definition: A development-only helper component that checks for common bugs 
+  and deprecated features.
+- Key Behaviors:
+  * Has NO visual UI in the DOM.
+  * Has ZERO effect on the production build.
+  * Deliberately renders components TWICE in development to detect accidental 
+    side effects and uncleaned subscriptions.
+
+
+9. APPLICATION EXECUTION FLOW
+--------------------------------------------------------------------------------
+1. Browser requests and loads `index.html`.
+2. `index.html` loads `<script type="module" src="/src/main.jsx">`.
+3. `main.jsx` selects `<div id="root">` via `document.getElementById('root')`.
+4. `ReactDOM.createRoot()` mounts the root `<App />` component inside `#root`.
+5. `<App />` renders JSX -> React Virtual DOM injects final HTML into the page.
+
+
+10. REACT COMPONENTS & TYPES
+--------------------------------------------------------------------------------
+- Component Definition: Self-contained, reusable UI blocks that return JSX.
+- Rule: Component names MUST start with a Capital Letter (PascalCase), e.g., `Header`, `Card`.
+
+- Definitions of the Two Types:
+  1. Functional Component:
+     * A plain JavaScript function (regular or arrow function) that accepts `props` 
+       as an argument and returns JSX.
+     * Manages state and lifecycle features cleanly using React Hooks (`useState`, `useEffect`).
+  2. Class-Based Component:
+     * An ES6 JavaScript class that extends `React.Component` and contains a mandatory 
+       `render()` method returning JSX.
+     * Manages state via `this.state` object and lifecycle via explicit lifecycle methods.
+
+
+11. FUNCTIONAL VS CLASS COMPONENTS (WITH EXAMPLES)
 --------------------------------------------------------------------------------
 
-a) Component-Based Architecture:
-   - The user interface is broken down into small, isolated, and reusable pieces 
-     called "Components".
-   - Each component contains its own logic, state, and presentation.
-   - Components can be nested inside other components to build complex UIs.
-   - Modern React uses Functional Components alongside React Hooks.
+a) Functional Component (Modern - Concise & Hook-based):
+   -----------------------------------------------------
+   import React, { useState } from 'react';
 
-b) Virtual DOM (VDOM) & Reconciliation:
-   - The Virtual DOM is an in-memory, lightweight copy of the real DOM.
-   - How it works:
-     1. When data or state changes, React updates the Virtual DOM first.
-     2. React compares the new Virtual DOM with the previous snapshot using a 
-        process called "Diffing".
-     3. React calculates the minimal number of changes needed.
-     4. It updates only the modified parts in the real DOM (Reconciliation/Batching).
-   - Benefit: High performance and fast rendering.
+   function Counter() {
+     const [count, setCount] = useState(0);
 
-c) JSX (JavaScript XML):
-   - JSX is a syntax extension for JavaScript that looks very similar to HTML.
-   - It allows developers to write HTML tags directly inside JavaScript files.
-   - Browsers cannot read JSX directly; a compiler like Babel transpiles JSX into 
-     standard `React.createElement()` calls.
-   - Example:
-       const element = <h1>Hello, World!</h1>;
+     return (
+       <div>
+         <p>Count: {count}</p>
+         <button onClick={() => setCount(count + 1)}>Increment</button>
+       </div>
+     );
+   }
+   export default Counter;
 
-d) One-Way Data Binding (Unidirectional Data Flow):
-   - In React, data flows strictly from top to bottom (from parent component 
-     to child component) via "props".
-   - Child components cannot directly modify parent data.
-   - Benefit: Makes data flow predictable, easier to debug, and reduces side effects.
+b) Class-Based Component (Legacy - Verbose & Boilerplate-heavy):
+   ------------------------------------------------------------
+   import React, { Component } from 'react';
 
-e) Declarative UI:
-   - React allows you to design views for each state in your application.
-   - Instead of imperatively telling the browser how to change the DOM step-by-step 
-     (e.g., document.getElementById(...).innerHTML = ...), you declare what the UI 
-     should look like based on current data, and React handles the updates.
+   class Counter extends Component {
+     constructor(props) {
+       super(props);
+       this.state = { count: 0 };
+       this.handleIncrement = this.handleIncrement.bind(this);
+     }
 
-f) React Hooks:
-   - Introduced in React 16.8.
-   - Hooks allow developers to use state and other React features inside functional 
-     components without writing class components.
-   - Common Built-in Hooks:
-     * useState: For managing component local state.
-     * useEffect: For side effects (API calls, timers, subscriptions).
-     * useContext: For consuming context (global data sharing).
-     * useRef: For referencing DOM nodes or mutable values without re-rendering.
-     * useMemo & useCallback: For performance optimization and memoization.
+     handleIncrement() {
+       this.setState({ count: this.state.count + 1 });
+     }
 
-g) Single-Page Application (SPA) Support:
-   - React enables the creation of SPAs where page content updates dynamically 
-     without reloading the entire browser page, providing a native-app-like experience.
-
-h) Rich Ecosystem & Community Support:
-   - React has an enormous ecosystem:
-     * Routing: React Router
-     * State Management: Redux Toolkit, Zustand, Context API
-     * Server-Side Rendering (SSR): Next.js
-     * Mobile Apps: React Native (write mobile apps for iOS and Android using React)
+     render() {
+       return (
+         <div>
+           <p>Count: {this.state.count}</p>
+           <button onClick={this.handleIncrement}>Increment</button>
+         </div>
+       );
+     }
+   }
+   export default Counter;
 
 
-4. CORE CONCEPTS SUMMARY
+12. WHY ARE CLASS COMPONENTS LEGACY / LESS PREFERRED?
 --------------------------------------------------------------------------------
-1. Component: The building block of React UI (e.g., Header, Button, Card).
-2. Props (Properties): Read-only inputs passed from a parent to a child component.
-3. State: Internal, mutable data managed by the component that triggers re-renders 
-   when updated.
-4. Event Handling: Synthetic event system wrapping native browser events for cross-browser 
-   consistency (e.g., onClick, onChange).
+1. Tricky `this` Keyword: Requires manual method binding (`.bind(this)`); easy 
+   to cause runtime `undefined` bugs.
+2. Heavy Boilerplate: Needs `constructor`, `super(props)`, and explicit `render()` methods.
+3. Fragmented Lifecycle: A single feature's logic had to be split across 
+   `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`.
+4. Hard to Share Logic: Required complex HOCs/Render Props ("wrapper hell").
+5. React Roadmap: Meta placed class components in maintenance mode; all modern 
+   features (Hooks, Server Components, Suspense) require functional components.
 
 
-5. ADVANTAGES OF REACT
+13. COMPARISON TABLE: FUNCTIONAL VS CLASS COMPONENTS
 --------------------------------------------------------------------------------
-- Fast rendering with Virtual DOM.
-- High code reusability and maintainability.
-- Easy to learn for developers with basic JavaScript knowledge.
-- SEO friendly when combined with SSR frameworks like Next.js.
-- Strong industry demand and community support.
++--------------------+--------------------------------+--------------------------------+
+| Feature            | Functional Components (Modern) | Class Components (Legacy)      |
++--------------------+--------------------------------+--------------------------------+
+| Syntax             | Plain JavaScript function      | ES6 class (extends Component)  |
+| Boilerplate        | Minimal and clean              | Heavy and verbose              |
+| 'this' Keyword     | Not needed                     | Required (this.state, props)   |
+| State Handling     | `useState()` Hook              | `this.state` & `setState()`    |
+| Lifecycle Handling | `useEffect()` Hook (Unified)   | Multiple lifecycle methods     |
+| Logic Sharing      | Custom Hooks (Simple & clean)  | HOCs / Render Props (Complex)  |
+| Performance / Size | Smaller bundle, easy to minify | Larger bundle, hard to minify  |
+| Current Status     | Industry standard (100% active)| Legacy / Maintenance mode      |
++--------------------+--------------------------------+--------------------------------+
+
+
+14. CLASS COMPONENT LIFECYCLE VS FUNCTIONAL HOOKS
+--------------------------------------------------------------------------------
++------------+---------------------------+-----------------------------------+---------------------------------------------+
+| Phase      | Class Method              | Uses / Purpose                    | Solved / Overcome in Functional Components  |
++------------+---------------------------+-----------------------------------+---------------------------------------------+
+| 1. MOUNTING| constructor()             | Initialize state & bind event     | `useState(initialValue)` initialized        |
+| (Birth)    |                           | handler methods                   | directly; no binding needed (lexical scope) |
+|            +---------------------------+-----------------------------------+---------------------------------------------+
+|            | static                    | Syncs internal state directly from| Compute derived values directly in render:  |
+|            | getDerivedStateFromProps()| props right before render         | `const fullName = props.first + props.last` |
+|            +---------------------------+-----------------------------------+---------------------------------------------+
+|            | render()                  | Returns JSX to mount onto DOM     | Direct `return (<JSX />)` from the function |
+|            +---------------------------+-----------------------------------+---------------------------------------------+
+|            | componentDidMount()       | Runs ONCE after first render:     | `useEffect(() => { ... }, [])`              |
+|            |                           | API calls, timers, subscriptions  | (Empty dependency array `[]` runs once)     |
++------------+---------------------------+-----------------------------------+---------------------------------------------+
+| 2. UPDATING| static                    | Re-syncs state when new props are | Handled via direct variable calculation     |
+| (Growth)   | getDerivedStateFromProps()| received before re-rendering      | or adjusting state inside the render cycle  |
+|            +---------------------------+-----------------------------------+---------------------------------------------+
+|            | shouldComponentUpdate()   | Performance check: controls       | `React.memo(Component)` or                  |
+|            |                           | whether component should re-render| `useMemo()` to skip redundant re-renders    |
+|            +---------------------------+-----------------------------------+---------------------------------------------+
+|            | render()                  | Re-calculates and returns new JSX | Function executes again automatically       |
+|            +---------------------------+-----------------------------------+---------------------------------------------+
+|            | getSnapshotBeforeUpdate() | Captures DOM info (e.g. scroll pos| `useLayoutEffect()` or capturing DOM info   |
+|            |                           | right BEFORE DOM is updated)      | using `useRef()` before paint               |
+|            +---------------------------+-----------------------------------+---------------------------------------------+
+|            | componentDidUpdate()      | Runs after state or prop update:  | `useEffect(() => { ... }, [dep1, dep2])`    |
+|            |                           | re-fetching data on prop changes  | (Runs whenever listed dependencies change)  |
++------------+---------------------------+-----------------------------------+---------------------------------------------+
+| 3. UNMOUNT | componentWillUnmount()    | Cleanup before removal from DOM:  | Return a cleanup function inside useEffect: |
+| (Death)    |                           | clear timers, cancel subscriptions| `useEffect(() => { return () => cleanup; })`|
++------------+---------------------------+-----------------------------------+---------------------------------------------+
+| 4. ERROR   | componentDidCatch() /     | Catch errors in child component   | Handled via Error Boundary wrapper or       |
+|  HANDLING  | getDerivedStateFromError()| tree to prevent app crash         | standard `react-error-boundary` package     |
++------------+---------------------------+-----------------------------------+---------------------------------------------+
+
+* Key Takeaway:
+  In Class components, lifecycle logic was split into 3-4 separate methods.
+  In Functional components, `useEffect()` unifies Mounting, Updating, and Unmounting 
+  into a single, clean hook.
+
+
+15. ADVANTAGES OF FUNCTIONAL COMPONENTS
+--------------------------------------------------------------------------------
+1. Simple & Readable: Less code, straightforward JavaScript functions.
+2. No `this` Binding: Eliminates one of JavaScript's most common sources of bugs.
+3. React Hooks Support: Full state, side effects, and context access via built-in hooks.
+4. Custom Hooks: Easy extraction and reuse of stateful logic without changing UI hierarchy.
+5. Unified Side Effects: `useEffect` combines setup and cleanup in one concise spot.
+6. Better Optimization: Minifiers and bundlers (Vite/Rollup) can compress functions 
+   much better than ES6 classes, yielding faster page loads.
+7. Future-Proof: The official standard for all modern React development.
+
+
+16. IMPORT & EXPORT IN REACT (ES6 MODULES)
+--------------------------------------------------------------------------------
+a) Definitions:
+   - export: Makes variables, functions, or components accessible to other files.
+   - import: Pulls exported code from an external file into the current file.
+
+b) Two Types of Exports & Imports:
+
+   1. Default Export & Import:
+      - Export: Only ONE default export is allowed per file.
+      - Import: NO curly braces `{}`. You can choose ANY name when importing.
+      * Export Example:
+          function Navbar() { return <nav>Navbar</nav>; }
+          export default Navbar;
+      * Import Example (Can rename freely):
+          import Navbar from './Navbar';
+          import CustomNav from './Navbar'; // Also valid! Any name works.
+
+   2. Named Export & Import:
+      - Export: MULTIPLE named exports are allowed in a single file.
+      - Import: MUST use curly braces `{}` and the EXACT exported name.
+      * Export Example:
+          export const Button = () => <button>Click</button>;
+          export const Input = () => <input type="text" />;
+      * Import Example (Exact name inside `{}`):
+          import { Button, Input } from './FormElements';
+      * Renaming via 'as' Keyword (Aliasing):
+          import { Button as SubmitBtn } from './FormElements';
+
+c) Combined Import (Default + Named):
+   - You can import both in a single line.
+   * Example:
+       import React, { useState, useEffect } from 'react';
+       // 'React'                ==> Default Import (no braces, custom name allowed)
+       // '{ useState, useEffect }'==> Named Imports (inside braces, exact names)
+
+d) Summary Table:
++--------------------+--------------------------------+--------------------------------+
+| Criteria           | Default Export                 | Named Export                   |
++--------------------+--------------------------------+--------------------------------+
+| Limit per file     | Only 1 per file                | Multiple per file              |
+| Export Syntax      | export default Component;      | export const Item = ...;       |
+| Import Syntax      | import Name from './file';     | import { Name } from './file'; |
+| Curly Braces `{}`  | NO curly braces                | MUST use curly braces `{}`     |
+| Naming on Import   | Any name allowed               | Must match exact exported name |
+| Renaming           | Direct (rename freely)         | Requires `as` (`{ Name as New }`)
++--------------------+--------------------------------+--------------------------------+
+
+
+17. PROPS IN REACT (PROPERTIES)
+--------------------------------------------------------------------------------
+a) What are Props? (Definition):
+   - Props stands for "PROPERTIES".
+   - Props are inputs/arguments passed from a Parent component down to a Child component.
+   - Real-World Analogy:
+     Just like you pass arguments into a normal JavaScript function:
+       function greet(name) { return "Hello " + name; }
+     In React, you pass props into a component:
+       <Greeting name="Rahul" />
+   - CRITICAL RULE: Props are READ-ONLY (Immutable).
+     A child component can NEVER change or modify the props it receives!
+
+b) Why / When to Use Props?
+   1. Component Reusability:
+      - Write one component design (e.g. ProductCard, Button) and reuse it 
+        multiple times with different data.
+   2. Dynamic Content:
+      - Instead of hardcoding text, UI changes dynamically based on the data passed.
+   3. Unidirectional Data Flow:
+      - Keeps data flow predictable and easy to debug (flows strictly Parent -> Child).
+
+c) How to Pass and Receive Props:
+
+   1. Passing Props (in Parent Component):
+      - Pass data as attributes inside the JSX tag.
+      - String values use double quotes: `name="John"`
+      - Numbers, booleans, objects, arrays, and functions use curly braces `{}`:
+        `age={25}` `isAdmin={true}` `skills={['HTML', 'CSS']}`
+
+   2. Receiving Props (in Child Component):
+      Method A: Using `props` Object directly
+        function Student(props) {
+          return <h3>Name: {props.name}, Age: {props.age}</h3>;
+        }
+
+      Method B: Using Destructuring `{}` (Industry Standard & Recommended!)
+        function Student({ name, age }) {
+          return <h3>Name: {name}, Age: {age}</h3>;
+        }
+
+d) Simple Step-by-Step Example:
+
+   // File: src/components/UserCard.jsx (Child Component)
+   function UserCard({ name, role, city }) {
+     return (
+       <div style={{ border: '1px solid gray', padding: '10px', margin: '5px' }}>
+         <h3>{name}</h3>
+         <p>Role: {role}</p>
+         <p>City: {city}</p>
+       </div>
+     );
+   }
+   export default UserCard;
+
+   // File: src/App.jsx (Parent Component)
+   import UserCard from './components/UserCard';
+
+   function App() {
+     return (
+       <div>
+         <h1>Team Members</h1>
+         {/* Reusing the same UserCard component with different props */}
+         <UserCard name="Rahul Sharma" role="Frontend Developer" city="Ahmedabad" />
+         <UserCard name="Priya Patel" role="UI/UX Designer" city="Surat" />
+         <UserCard name="Amit Verma" role="Backend Developer" city="Vadodara" />
+       </div>
+     );
+   }
+   export default App;
+
+e) Default Props (Fallback Values):
+   - You can assign default values in case the parent doesn't provide a prop.
+   * Example:
+       function AlertBox({ message = "Default Notification", type = "info" }) {
+         return <div className={type}>{message}</div>;
+       }
+
+f) Special Prop: `props.children`:
+   - React automatically captures anything placed BETWEEN component open/close tags:
+   * Parent:
+       <Card>
+         <p>This content goes directly inside props.children!</p>
+       </Card>
+   * Child:
+       function Card({ children }) {
+         return <div className="card-box">{children}</div>;
+       }
+
+g) Summary Table:
++--------------------+---------------------------------------------------------------+
+| Criteria           | Details                                                       |
++--------------------+---------------------------------------------------------------+
+| Full Name          | Properties                                                    |
+| Purpose            | Pass data from Parent component to Child component            |
+| Direction          | One-Way Data Flow (Parent -> Child only)                      |
+| Mutability         | Read-Only / Immutable (Child cannot edit received props)      |
+| Data Types Allowed | Strings, Numbers, Booleans, Arrays, Objects, Functions, JSX   |
+| Best Practice      | Use Object Destructuring (`{ name, age }`) in component args  |
++--------------------+---------------------------------------------------------------+
 ================================================================================
