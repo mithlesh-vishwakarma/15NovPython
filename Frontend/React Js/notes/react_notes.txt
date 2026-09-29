@@ -432,3 +432,155 @@ g) Summary Table:
 | Best Practice      | Use Object Destructuring (`{ name, age }`) in component args  |
 +--------------------+---------------------------------------------------------------+
 ================================================================================
+
+18. REACT HOOKS & HOOKS VS PROPS
+--------------------------------------------------------------------------------
+a) What are React Hooks? (Definition):
+   - Introduced in React version 16.8.
+   - Hooks are special built-in functions (starting with "use", e.g., useState,
+     useEffect) that let Functional Components use State and Lifecycle features 
+     without writing Class Components.
+
+b) Why Did Hooks Come? (Why were Hooks introduced?):
+   Before Hooks, developers had to use Class Components for state and lifecycle.
+   Hooks solved major problems:
+
+   1. Removed the Confusion of the `this` Keyword:
+      - In class components, binding methods to `this` was tricky, repetitive,
+        and caused common bugs.
+      - Functional components do not require `this`.
+
+   2. Reusable Logic without "Wrapper Hell":
+      - In classes, sharing stateful logic required complex patterns like
+        Higher-Order Components (HOC) or Render Props, creating deeply nested
+        component trees ("wrapper hell").
+      - With Hooks, you can easily create Custom Hooks to share logic cleanly.
+
+   3. Simplified Lifecycle Management:
+      - Class lifecycle methods (`componentDidMount`, `componentDidUpdate`,
+        `componentWillUnmount`) often split related code into different places.
+      - The `useEffect` hook groups related side-effect logic together in one place.
+
+   4. Cleaner, Less Boilerplate Code:
+      - Functions with hooks require far less code and are much easier to read,
+        test, and maintain than classes.
+
+c) Rules of Hooks:
+   1. Only Call Hooks at the Top Level:
+      - Never call hooks inside loops, conditions (`if`), or nested functions.
+   2. Only Call Hooks from React Functions:
+      - Call them only inside React Functional Components or Custom Hooks.
+   3. Naming Convention:
+      - Hook names must always start with `use` (e.g., useState, useEffect).
+
+d) Difference Between Hooks and Props (Simple Comparison):
+
++--------------------+--------------------------------+--------------------------------+
+| Feature            | Props                          | Hooks                          |
++--------------------+--------------------------------+--------------------------------+
+| Stands For / Core  | Props stands for "Properties"  | Hooks manage State (State      |
+|                    | (passed into component).       | stores component data).        |
+| Definition         | Arguments/data passed from a   | Built-in functions to access   |
+|                    | parent down to a child.        | state and React features.      |
+| Direction / Source | External (Parent -> Child).    | Internal (Inside component).   |
+| Mutability         | Read-Only (Immutable). Child   | Mutable / Dynamic (Component   |
+|                    | cannot modify received props.  | can update state via setters). |
+| Purpose            | To configure & pass data to a  | To manage internal state, side |
+|                    | component from outside.        | effects, and component logic.  |
+| Syntax Example     | <UserCard name="Rahul" />      | const [count, setCount] =      |
+|                    |                                |   useState(0);                 |
++--------------------+--------------------------------+--------------------------------+
+
+e) Real-World Analogy:
+   - Props: Like a package delivered to your doorstep. You can open and use it,
+     but you cannot change what was sent inside it.
+   - Hooks: Like appliances inside your kitchen (refrigerator, stove). You use
+     them internally whenever you need to store or modify things.
+================================================================================
+
+19. STYLING IN REACT (INLINE, EXTERNAL & STYLED COMPONENTS)
+--------------------------------------------------------------------------------
+a) Inline CSS:
+   - Pass styles directly as a JavaScript object to the `style` attribute.
+   - Property names must use camelCase (e.g., `backgroundColor`, `fontSize`).
+   - Values are strings (or numbers for pixel dimensions).
+
+   * Example:
+       function InlineDemo() {
+         const headingStyle = { color: 'royalblue', fontSize: '22px' };
+         return (
+           <div>
+             <h2 style={headingStyle}>Inline Heading</h2>
+             <p style={{ color: 'gray', padding: '10px' }}>Direct inline style</p>
+           </div>
+         );
+       }
+
+b) External CSS:
+   - Write standard CSS in a separate `.css` file and import it directly into
+     the React component.
+   - Use `className` in JSX instead of HTML's `class`.
+
+   * Step 1: Create `Card.css`
+       .card {
+         padding: 16px;
+         background-color: #fff;
+         border: 1px solid #ccc;
+         border-radius: 8px;
+       }
+       .card-title { color: #333; }
+
+   * Step 2: Import & Use in Component:
+       import './Card.css';
+
+       function Card() {
+         return (
+           <div className="card">
+             <h2 className="card-title">External CSS Card</h2>
+           </div>
+         );
+       }
+
+c) Styled Components (CSS-in-JS):
+   - A popular library (`npm install styled-components`) that lets you create 
+     reusable React components with styles attached using ES6 template literals.
+   - Allows writing pure CSS with support for dynamic props and pseudo-classes.
+
+   * Example:
+       import styled from 'styled-components';
+
+       // Create styled component
+       const Button = styled.button`
+         background-color: ${props => props.primary ? '#007bff' : '#6c757d'};
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+
+         &:hover { opacity: 0.9; }
+       `;
+
+       function StyledDemo() {
+         return (
+           <div>
+             <Button>Normal Button</Button>
+             <Button primary>Primary Button</Button>
+           </div>
+         );
+       }
+
+d) Quick Comparison Table:
+
++-------------------+----------------------------+-----------------------------+----------------------------+
+| Feature           | Inline CSS                 | External CSS                | Styled Components          |
++-------------------+----------------------------+-----------------------------+----------------------------+
+| Syntax            | style={{ color: 'red' }}   | className="my-class"        | const Box = styled.div`..` |
+| File              | Inside JSX file            | Separate .css file          | Inside JS/JSX file         |
+| Pseudo-classes    | No (:hover, :focus, etc.)  | Yes                         | Yes                        |
+| Media Queries     | Difficult / No             | Yes                         | Yes                        |
+| Scoping           | Component only             | Global (name clashes risk)  | Scoped automatically       |
+| Dynamic Props     | Yes (JS variables)         | Limited                     | Yes (via props in CSS)     |
+| Extra Library     | None (built-in)            | None (built-in)             | Requires npm install       |
++-------------------+----------------------------+-----------------------------+----------------------------+
+================================================================================
