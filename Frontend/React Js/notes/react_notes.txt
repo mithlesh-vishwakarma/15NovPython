@@ -584,3 +584,188 @@ d) Quick Comparison Table:
 | Extra Library     | None (built-in)            | None (built-in)             | Requires npm install       |
 +-------------------+----------------------------+-----------------------------+----------------------------+
 ================================================================================
+
+20. REACT HOOKS (TYPES, useState & useEffect)
+--------------------------------------------------------------------------------
+a) What are Hooks?
+   - Special functions that let functional components use state and lifecycle features.
+   - Must only be called at the top level (never inside loops, conditions, or nested functions).
+
+b) Common Types / Categories of Hooks:
+   1. State Hooks:
+      - useState: Manages simple component state.
+      - useReducer: Manages complex state logic with action-reducer pattern.
+   2. Effect Hooks:
+      - useEffect: Performs side effects (API calls, timers, subscriptions).
+      - useLayoutEffect: Runs synchronously before the browser repaints screen.
+   3. Context Hook:
+      - useContext: Reads and subscribes to Context values without props drilling.
+   4. Ref Hook:
+      - useRef: Holds a mutable reference (or DOM element) that does NOT trigger re-renders.
+   5. Performance Hooks:
+      - useMemo: Caches / memoizes the calculated result of expensive operations.
+      - useCallback: Caches / memoizes function definitions between re-renders.
+   6. Custom Hooks:
+      - User-defined functions (prefix with `use`) to reuse stateful logic across components.
+
+--------------------------------------------------------------------------------
+c) useState - Simple Explanation & Main Points
+--------------------------------------------------------------------------------
+* What it is:
+  - Built-in hook to declare and update component state.
+
+* Why use it:
+  - Regular JavaScript variables reset to their defaults on every re-render and do NOT trigger a re-render when changed.
+  - `useState` preserves data between renders AND re-renders the UI when updated.
+
+* Syntax:
+  const [stateName, setStateName] = useState(initialValue);
+
+* Example:
+  import React, { useState } from 'react';
+
+  function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+      <div>
+        <p>Count: {count}</p>
+        <button onClick={() => setCount(count + 1)}>Increment</button>
+      </div>
+    );
+  }
+
+* Output / Behavior:
+  - Initially renders: "Count: 0".
+  - On button click: `setCount` updates `count` to 1, causing the component to re-render and display "Count: 1".
+
+--------------------------------------------------------------------------------
+d) useEffect - Simple Explanation & Main Points
+--------------------------------------------------------------------------------
+* What it is:
+  - Built-in hook to handle "side effects" in functional components.
+  - Side effects include: fetching API data, setting timers, manual DOM changes, event listeners.
+
+* Why use it:
+  - React components should remain pure during rendering (no side effects inside render body).
+  - `useEffect` schedules side effects to run safely AFTER React renders and updates the DOM.
+
+--------------------------------------------------------------------------------
+e) All 4 Types / Variations of useEffect
+--------------------------------------------------------------------------------
+
+1. WITHOUT DEPENDENCY ARRAY:
+   - Syntax:
+     useEffect(() => {
+       // Code runs after EVERY render
+     });
+   - Output / Behavior:
+     - Runs once on initial component load (mount).
+     - Runs AGAIN on EVERY re-render (whenever any state or prop changes).
+   - Example:
+     import React, { useState, useEffect } from 'react';
+
+     function AutoLogger() {
+       const [text, setText] = useState('');
+
+       useEffect(() => {
+         console.log("Component rendered or updated!");
+       });
+
+       return <input value={text} onChange={(e) => setText(e.target.value)} />;
+     }
+   - Output Behavior: Logs "Component rendered or updated!" on initial load and on EVERY keystroke typed in the input.
+
+---
+
+2. WITH EMPTY DEPENDENCY ARRAY `[]`:
+   - Syntax:
+     useEffect(() => {
+       // Code runs ONLY ONCE
+     }, []);
+   - Output / Behavior:
+     - Runs only once when the component is first mounted into the DOM.
+     - Does NOT re-run on subsequent re-renders or state changes.
+     - Best for: Initial API data fetching, one-time setups.
+   - Example:
+     import React, { useState, useEffect } from 'react';
+
+     function InitialLoad() {
+       const [data, setData] = useState("Loading...");
+
+       useEffect(() => {
+         console.log("Component Mounted!");
+         setData("Data fetched successfully!");
+       }, []);
+
+       return <h2>{data}</h2>;
+     }
+   - Output Behavior: Logs "Component Mounted!" exactly once when page loads. `setData` updates text to "Data fetched successfully!" and effect never runs again.
+
+---
+
+3. WITH DEPENDENCY ARRAY `[dependency]`:
+   - Syntax:
+     useEffect(() => {
+       // Code runs on mount + when dependency changes
+     }, [dep1, dep2]);
+   - Output / Behavior:
+     - Runs once when component mounts.
+     - Runs again ONLY when one of the specified dependencies (`dep1`, `dep2`) changes value.
+     - If other state variables change, this effect does NOT re-run.
+   - Example:
+     import React, { useState, useEffect } from 'react';
+
+     function DependencyDemo() {
+       const [count, setCount] = useState(0);
+       const [text, setText] = useState('');
+
+       useEffect(() => {
+         console.log(`Count changed to: ${count}`);
+       }, [count]); // Only tracks count
+
+       return (
+         <div>
+           <button onClick={() => setCount(count + 1)}>Count: {count}</button>
+           <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Type here" />
+         </div>
+       );
+     }
+   - Output Behavior: Logs "Count changed to: 0" on initial mount. Clicking the button logs "Count changed to: 1", "Count changed to: 2", etc. Typing in the input re-renders the component but does NOT trigger the log.
+
+---
+
+4. WITH CLEANUP FUNCTION:
+   - Syntax:
+     useEffect(() => {
+       // Setup code
+
+       return () => {
+         // Cleanup code (runs on unmount or before next effect run)
+       };
+     }, [dependency]);
+   - Output / Behavior:
+     - The returned function executes right before the component unmounts (is removed from DOM) or before the effect re-runs.
+     - Prevents memory leaks by clearing intervals, timers, and global event listeners.
+   - Example:
+     import React, { useState, useEffect } from 'react';
+
+     function Timer() {
+       const [seconds, setSeconds] = useState(0);
+
+       useEffect(() => {
+         const intervalId = setInterval(() => {
+           setSeconds((prev) => prev + 1);
+         }, 1000);
+
+         // Cleanup function
+         return () => {
+           clearInterval(intervalId);
+           console.log("Timer cleared / Component Unmounted!");
+         };
+       }, []);
+
+       return <h3>Seconds: {seconds}</h3>;
+     }
+   - Output Behavior: Timer counts 1, 2, 3 every second. When this component is unmounted (hidden or navigated away from), `clearInterval` runs automatically and prints "Timer cleared / Component Unmounted!", stopping the timer to prevent memory leaks.
+================================================================================
