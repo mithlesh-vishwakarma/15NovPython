@@ -1,0 +1,31 @@
+.col{
+    position: relative;
+}
+.col img{
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+}
+.overlay {
+     border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.4s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col:hover .overlay{
+    opacity: 1;
+    
+}
+/* .col:hover .col img{
+    z-index: 2;
+} */

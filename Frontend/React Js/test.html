@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    <h1>button will be shown here and it's properties</h1>
+  </div>
+  <button id="addLinkBtn">click me</button>
+
+  <script>
+    function createButton() {
+      let button = document.createElement("button");
+      button.textContent = "Submit";
+      button.style.backgroundColor = "red";
+      button.style.width = "100px";
+      button.style.color = "white";
+      button.style.height = "40px";
+      button.style.fontSize = "20px";
+      document.body.appendChild(button);
+    }
+
+    createButton();
+
+    // -------------------------------------------------------------------------------------------------------------
+
+    const addLinkBtn = document.getElementById("addLinkBtn");
+
+    addLinkBtn.addEventListener("click", () => {
+      console.log("Button clicked");
+    });
+
+    const socialLinks = [
+      {
+        title: "Title",
+        url: "description",
+      },
+    ];
+  </script>
+</body>
+
+</html>
