@@ -1,0 +1,94 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: #2d3748;
+  background-color: #edf2f7;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.app-container {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  max-width: 520px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #3182ce;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  color: #4a5568;
+  font-size: 1.15rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.greeting-box {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.greeting-box p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.functional-greeting {
+  border-left: 4px solid #38a169;
+}
+
+.class-greeting {
+  border-left: 4px solid #805ad5;
+}
+
+.mini-profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  margin-top: 1rem;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #3182ce;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.75rem;
+}
+
+.profile-name {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1a202c;
+}
+
+.profile-status {
+  margin: 0.5rem 0 0 0;
+  color: #718096;
+  font-size: 0.92rem;
+}
+

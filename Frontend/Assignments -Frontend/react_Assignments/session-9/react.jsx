@@ -1,1 +1,4 @@
-<h1>will be updated in some time </h1>;
+import App from './src/App';
+
+export default App;
+

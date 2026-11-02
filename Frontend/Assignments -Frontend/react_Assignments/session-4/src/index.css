@@ -1,0 +1,207 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #2d3748;
+  background-color: #f7fafc;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  color: #2b6cb0;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #718096;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.exercise-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.exercise-card h3 {
+  margin-top: 0;
+  color: #1a202c;
+  font-size: 1.15rem;
+  border-bottom: 1px solid #edf2f7;
+  padding-bottom: 0.5rem;
+}
+
+/* Like Button */
+.like-btn {
+  background: #fff5f5;
+  color: #e53e3e;
+  border: 1px solid #feb2b2;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.like-btn:hover {
+  background: #fed7d7;
+  transform: scale(1.05);
+}
+
+.badge-count {
+  background: #e53e3e;
+  color: #ffffff;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+/* Cart Item */
+.cart-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.qty-btn {
+  background: #edf2f7;
+  border: 1px solid #cbd5e0;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qty-display {
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+.helper-text {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.muted {
+  color: #e53e3e;
+}
+
+/* Song Vote */
+.song-title {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.vote-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.vote-btn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.vote-btn.upvote {
+  background: #ebf8ff;
+  color: #3182ce;
+  border-color: #bee3f8;
+}
+
+.vote-btn.downvote {
+  background: #feebc8;
+  color: #dd6b20;
+  border-color: #fbd38d;
+}
+
+.vote-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.votes-count {
+  font-weight: bold;
+  color: #2d3748;
+}
+
+/* Star Rating */
+.star-container {
+  display: flex;
+  gap: 0.4rem;
+  margin: 1rem 0;
+}
+
+.star-btn {
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s ease;
+}
+
+.star-btn:hover {
+  transform: scale(1.2);
+}
+
+.star-btn.filled {
+  color: #ecc94b;
+}
+
+.star-btn.empty {
+  color: #cbd5e0;
+}
+
+.rating-status {
+  font-size: 0.9rem;
+  color: #718096;
+}
+

@@ -1,0 +1,201 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #2d3748;
+  background-color: #f7fafc;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1rem;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  color: #2c5282;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #718096;
+  margin: 0;
+}
+
+.content-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.component-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.card-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-bottom: 1px solid #edf2f7;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-top-bar h3 {
+  margin: 0;
+}
+
+.component-card h3 {
+  margin-top: 0;
+  color: #1a202c;
+  font-size: 1.15rem;
+}
+
+.btn-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.subtext {
+  font-size: 0.88rem;
+  color: #718096;
+  margin-top: 0;
+}
+
+.disclaimer-banner {
+  background: #fffaf0;
+  border: 1px solid #feebc8;
+  color: #7b341e;
+  padding: 0.6rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: #3182ce;
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #2b6cb0;
+}
+
+.btn-secondary {
+  background: #edf2f7;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading-state {
+  color: #3182ce;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.error-box {
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.exact-error-msg {
+  color: #e53e3e;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.songs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+}
+
+.song-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  background: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.track-number {
+  font-weight: bold;
+  color: #3182ce;
+}
+
+.track-title {
+  text-transform: capitalize;
+  color: #2d3748;
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.match-card {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.match-status-tag {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #2b6cb0;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.team-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.team-score {
+  font-weight: bold;
+}
+
